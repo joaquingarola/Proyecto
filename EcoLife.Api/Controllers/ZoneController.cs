@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EcoLife.Api.DataAccess.Repositories.Interfaces;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Dtos;
 using EcoLife.Api.Entities;
@@ -36,7 +35,7 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostZoneAsync([FromBody] ZoneDto zoneDto)
+        async public Task<IActionResult> PostAsync([FromBody] ZoneDto zoneDto)
         {
             var zone = _mapper.Map<Zone>(zoneDto);
             var result = await _uow.ZoneRepository.AddAndSaveAsync(zone);

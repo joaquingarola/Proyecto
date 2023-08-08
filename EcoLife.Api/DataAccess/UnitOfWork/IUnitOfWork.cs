@@ -5,5 +5,6 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
     public interface IUnitOfWork
     {
         public IZoneRepository ZoneRepository { get; }
+        public IVehicleRepository VehicleRepository { get; }
     }
 }

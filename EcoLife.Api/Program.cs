@@ -1,4 +1,3 @@
-using AutoMapper;
 using EcoLife.Api.DataAccess;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using Microsoft.EntityFrameworkCore;

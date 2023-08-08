@@ -9,5 +9,6 @@ namespace EcoLife.Api.DataAccess
         public EcoLifeContext(DbContextOptions options) : base(options) { }
 
         public virtual DbSet<Zone> Zones { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
     }
 }

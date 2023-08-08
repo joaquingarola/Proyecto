@@ -5,13 +5,13 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EcoLifeContext _context;
         public IZoneRepository ZoneRepository { get; private set; }
+        public IVehicleRepository VehicleRepository { get; private set; }
 
         public UnitOfWork(EcoLifeContext context)
         {
-            this._context = context;
             ZoneRepository = new ZoneRepository(context);
+            VehicleRepository = new VehicleRepository(context);
         }
     }
 }
