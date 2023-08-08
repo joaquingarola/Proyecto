@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="0208b445-eea6-4b91-bde6-ce5cb33e33fd" ChangeDateTime="08/07/2023 23:00:07">
+    <Property Name="ElementName" Value="[dbo].[Zone].[LimitTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Zone]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MaximumHours" />
+  </Operation>
+</Operations>

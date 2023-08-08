@@ -1,0 +1,6 @@
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\bin\Debug\EcoLife.Db.dacpac
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\bin\Debug\EcoLife.Db.dll
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\bin\Debug\EcoLife.Db.pdb
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\obj\Debug\EcoLife.Db.sqlproj.AssemblyReference.cache
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\obj\Debug\EcoLife.Db.dll
+C:\Users\PC\Desktop\Facultad\Proyecto Final\EcoLife\EcoLife.Db\obj\Debug\EcoLife.Db.pdb
