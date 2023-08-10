@@ -3,7 +3,7 @@
     public class ContainerDto
 
     {
-        public int Id_Containter { get; set; }
+        
         public struct Coordinates
         {
             public double Latitude { get; set; }
