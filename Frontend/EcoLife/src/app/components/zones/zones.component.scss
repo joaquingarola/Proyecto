@@ -1,0 +1,22 @@
+.container{
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    
+    &__data {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__table {
+            text-align: center;
+        }
+
+        &__add-button{
+            margin-top: 1rem;
+        }
+    }
+}
