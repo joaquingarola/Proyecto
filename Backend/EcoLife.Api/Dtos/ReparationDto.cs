@@ -1,4 +1,4 @@
-﻿namespace EcoLife.Api.Entities
+﻿namespace EcoLife.Api.Dtos
 {
     public class ReparationDto
     {

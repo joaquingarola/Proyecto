@@ -1,0 +1,40 @@
+.header{
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+
+    &__options{
+        width: 20%;
+        display: flex;
+        justify-content: space-around;
+
+        &__item {
+            color: black;
+            font-size: medium;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        &__item::after{
+            position: absolute;
+            content: "";
+            width: 0%;
+            height: 2px;
+            background-color: black;
+            left: 50%;
+            bottom: -10px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        &__item:hover{
+            cursor:pointer;
+        }
+        
+        &__item:hover::after{
+            cursor: pointer;
+            width: 100%;
+            left: 0;
+        }
+    }
+}

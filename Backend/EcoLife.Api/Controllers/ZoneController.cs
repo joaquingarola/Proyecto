@@ -35,7 +35,7 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostAsync([FromBody] ZoneDto zoneDto)
+        async public Task<IActionResult> PostZoneAsync([FromBody] ZoneDto zoneDto)
         {
             var zone = _mapper.Map<Zone>(zoneDto);
             var result = await _uow.ZoneRepository.AddAndSaveAsync(zone);
@@ -46,7 +46,14 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int zoneId)
         {
             await _uow.ZoneRepository.Delete(zoneId);
-            return Ok(new { msg = "Zone removed successfully" });
+            return Ok();
+        }
+
+        [HttpPut]
+        async public Task<IActionResult> UpdateZoneAsync([FromBody] Zone editZone)
+        {
+            var result = await _uow.ZoneRepository.Update(editZone);
+            return Ok(result);
         }
     }
 }

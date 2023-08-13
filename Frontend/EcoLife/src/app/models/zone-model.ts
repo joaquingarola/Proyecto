@@ -1,5 +1,5 @@
 export interface ZoneModel {
-    id: number,
+    id?: number,
     description: string,
-    maximunHours: number
+    maximumHours: number
 }

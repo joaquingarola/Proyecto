@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="container">
 	<div class="container__data">
 		<h1 class="container__data__title">Lista de zonas</h1>
@@ -12,22 +13,22 @@
 					<td mat-cell *matCellDef="let zone"> {{zone.description}} </td>
 			</ng-container>
 
-			<ng-container matColumnDef="maxHours">
+			<ng-container matColumnDef="maximumHours">
 				<th mat-header-cell *matHeaderCellDef> Cantidad máxima de horas </th>
-				<td mat-cell *matCellDef="let zone"> {{zone.maximunHours}} </td>
-		</ng-container>
+				<td mat-cell *matCellDef="let zone"> {{zone.maximumHours}} </td>
+			</ng-container>
 
 			<ng-container matColumnDef="options">
 					<th mat-header-cell *matHeaderCellDef> Opciones </th>
-					<td mat-cell *matCellDef="let category">
-							<mat-icon class="icon">edit</mat-icon>
-							<mat-icon class="icon">delete</mat-icon>
+					<td mat-cell *matCellDef="let zone">
+						<mat-icon (click)="editZone(zone)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteZone(zone.id)" class="icon">delete</mat-icon>
 					</td>
 			</ng-container>
 
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
-		<button mat-raised-button color="primary" [routerLink]="['/categories/add']" class="container__data__add-button">Agregar nueva zona</button>
+		<button mat-raised-button color="primary" (click)="addZone()" class="container__data__add-button">Agregar nueva zona</button>
 	</div>
 </div>

@@ -19,11 +19,15 @@ export class VehicleService {
     return this.http.get<VehicleModel>(`${this.API_URL}/${id}`);
   }
 
-  public add(zone: VehicleModel): Observable<Object> {
-    return this.http.post(`${this.API_URL}`, zone);
+  public add(vehicle: VehicleModel): Observable<Object> {
+    return this.http.post(`${this.API_URL}`, vehicle);
   }
 
   public deleteCategory(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
+  }
+
+  public updateVehicle(id: number, vehicle: VehicleModel): Observable<Object> {
+    return this.http.put(`${this.API_URL}`, { id: id, ...vehicle });
   }
 }

@@ -35,7 +35,7 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostAsync([FromBody] VehicleDto vehicleDto)
+        async public Task<IActionResult> PostVehicleAsync([FromBody] VehicleDto vehicleDto)
         {
             var vehicle = _mapper.Map<Vehicle>(vehicleDto);
             var result = await _uow.VehicleRepository.AddAndSaveAsync(vehicle);
@@ -46,7 +46,14 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int vehicleId)
         {
             await _uow.VehicleRepository.Delete(vehicleId);
-            return Ok("Vehicle removed successfully");
+            return Ok();
+        }
+
+        [HttpPut]
+        async public Task<IActionResult> UpdateVehicleAsync([FromBody] Vehicle editVehicle)
+        {
+            var result = await _uow.VehicleRepository.Update(editVehicle);
+            return Ok(result);
         }
     }
 }

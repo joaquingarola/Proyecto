@@ -7,18 +7,29 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ZonesComponent } from './components/zones/zones.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ZonesFormModalComponent } from './components/zones/zones-form-modal/zones-form-modal.component';
+import { VehiclesFormModalComponent } from './components/vehicles/vehicles-form-modal/vehicles-form-modal.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     ZonesComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    NavbarComponent,
+    ConfirmationModalComponent,
+    ZonesFormModalComponent,
+    VehiclesFormModalComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +42,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

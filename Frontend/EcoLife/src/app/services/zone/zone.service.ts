@@ -23,7 +23,11 @@ export class ZoneService {
     return this.http.post(`${this.API_URL}`, zone);
   }
 
-  public deleteCategory(id: number): Observable<Object> {
+  public deleteZone(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
+  }
+
+  public updateZone(id: number, zone: ZoneModel): Observable<Object> {
+    return this.http.put(`${this.API_URL}`, { id: id, ...zone });
   }
 }

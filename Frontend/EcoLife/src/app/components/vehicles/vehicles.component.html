@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="container">
 	<div class="container__data">
 		<h1 class="container__data__title">Lista de vehículos</h1>
@@ -30,14 +31,14 @@
 			<ng-container matColumnDef="options">
 					<th mat-header-cell *matHeaderCellDef> Opciones </th>
 					<td mat-cell *matCellDef="let vehicle">
-							<mat-icon class="icon">edit</mat-icon>
-							<mat-icon class="icon">delete</mat-icon>
+						<mat-icon (click)="editVehicle(vehicle)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteVehicle(vehicle.id)" class="icon">delete</mat-icon>
 					</td>
 			</ng-container>
 
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
-		<button mat-raised-button color="primary" [routerLink]="['/categories/add']" class="container__data__add-button">Agregar nuevo vehículo</button>
+		<button mat-raised-button color="primary" (click)="addVehicle()" class="container__data__add-button">Agregar nuevo vehículo</button>
 	</div>
 </div>
