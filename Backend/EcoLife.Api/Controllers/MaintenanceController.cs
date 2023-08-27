@@ -24,7 +24,7 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> GetAllAsync()
         {
             var maintenances = await _uow.MaintenanceRepository.GetAllWithVehicleAsync();
-            return Ok(maintenances);
+            return Ok(_mapper.Map<List<MaintenanceResponseDto>>(maintenances));
         }
 
         [HttpGet("{maintenanceId}")]
