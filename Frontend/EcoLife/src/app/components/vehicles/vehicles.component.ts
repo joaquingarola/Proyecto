@@ -4,6 +4,7 @@ import { VehicleService } from 'src/app/services/vehicle/vehicle.service';
 import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
 import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
+import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class VehiclesComponent {
   public vehicles: VehicleModel[];
-  public displayedColumns = ["id", "patent", "description", "model", "buyDate", "options"];
+  public displayedColumns = ["patent", "description", "model", "buyDate", "options"];
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar este vehículo?',
     confirmCaption: 'Eliminar',
@@ -42,7 +43,7 @@ export class VehiclesComponent {
     this.modalConfirmationService.open(this.confirmationData)
       .subscribe(response => {
         if(response){
-          this.vehicleService.deleteCategory(id)
+          this.vehicleService.deleteVehicle(id)
             .subscribe(res => this.listVehicles())
         }
       });
@@ -61,6 +62,14 @@ export class VehiclesComponent {
     dialogRef.afterClosed().subscribe({
       next: (res) => this.listVehicles()
     });
+  }
+
+  public notifyMaintenance(data: VehicleModel): void{
+    const dialogRef = this.dialog.open(NotifyMaintenanceFormModalComponent, { data });
+
+    /* dialogRef.afterClosed().subscribe({
+      next: (res) => this.listVehicles()
+    }); */
   }
 }
 

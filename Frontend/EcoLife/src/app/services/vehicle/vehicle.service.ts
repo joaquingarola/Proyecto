@@ -23,7 +23,7 @@ export class VehicleService {
     return this.http.post(`${this.API_URL}`, vehicle);
   }
 
-  public deleteCategory(id: number): Observable<Object> {
+  public deleteVehicle(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 

@@ -20,6 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ZonesFormModalComponent } from './components/zones/zones-form-modal/zones-form-modal.component';
 import { VehiclesFormModalComponent } from './components/vehicles/vehicles-form-modal/vehicles-form-modal.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NotifyMaintenanceFormModalComponent } from './components/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NavbarComponent,
     ConfirmationModalComponent,
     ZonesFormModalComponent,
-    VehiclesFormModalComponent
+    VehiclesFormModalComponent,
+    NotifyMaintenanceFormModalComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TextFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

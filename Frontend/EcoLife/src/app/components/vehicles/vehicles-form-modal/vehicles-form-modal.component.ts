@@ -29,7 +29,7 @@ export class VehiclesFormModalComponent {
 
   ngOnInit(): void {
     this.vehicleForm.patchValue(this.data);
-  }
+  };
 
   onFormSubmit(): void {
     if (this.vehicleForm.valid) {

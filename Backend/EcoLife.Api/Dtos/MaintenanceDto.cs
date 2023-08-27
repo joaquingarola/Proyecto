@@ -1,11 +1,10 @@
-﻿using EcoLife.Api.Entities;
-
-namespace EcoLife.Api.Dtos
+﻿namespace EcoLife.Api.Dtos
 {
     public class MaintenanceDto
     {
-        public Vehicle Vehicle { get; set; }
-        public DateOnly Date { get; set; }
-        public String Description { get; set; }
+        public int VehicleId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string Description { get; set; }
     }
 }
