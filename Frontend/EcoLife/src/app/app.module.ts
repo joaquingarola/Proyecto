@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NotifyMaintenanceFormModalComponent } from './components/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
+import { FinishMaintenanceFormModalComponent } from './components/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
+import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
 
 
 @NgModule({
@@ -37,6 +40,8 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     VehiclesFormModalComponent,
     NotifyMaintenanceFormModalComponent,
     MaintenanceComponent,
+    FinishMaintenanceFormModalComponent,
+    ProgressBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     MatDatepickerModule,
     MatNativeDateModule,
     TextFieldModule,
-    MatSnackBarModule,  
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #999; }
+
+.disabled-icon{
+  opacity: 0.25;
+  color: grey !important;
+  pointer-events: none;
+}
+
+.success-icon{
+  color: rgb(31, 181, 31);
+}
+
+.edit-icon{
+  color: rgb(84, 84, 206);
+}

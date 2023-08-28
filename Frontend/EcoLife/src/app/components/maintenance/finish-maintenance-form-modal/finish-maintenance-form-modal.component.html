@@ -1,0 +1,23 @@
+<div class="modal-form">
+  <div mat-dialog-title class="modal-form__title">
+      <h1>Finalizar mantenimiento</h1>
+      <h3>{{data.vehicle.description}} - {{data.vehicle.patent}}</h3>
+  </div>
+  <form [formGroup]="maintenanceForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="modal-form__content">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de finalización</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="endDate" [min]="data.startDate" [max]="actualDate">
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div mat-dialog-actions class="modal-form__action">
+      <button mat-raised-button type="button" [mat-dialog-close]="false">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="maintenanceForm.pristine || maintenanceForm.invalid">Guardar</button>
+    </div>
+  </form>
+</div>

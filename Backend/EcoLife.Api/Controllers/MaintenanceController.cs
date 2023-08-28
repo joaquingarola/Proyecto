@@ -50,5 +50,19 @@ namespace EcoLife.Api.Controllers
             var result = await _uow.MaintenanceRepository.Update(maintenance);
             return Ok(result);
         }
+
+        [HttpPut]
+        async public Task<IActionResult> UpdateMaintenanceAsync([FromBody] Maintenance editMaintenance)
+        {
+            var result = await _uow.MaintenanceRepository.Update(editMaintenance);
+            return Ok(result);
+        }
+
+        [HttpDelete("{maintenanceId}")]
+        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int maintenanceId)
+        {
+            await _uow.MaintenanceRepository.Delete(maintenanceId);
+            return Ok();
+        }
     }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FinishMaintenanceModel } from 'src/app/models/finish-maintenance-model';
 import { MaintenanceModel } from 'src/app/models/maintenance-model';
 
 @Injectable({
@@ -22,5 +23,17 @@ export class MaintenanceService {
 
   public add(maintenance: MaintenanceModel): Observable<Object> {
     return this.http.post(`${this.API_URL}`, maintenance);
+  }
+
+  public finishMaintenance(id: number, maintenance: FinishMaintenanceModel): Observable<Object>{
+    return this.http.post(`${this.API_URL}/complete/${id}`, maintenance)
+  }
+
+  public deleteMaintenance(id: number): Observable<Object> {
+    return this.http.delete(`${this.API_URL}/${id}`);
+  }
+
+  public updateMaintenance(id: number, maintenance: MaintenanceModel): Observable<Object> {
+    return this.http.put(`${this.API_URL}`, { id: id, ...maintenance });
   }
 }

@@ -6,7 +6,7 @@ import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
 import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarNotificationService } from '../../services/snackbar-notification/snackbar-notification.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -26,18 +26,11 @@ export class VehiclesComponent {
     private vehicleService: VehicleService,
     private modalConfirmationService: ModalConfirmationService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private snackbarNotificationService: SnackbarNotificationService
   ) { }
 
   ngOnInit(): void {
     this.listVehicles();
-  }
-
-  mensajeExito(){
-    this._snackBar.open('El Vehiculo fue eliminado con éxito', '' , {
-      duration: 4000,
-      horizontalPosition: 'right',
-    })
   }
 
   private listVehicles(): void { 
@@ -53,8 +46,13 @@ export class VehiclesComponent {
       .subscribe(response => {
         if(response){
           this.vehicleService.deleteVehicle(id)
-            .subscribe(res => this.listVehicles()),
-            this.mensajeExito()
+            .subscribe({
+              next: () => {
+                this.listVehicles();
+                this.snackbarNotificationService.open('Se elimino el vehículo con éxito');
+              },
+              error: () => this.snackbarNotificationService.open('Error: Existen mantenimientos para el vehículo')
+            })
         }
       });
   }
@@ -70,7 +68,10 @@ export class VehiclesComponent {
   public addVehicle(): void {
     const dialogRef = this.dialog.open(VehiclesFormModalComponent);
     dialogRef.afterClosed().subscribe({
-      next: (res) => this.listVehicles()
+      next: (res) => { 
+        this.listVehicles();
+        this.snackbarNotificationService.open('aa');
+      }
     });
   }
 
