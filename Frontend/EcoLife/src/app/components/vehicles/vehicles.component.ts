@@ -6,6 +6,7 @@ import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
 import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-vehicles',
@@ -24,11 +25,19 @@ export class VehiclesComponent {
   constructor(
     private vehicleService: VehicleService,
     private modalConfirmationService: ModalConfirmationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.listVehicles();
+  }
+
+  mensajeExito(){
+    this._snackBar.open('El Vehiculo fue eliminado con éxito', '' , {
+      duration: 4000,
+      horizontalPosition: 'right',
+    })
   }
 
   private listVehicles(): void { 
@@ -44,7 +53,8 @@ export class VehiclesComponent {
       .subscribe(response => {
         if(response){
           this.vehicleService.deleteVehicle(id)
-            .subscribe(res => this.listVehicles())
+            .subscribe(res => this.listVehicles()),
+            this.mensajeExito()
         }
       });
   }

@@ -8,6 +8,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +24,9 @@ import { VehiclesFormModalComponent } from './components/vehicles/vehicles-form-
 import { MatNativeDateModule } from '@angular/material/core';
 import { NotifyMaintenanceFormModalComponent } from './components/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MaintenanceComponent } from './components/maintenance/maintenance.component';
+
+
 
 @NgModule({
   declarations: [
@@ -32,7 +37,12 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     ConfirmationModalComponent,
     ZonesFormModalComponent,
     VehiclesFormModalComponent,
-    NotifyMaintenanceFormModalComponent
+    NotifyMaintenanceFormModalComponent,
+    MaintenanceComponent,
+
+   
+   
+    
   ],
   imports: [
     BrowserModule,
@@ -49,7 +59,11 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    TextFieldModule
+    TextFieldModule,
+    MatSnackBarModule,
+
+   
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
