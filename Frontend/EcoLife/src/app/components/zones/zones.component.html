@@ -3,11 +3,6 @@
 	<div class="container__data">
 		<h1 class="container__data__title">Lista de zonas</h1>
 		<table mat-table [dataSource]="zones" class="mat-elevation-z8 container__data__table">
-			<ng-container matColumnDef="id">
-					<th mat-header-cell *matHeaderCellDef> ID </th>
-					<td mat-cell *matCellDef="let zone"> {{zone.id}} </td>
-			</ng-container>
-
 			<ng-container matColumnDef="description">
 					<th mat-header-cell *matHeaderCellDef> Descripción </th>
 					<td mat-cell *matCellDef="let zone"> {{zone.description}} </td>

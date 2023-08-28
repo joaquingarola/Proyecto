@@ -8,8 +8,5 @@ export interface MaintenanceModel {
   endDate?: Date,
   vehicle: VehicleModel
   status?: string
-
-
-
 }
 

@@ -11,15 +11,11 @@ export class MaintenanceComponent {
   public maintenance: MaintenanceModel[];
   public displayedColumns = ["description", "startDate", "endDate", "vehicle", "status"];
 
-
-
+  constructor(private maintenanceService: MaintenanceService){}
   
   ngOnInit(): void {
     this.listMaintenances();
   }
-  constructor(
-   private maintenanceService: MaintenanceService){}
-  
 
   private listMaintenances(): void { 
     this.maintenanceService.getAll()
@@ -28,5 +24,4 @@ export class MaintenanceComponent {
         this.maintenance = response;
       });
   }
-
 }

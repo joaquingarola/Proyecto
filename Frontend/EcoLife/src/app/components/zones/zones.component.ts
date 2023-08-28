@@ -13,7 +13,7 @@ import { ZonesFormModalComponent } from './zones-form-modal/zones-form-modal.com
 })
 export class ZonesComponent {
   public zones: ZoneModel[];
-  public displayedColumns : string[] = ["id", "description", "maximumHours", "options"];
+  public displayedColumns : string[] = ["description", "maximumHours", "options"];
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta zona?',
     confirmCaption: 'Eliminar',

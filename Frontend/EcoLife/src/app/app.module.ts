@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ZonesComponent } from './components/zones/zones.component';
@@ -27,7 +26,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,10 +37,6 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     VehiclesFormModalComponent,
     NotifyMaintenanceFormModalComponent,
     MaintenanceComponent,
-
-   
-   
-    
   ],
   imports: [
     BrowserModule,
@@ -60,10 +54,7 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     MatDatepickerModule,
     MatNativeDateModule,
     TextFieldModule,
-    MatSnackBarModule,
-
-   
-    
+    MatSnackBarModule,  
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,8 +8,8 @@ const routes: Routes = [
   {path: 'zones', component: ZonesComponent},
   {path: 'vehicles', component: VehiclesComponent},
   {path: 'maintenance', component: MaintenanceComponent}, 
- // {path: '', redirectTo: 'zones', pathMatch: 'full'},
- // {path: '**', redirectTo: 'zones'}
+  {path: '', redirectTo: 'zones', pathMatch: 'full'},
+  {path: '**', redirectTo: 'zones'}
 ];
 
 @NgModule({
