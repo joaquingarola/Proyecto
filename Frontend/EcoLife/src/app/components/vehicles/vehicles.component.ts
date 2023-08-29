@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { VehicleModel } from 'src/app/models/vehicle-model';
 import { VehicleService } from 'src/app/services/vehicle/vehicle.service';
 import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
@@ -7,6 +7,9 @@ import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-
 import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarNotificationService } from '../../services/snackbar-notification/snackbar-notification.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-vehicles',
@@ -16,6 +19,7 @@ import { SnackbarNotificationService } from '../../services/snackbar-notificatio
 export class VehiclesComponent {
   public vehicles: VehicleModel[];
   public displayedColumns = ["patent", "description", "model", "buyDate", "options"];
+  public Vehicles: MatTableDataSource<VehicleModel>
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar este vehículo?',
     confirmCaption: 'Eliminar',
@@ -29,8 +33,28 @@ export class VehiclesComponent {
     private snackbarNotificationService: SnackbarNotificationService
   ) { }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   ngOnInit(): void {
     this.listVehicles();
+  }
+
+  ngAfterViewInit() {
+    this.Vehicles = new MatTableDataSource(this.vehicles)
+    this.Vehicles.paginator = this.paginator;
+    this.Vehicles.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
+
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.Vehicles.filter = filterValue.trim().toLowerCase();
+
+    if (this.Vehicles.paginator) {
+      this.Vehicles.paginator.firstPage();
+    }
   }
 
   private listVehicles(): void { 
@@ -38,6 +62,7 @@ export class VehiclesComponent {
     .subscribe(
       (response) => {
         this.vehicles = response;
+        this.Vehicles.data = this.vehicles;
       });
   }
 

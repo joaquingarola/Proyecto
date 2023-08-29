@@ -2,24 +2,29 @@
 <div class="container">
 	<div class="container__data">
 		<h1 class="container__data__title">Lista de vehículos</h1>
-		<table mat-table [dataSource]="vehicles" class="mat-elevation-z8 container__data__table">
+		<div class="filter-and-table-container">
+			<mat-form-field class="filter">
+				<mat-label>Filtro</mat-label>
+				<input matInput (keyup)="applyFilter($event)" placeholder="Finalizado" #input autocomplete="off">
+			  </mat-form-field>
+		<table mat-table [dataSource]="Vehicles" class="mat-elevation-z8 container__data__table" matSort>
 			<ng-container matColumnDef="patent">
-				<th mat-header-cell *matHeaderCellDef> Patente </th>
+				<th mat-header-cell *matHeaderCellDef mat-sort-header > Patente </th>
 				<td mat-cell *matCellDef="let vehicle"> {{vehicle.patent}} </td>
 			</ng-container>
 
 			<ng-container matColumnDef="description">
-				<th mat-header-cell *matHeaderCellDef> Descripción </th>
+				<th mat-header-cell *matHeaderCellDef mat-sort-header > Descripción </th>
 				<td mat-cell *matCellDef="let vehicle"> {{vehicle.description}} </td>
 			</ng-container>
 
 			<ng-container matColumnDef="model">
-				<th mat-header-cell *matHeaderCellDef> Modelo </th>
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
 				<td mat-cell *matCellDef="let vehicle"> {{vehicle.model}} </td>
 			</ng-container>
 
 			<ng-container matColumnDef="buyDate">
-				<th mat-header-cell *matHeaderCellDef> Fecha de compra </th>
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de compra </th>
 				<td mat-cell *matCellDef="let vehicle"> {{vehicle.buyDate | date:'dd/MM/yyyy'}} </td>
 			</ng-container>
 
@@ -35,6 +40,13 @@
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
+	
+		<mat-paginator class="mat-paginator" [length]="100"
+		[pageSize]="10"
+		[pageSizeOptions]="[1,2,3,100]"
+		aria-label="Select page">
+		</mat-paginator>
+	</div>
 		<button mat-raised-button color="primary" (click)="addVehicle()" class="container__data__add-button">Agregar nuevo vehículo</button>
 	</div>
 </div>

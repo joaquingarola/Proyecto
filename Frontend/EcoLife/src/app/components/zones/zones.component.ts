@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ZoneModel } from '../../models/zone-model';
 import { ZoneService } from '../../services/zone/zone.service';
 import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
 import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { MatDialog } from '@angular/material/dialog';
 import { ZonesFormModalComponent } from './zones-form-modal/zones-form-modal.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-zones',
@@ -14,6 +18,7 @@ import { ZonesFormModalComponent } from './zones-form-modal/zones-form-modal.com
 export class ZonesComponent {
   public zones: ZoneModel[];
   public displayedColumns : string[] = ["description", "maximumHours", "options"];
+  public Zones: MatTableDataSource<ZoneModel>;
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta zona?',
     confirmCaption: 'Eliminar',
@@ -26,8 +31,28 @@ export class ZonesComponent {
     private dialog: MatDialog
   ) { }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   ngOnInit(): void {
     this.listZones();
+  }
+
+  ngAfterViewInit() {
+    this.Zones = new MatTableDataSource(this.zones)
+    this.Zones.paginator = this.paginator;
+    this.Zones.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
+
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.Zones.filter = filterValue.trim().toLowerCase();
+
+    if (this.Zones.paginator) {
+      this.Zones.paginator.firstPage();
+    }
   }
 
   private listZones(): void { 
@@ -35,6 +60,7 @@ export class ZonesComponent {
     .subscribe(
       (response) => {
         this.zones = response;
+        this.Zones.data = this.zones;
       });
   }
 

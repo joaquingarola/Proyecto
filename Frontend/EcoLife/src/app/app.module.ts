@@ -27,6 +27,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { FinishMaintenanceFormModalComponent } from './components/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
 import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { ProgressBarComponent } from './components/shared/progress-bar/progress-
     NotifyMaintenanceFormModalComponent,
     MaintenanceComponent,
     FinishMaintenanceFormModalComponent,
-    ProgressBarComponent,
+    ProgressBarComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,9 @@ import { ProgressBarComponent } from './components/shared/progress-bar/progress-
     MatNativeDateModule,
     TextFieldModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

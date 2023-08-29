@@ -1,31 +1,36 @@
 <app-navbar></app-navbar>
 <div class="container">
   <div class="container__data">
-    <h1 class="container__data__title">Lista de Mantemientos</h1>
-    <table mat-table [dataSource]="maintenance" class="mat-elevation-z8">
+    <h1 class="container__data__title">Lista de Mantenimientos</h1>
+    <div class="filter-and-table-container">
+    <mat-form-field class="filter">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Finalizado" #input autocomplete="off">
+    </mat-form-field>
+    <table mat-table [dataSource]="Maintenance" class="mat-elevation-z8 container__data__table" matSort>
       <ng-container matColumnDef="vehicle">
-        <th mat-header-cell *matHeaderCellDef class="aaa"> Vehículo </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="aaa" > Vehículo </th>
         <td mat-cell *matCellDef="let maintenance"> {{maintenance.vehicle.patent}} - {{maintenance.vehicle.description}}</td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <th mat-header-cell *matHeaderCellDef > Descripcion </th>
         <td mat-cell *matCellDef="let maintenance"> {{maintenance.description}} </td>
       </ng-container>
 
       <ng-container matColumnDef="startDate">
-        <th mat-header-cell *matHeaderCellDef> Fecha Inicio </th>
-        <td mat-cell *matCellDef="let maintenance"> {{maintenance.startDate | date:'dd/MM/yyyy'}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Inicio </th>
+        <td mat-cell *matCellDef="let maintenance" > {{maintenance.startDate | date:'dd/MM/yyyy'}} </td>
       </ng-container>
         
       <ng-container matColumnDef="endDate">
-        <th mat-header-cell *matHeaderCellDef> Fecha Fin </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Fin </th>
         <td mat-cell *matCellDef="let maintenance"> {{maintenance.endDate ? (maintenance.endDate | date:'dd/MM/yyyy') : '-' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Estado </th>
-        <td mat-cell *matCellDef="let maintenance"> {{maintenance.status}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let maintenance" > {{maintenance.status}} </td>
       </ng-container>
 
       <ng-container matColumnDef="options">
@@ -38,7 +43,17 @@
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+      
     </table>
+  
+    <mat-paginator class="mat-paginator custom-paginator" [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[1,2,3,100]"
+              aria-label="Select page">
+</mat-paginator>
+</div>
   </div>
 </div>
