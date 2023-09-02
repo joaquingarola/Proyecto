@@ -3,8 +3,8 @@
 	<div class="container__data">
 		<p class="table-title">Lista de zonas</p>
 		<mat-form-field class="container__data__filter">
-			<mat-label>Filtro</mat-label>
-			<input matInput (keyup)="applyFilter($event)"placeholder="Finalizado" #input autocomplete="off">
+			<mat-label>Filtrar</mat-label>
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción u horas" #input autocomplete="off">
 		</mat-form-field>
 		<table mat-table [dataSource]="zones" class="mat-elevation-z8 container__data__table" matSort>
 			<ng-container matColumnDef="description">
