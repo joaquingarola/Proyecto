@@ -1,13 +1,12 @@
 <app-navbar></app-navbar>
 <div class="container">
 	<div class="container__data">
-		<h1 class="container__data__title">Lista de vehículos</h1>
-		<div class="filter-and-table-container">
-			<mat-form-field class="filter">
-				<mat-label>Filtro</mat-label>
-				<input matInput (keyup)="applyFilter($event)" placeholder="Finalizado" #input autocomplete="off">
-			  </mat-form-field>
-		<table mat-table [dataSource]="Vehicles" class="mat-elevation-z8 container__data__table" matSort>
+		<p class="table-title">Lista de vehículos</p>
+		<mat-form-field class="container__data__filter">
+			<mat-label>Filtrar</mat-label>
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por patente, descripción o modelo" #input autocomplete="off">
+		</mat-form-field>
+		<table mat-table [dataSource]="vehicles" class="mat-elevation-z8 container__data__table" matSort>
 			<ng-container matColumnDef="patent">
 				<th mat-header-cell *matHeaderCellDef mat-sort-header > Patente </th>
 				<td mat-cell *matCellDef="let vehicle"> {{vehicle.patent}} </td>
@@ -39,14 +38,19 @@
 
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+			<tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell container__data__table__no-results" colspan="5">No se encontraron vehículos que coincidan con "{{input.value}}"</td>
+      </tr>
 		</table>
 	
-		<mat-paginator class="mat-paginator" [length]="100"
-		[pageSize]="10"
-		[pageSizeOptions]="[1,2,3,100]"
-		aria-label="Select page">
+		<mat-paginator 
+			class="container__data__paginator" 
+			[length]="100"
+			[pageSize]="10"
+			[pageSizeOptions]="[1,5,10,20]">
 		</mat-paginator>
-	</div>
+
 		<button mat-raised-button color="primary" (click)="addVehicle()" class="container__data__add-button">Agregar nuevo vehículo</button>
 	</div>
 </div>

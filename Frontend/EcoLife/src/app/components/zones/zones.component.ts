@@ -16,9 +16,10 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./zones.component.scss']
 })
 export class ZonesComponent {
-  public zones: ZoneModel[];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns : string[] = ["description", "maximumHours", "options"];
-  public Zones: MatTableDataSource<ZoneModel>;
+  public zones: MatTableDataSource<ZoneModel>;
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta zona?',
     confirmCaption: 'Eliminar',
@@ -31,27 +32,21 @@ export class ZonesComponent {
     private dialog: MatDialog
   ) { }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
   ngOnInit(): void {
     this.listZones();
   }
 
-  ngAfterViewInit() {
-    this.Zones = new MatTableDataSource(this.zones)
-    this.Zones.paginator = this.paginator;
-    this.Zones.sort = this.sort;
-    this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
-
+  private initialize(): void{
+    this.zones.paginator = this.paginator;
+    this.zones.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.Zones.filter = filterValue.trim().toLowerCase();
+    this.zones.filter = filterValue.trim().toLowerCase();
 
-    if (this.Zones.paginator) {
-      this.Zones.paginator.firstPage();
+    if (this.zones.paginator) {
+      this.zones.paginator.firstPage();
     }
   }
 
@@ -59,8 +54,8 @@ export class ZonesComponent {
     this.zoneService.getAll()
     .subscribe(
       (response) => {
-        this.zones = response;
-        this.Zones.data = this.zones;
+        this.zones = new MatTableDataSource(response);
+        this.initialize();
       });
   }
 

@@ -17,9 +17,10 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./vehicles.component.scss']
 })
 export class VehiclesComponent {
-  public vehicles: VehicleModel[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public displayedColumns = ["patent", "description", "model", "buyDate", "options"];
-  public Vehicles: MatTableDataSource<VehicleModel>
+  public vehicles: MatTableDataSource<VehicleModel>
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar este vehículo?',
     confirmCaption: 'Eliminar',
@@ -33,27 +34,21 @@ export class VehiclesComponent {
     private snackbarNotificationService: SnackbarNotificationService
   ) { }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
   ngOnInit(): void {
     this.listVehicles();
   }
 
-  ngAfterViewInit() {
-    this.Vehicles = new MatTableDataSource(this.vehicles)
-    this.Vehicles.paginator = this.paginator;
-    this.Vehicles.sort = this.sort;
-    this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
-
+  private initialize(): void{
+    this.vehicles.paginator = this.paginator;
+    this.vehicles.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.Vehicles.filter = filterValue.trim().toLowerCase();
+    this.vehicles.filter = filterValue.trim().toLowerCase();
 
-    if (this.Vehicles.paginator) {
-      this.Vehicles.paginator.firstPage();
+    if (this.vehicles.paginator) {
+      this.vehicles.paginator.firstPage();
     }
   }
 
@@ -61,8 +56,8 @@ export class VehiclesComponent {
     this.vehicleService.getAll()
     .subscribe(
       (response) => {
-        this.vehicles = response;
-        this.Vehicles.data = this.vehicles;
+        this.vehicles = new MatTableDataSource(response);
+        this.initialize();
       });
   }
 

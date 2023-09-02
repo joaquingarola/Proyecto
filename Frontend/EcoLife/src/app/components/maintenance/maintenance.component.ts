@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MaintenanceModel } from 'src/app/models/maintenance-model';
 import { MaintenanceService } from 'src/app/services/maintenance/maintenance.service';
 import { StatusEnum } from './status.enum';
@@ -8,18 +8,18 @@ import { ModalConfirmationService } from '../../services/modal-confirmation/moda
 import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
   styleUrls: ['./maintenance.component.scss'],
 })
-export class MaintenanceComponent implements AfterViewInit {
-  public maintenance: MaintenanceModel[];
+export class MaintenanceComponent  {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public displayedColumns = ["vehicle", "description", "startDate", "endDate", "status", "options"];
-  public Maintenance: MatTableDataSource<MaintenanceModel>;
+  public maintenance: MatTableDataSource<MaintenanceModel>;
   public statusEnum = StatusEnum;
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de cancelar este mantenimiento?',
@@ -30,40 +30,32 @@ export class MaintenanceComponent implements AfterViewInit {
   constructor(
     private maintenanceService: MaintenanceService,
     private modalConfirmationService: ModalConfirmationService,
-    private dialog: MatDialog){
-    }
+    private dialog: MatDialog){ }
   
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
+  ngOnInit(): void {
+    this.listMaintenances();
+  }
 
-    ngOnInit(): void {
-      
-      this.listMaintenances();
+  private initialize(): void{
+    this.maintenance.paginator = this.paginator;
+    this.maintenance.sort = this.sort;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.maintenance.filter = filterValue.trim().toLowerCase();
+
+    if (this.maintenance.paginator) {
+      this.maintenance.paginator.firstPage();
     }
-
-    ngAfterViewInit() {
-      this.Maintenance = new MatTableDataSource(this.maintenance)
-      this.Maintenance.paginator = this.paginator;
-      this.Maintenance.sort = this.sort;
-      this.paginator._intl.itemsPerPageLabel = 'Items por pagina';
-
-    }
-
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.Maintenance.filter = filterValue.trim().toLowerCase();
-  
-      if (this.Maintenance.paginator) {
-        this.Maintenance.paginator.firstPage();
-      }
-    }
+  }
     
   private listMaintenances(): void { 
     this.maintenanceService.getAll()
     .subscribe(
       (response) => {
-        this.maintenance = response;
-        this.Maintenance.data = this.maintenance;
+        this.maintenance = new MatTableDataSource(response);
+        this.initialize();
       });
   }
 
@@ -71,7 +63,7 @@ export class MaintenanceComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(FinishMaintenanceFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
-      next: (res) => this.listMaintenances()
+      next: () => this.listMaintenances()
     });
   }
 
@@ -80,7 +72,7 @@ export class MaintenanceComponent implements AfterViewInit {
       .subscribe(response => {
         if(response){
           this.maintenanceService.deleteMaintenance(id)
-            .subscribe(res => this.listMaintenances())
+            .subscribe(() => this.listMaintenances())
         }
       });
   }

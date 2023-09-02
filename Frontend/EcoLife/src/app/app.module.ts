@@ -27,8 +27,9 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { FinishMaintenanceFormModalComponent } from './components/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
 import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { CustomPaginator } from './custom-classes/custom-paginator/custom-paginator';
 
 
 @NgModule({
@@ -67,7 +68,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

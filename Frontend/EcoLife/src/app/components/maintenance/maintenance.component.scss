@@ -1,62 +1,37 @@
 .container{
-    width: 100%;
-    margin-top: 25px;
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  
+  &__data {
+    width: 70%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    
-    &__data {
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    align-items: center;
 
-        &__table {
-            text-align: center;
-        }
-
-        &__add-button{
-            margin-top: 1rem;
-        }
+    &__filter {
+      width: 100%;
     }
+
+    &__table {
+      margin-bottom: 10px;
+
+      &__no-results {
+        font-weight: 500;
+      }
+    }
+
+    &__paginator {
+      width: 100%;
+    }
+  }
 }
 
 .icon{
     cursor: pointer;
 }
-
-.container__data__title{
-    font-family: "Arial", sans-serif; /* Cambia la fuente a la que desees */
-    font-size: 24px; /* Tamaño de la fuente */
-    font-weight: bold; /* Estilo de la fuente (negrita) */
-    color: #333; /* Color del texto */
-  }
-
-/* Contenedor flexible para el filtro, la tabla y el paginador */
-.filter-and-table-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between; /* Distribuye los elementos a los extremos */
-    flex-wrap: wrap; /* Permite que los elementos se ajusten automáticamente */
-  }
-  
-  /* Estilo del filtro */
-  .filter {
-    flex: 1;
-    margin-right: 20px;
-    margin-bottom: 1px; /* Agrega margen inferior para separar del paginador */
-  }
-  
-  /* Estilo de la tabla */
-  .container__data__table {
-    flex: 1;
-    margin-bottom: 10px; /* Agrega margen inferior para separar del paginador */
-  }
-  
-  /* Estilo del paginador */
-  .mat-paginator {
-    flex: 1;
-  }
  
   
   
