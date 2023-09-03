@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { MaintenanceModel } from 'src/app/models/maintenance-model';
-import { MaintenanceService } from 'src/app/services/maintenance/maintenance.service';
-import { StatusEnum } from './status.enum';
 import { MatDialog } from '@angular/material/dialog';
-import { FinishMaintenanceFormModalComponent } from './finish-maintenance-form-modal/finish-maintenance-form-modal.component';
-import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
-import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+
+import { MaintenanceService, ModalConfirmationService } from '../../services';
+import { StatusEnum } from './status.enum';
+import { FinishMaintenanceFormModalComponent } from './finish-maintenance-form-modal/finish-maintenance-form-modal.component';
+import { ConfirmationModalData, MaintenanceModel } from '../../models';
 
 @Component({
   selector: 'app-maintenance',

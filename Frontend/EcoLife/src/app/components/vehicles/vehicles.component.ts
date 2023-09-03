@@ -1,15 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { VehicleModel } from 'src/app/models/vehicle-model';
-import { VehicleService } from 'src/app/services/vehicle/vehicle.service';
-import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
-import { ConfirmationModalData } from '../../models/confirmation-modal-data';
-import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
-import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackbarNotificationService } from '../../services/snackbar-notification/snackbar-notification.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+
+import { VehicleModel, ConfirmationModalData } from '../../models';
+import { VehicleService, ModalConfirmationService, SnackbarNotificationService } from '../../services';
+import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
+import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 
 @Component({
   selector: 'app-vehicles',

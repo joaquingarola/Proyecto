@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { VehicleModel } from '../../../models/vehicle-model';
-import { MaintenanceService } from '../../../services/maintenance/maintenance.service';
-import { MaintenanceModel } from '../../../models/maintenance-model';
+
+import { VehicleModel, MaintenanceModel } from '../../../models';
+import { MaintenanceService } from '../../../services';
 
 @Component({
   selector: 'app-notify-maintenance-form-modal',

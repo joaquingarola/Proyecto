@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ConfirmationModalData } from '../../../models/confirmation-modal-data';
+
+import { ConfirmationModalData } from '../../../models';
 
 @Component({
   selector: 'app-confirmation-modal',

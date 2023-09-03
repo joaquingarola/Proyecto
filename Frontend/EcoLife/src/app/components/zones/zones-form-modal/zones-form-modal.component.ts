@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ZoneService } from '../../../services/zone/zone.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ZoneModel } from '../../../models/zone-model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { ZoneService } from '../../../services';
+import { ZoneModel } from '../../../models';
 
 @Component({
   selector: 'app-zones-form-modal',

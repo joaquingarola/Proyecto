@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MaintenanceService } from '../../../services/maintenance/maintenance.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+import { MaintenanceService } from '../../../services';
 import { NotifyMaintenanceFormModalComponent } from '../../vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
-import { FinishMaintenanceModel } from '../../../models/finish-maintenance-model';
-import { MaintenanceModel } from '../../../models/maintenance-model';
+import { FinishMaintenanceModel, MaintenanceModel } from '../../../models';
 
 @Component({
   selector: 'app-finish-maintenance-form-modal',

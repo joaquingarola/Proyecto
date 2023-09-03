@@ -1,5 +1,5 @@
 export interface ConfirmationModalData {
-    message: string;
-    confirmCaption: string;
-    cancelCaption: string;
-  }
+  message: string;
+  confirmCaption: string;
+  cancelCaption: string;
+}

@@ -1,14 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { ZoneModel } from '../../models/zone-model';
-import { ZoneService } from '../../services/zone/zone.service';
-import { ModalConfirmationService } from '../../services/modal-confirmation/modal-confirmation.service';
-import { ConfirmationModalData } from '../../models/confirmation-modal-data';
 import { MatDialog } from '@angular/material/dialog';
-import { ZonesFormModalComponent } from './zones-form-modal/zones-form-modal.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
+import { ZoneModel, ConfirmationModalData } from '../../models';
+import { ZoneService, ModalConfirmationService } from '../../services';
+import { ZonesFormModalComponent } from './zones-form-modal/zones-form-modal.component';
 
 @Component({
   selector: 'app-zones',

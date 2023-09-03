@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VehicleService } from '../../../services/vehicle/vehicle.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { VehicleModel } from '../../../models/vehicle-model';
+
+import { VehicleService } from '../../../services';
+import { VehicleModel } from '../../../models';
 
 @Component({
   selector: 'app-vehicles-form-modal',
