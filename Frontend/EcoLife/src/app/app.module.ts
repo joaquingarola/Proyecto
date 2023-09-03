@@ -30,6 +30,7 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
 import { FinishMaintenanceFormModalComponent } from './components/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
 import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
 import { CustomPaginator } from './custom-classes/custom-paginator/custom-paginator';
+import { EditMaintenanceFormModalComponent } from './components/maintenance/edit-maintenance-form-modal/edit-maintenance-form-modal.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CustomPaginator } from './custom-classes/custom-paginator/custom-pagina
     NotifyMaintenanceFormModalComponent,
     MaintenanceComponent,
     FinishMaintenanceFormModalComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    EditMaintenanceFormModalComponent
     
   ],
   imports: [

@@ -18,14 +18,13 @@ export class ZonesFormModalComponent {
     private zoneService: ZoneService,
     private _dialogRef: MatDialogRef<ZonesFormModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ZoneModel
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.zoneForm = this.fb.group({
       description: ['', [Validators.required]],
       maximumHours: ['', [Validators.required]]
     });
-  }
-
-  ngOnInit(): void {
     this.zoneForm.patchValue(this.data);
   }
 

@@ -52,9 +52,12 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateMaintenanceAsync([FromBody] Maintenance editMaintenance)
+        async public Task<IActionResult> UpdateMaintenanceAsync([FromBody] MaintenanceEditDto editMaintenance)
         {
-            var result = await _uow.MaintenanceRepository.Update(editMaintenance);
+            var maintenance = await _uow.MaintenanceRepository.GetByIdAsync(editMaintenance.Id);
+            maintenance.Description = editMaintenance.Description;
+            maintenance.StartDate = editMaintenance.StartDate;
+            var result = await _uow.MaintenanceRepository.Update(maintenance);
             return Ok(result);
         }
 

@@ -8,6 +8,7 @@ import { MaintenanceService, ModalConfirmationService } from '../../services';
 import { StatusEnum } from './status.enum';
 import { FinishMaintenanceFormModalComponent } from './finish-maintenance-form-modal/finish-maintenance-form-modal.component';
 import { ConfirmationModalData, MaintenanceModel } from '../../models';
+import { EditMaintenanceFormModalComponent } from './edit-maintenance-form-modal/edit-maintenance-form-modal.component';
 
 @Component({
   selector: 'app-maintenance',
@@ -73,6 +74,14 @@ export class MaintenanceComponent  {
           this.maintenanceService.deleteMaintenance(id)
             .subscribe(() => this.listMaintenances())
         }
-      });
+    });
+  }
+
+  public editMaintenance(data: MaintenanceModel): void {
+    const dialogRef = this.dialog.open(EditMaintenanceFormModalComponent, { data });
+
+    dialogRef.afterClosed().subscribe({
+      next: () => this.listMaintenances()
+    });
   }
 }
