@@ -67,6 +67,7 @@
     <Build Include="Tables\Maintenances.sql" />
     <None Include="Scripts\PostDeployment\Roles.sql" />
     <Build Include="Tables\Roles.sql" />
+    <Build Include="Tables\Employees.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="EcoLife.Db.refactorlog" />

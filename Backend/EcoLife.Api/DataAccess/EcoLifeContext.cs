@@ -11,5 +11,7 @@ namespace EcoLife.Api.DataAccess
         public virtual DbSet<Zone> Zones { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Maintenance> Maintenances { get; set;}
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     }
 }
