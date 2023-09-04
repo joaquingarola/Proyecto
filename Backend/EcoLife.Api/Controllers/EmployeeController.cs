@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcoLife.Api.Controllers
 {
-    [Route("api/employee")]
+    [Route("api/employees")]
     [ApiController]
     public class EmployeeController : Controller
     {

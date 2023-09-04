@@ -9,7 +9,7 @@ import { MaintenanceModel } from 'src/app/models/maintenance-model';
 })
 export class MaintenanceService {
 
-  private readonly API_URL = 'https://localhost:7202/api/maintenance';
+  private readonly API_URL = 'https://localhost:7202/api/maintenances';
 
   constructor(private http: HttpClient) { }
 

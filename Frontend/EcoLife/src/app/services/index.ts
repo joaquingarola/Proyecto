@@ -3,3 +3,5 @@ export * from './modal-confirmation/modal-confirmation.service';
 export * from './snackbar-notification/snackbar-notification.service';
 export * from './vehicle/vehicle.service';
 export * from './zone/zone.service';
+export * from './employee/employee.service';
+export * from './role/role.service';

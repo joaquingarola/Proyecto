@@ -9,6 +9,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IVehicleRepository VehicleRepository { get; private set; }
         public IMaintenanceRepository MaintenanceRepository { get; private set; }
         public IEmployeeRepository EmployeeRepository { get; private set; }
+        public IRoleRepository RoleRepository { get; private set; }
 
         public UnitOfWork(EcoLifeContext context)
         {
@@ -16,6 +17,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
             VehicleRepository = new VehicleRepository(context);
             MaintenanceRepository = new MaintenanceRepository(context);
             EmployeeRepository = new EmployeeRepository(context);
+            RoleRepository = new RoleRepository(context);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EcoLife.Api.Controllers
 {
-    [Route("api/maintenance")]
+    [Route("api/maintenances")]
     [ApiController]
     public class MaintenanceController : Controller
     {

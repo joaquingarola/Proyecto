@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOption } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +31,9 @@ import { FinishMaintenanceFormModalComponent } from './components/maintenance/fi
 import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
 import { CustomPaginator } from './custom-classes/custom-paginator/custom-paginator';
 import { EditMaintenanceFormModalComponent } from './components/maintenance/edit-maintenance-form-modal/edit-maintenance-form-modal.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { EmployeeFormModalComponent } from './components/employee/employee-form-modal/employee-form-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -46,8 +49,9 @@ import { EditMaintenanceFormModalComponent } from './components/maintenance/edit
     MaintenanceComponent,
     FinishMaintenanceFormModalComponent,
     ProgressBarComponent,
-    EditMaintenanceFormModalComponent
-    
+    EditMaintenanceFormModalComponent,
+    EmployeeComponent,
+    EmployeeFormModalComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,8 @@ import { EditMaintenanceFormModalComponent } from './components/maintenance/edit
     MatSnackBarModule,
     MatProgressBarModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }],
   bootstrap: [AppComponent]

@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+<div class="container">
+	<div class="container__data">
+		<p class="table-title">Lista de empleados</p>
+		<mat-form-field class="container__data__filter">
+			<mat-label>Filtrar</mat-label>
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar nombre, apellido, email, telefono, dni o rol" #input autocomplete="off">
+		</mat-form-field>
+		<table mat-table [dataSource]="employees" class="mat-elevation-z8 container__data__table" matSort>
+			<ng-container matColumnDef="dni">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Dni </th>
+					<td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.dni}} </td>
+			</ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Nombre </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="surName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Apellido </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.surname}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Email </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Teléfono </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.phoneNumber}} </td>
+      </ng-container>
+      <ng-container matColumnDef="birthdate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Fecha de nacimiento </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{(employee.birthdate | date:'dd/MM/yyyy')}} </td>
+      </ng-container>
+      <ng-container matColumnDef="admissionDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Fecha de ingreso </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{(employee.admissionDate | date:'dd/MM/yyyy')}} </td>
+      </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Rol </th>
+        <td mat-cell *matCellDef="let employee" class="centered-cell"> {{employee.role.description}} </td>
+      </ng-container>
+			<ng-container matColumnDef="options">
+					<th mat-header-cell *matHeaderCellDef class="centered-header"> Opciones </th>
+					<td mat-cell *matCellDef="let employee" class="centered-cell">
+						<mat-icon (click)="editEmployee(employee)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteEmployee(employee.id)" class="icon" color="warn">delete</mat-icon>
+					</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			<tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell container__data__table__no-results" colspan="6">No se encontraron empleados que coincidan con "{{input.value}}"</td>
+      </tr>
+		</table>
+		<mat-paginator 
+			class="container__data__paginator" 
+			[length]="100"
+			[pageSize]="10"
+			[pageSizeOptions]="[1,5,10,20]">
+		</mat-paginator>
+		<button mat-raised-button (click)="addEmployee()" color="primary" class="container__data__add-button">Agregar nuevo empleado</button>
+	</div>
+</div>

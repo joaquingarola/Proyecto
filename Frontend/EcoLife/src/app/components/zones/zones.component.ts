@@ -71,14 +71,14 @@ export class ZonesComponent {
     const dialogRef = this.dialog.open(ZonesFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
-      next: (res) => this.listZones()
+      next: () => this.listZones()
     });
   }
 
   public addZone(): void {
     const dialogRef = this.dialog.open(ZonesFormModalComponent);
     dialogRef.afterClosed().subscribe({
-      next: (res) => this.listZones()
+      next: () => this.listZones()
     });
   }
 }
