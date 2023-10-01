@@ -24,11 +24,5 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
             => await context.Set<Employee>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Dni == dni);
-
-        public async Task<Employee?> GetByIdWithUser(int id)
-            => await context.Set<Employee>()
-                .AsNoTracking()
-                .Include(x => x.User)
-                .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

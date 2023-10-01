@@ -9,7 +9,5 @@ namespace EcoLife.Api.DataAccess.Repositories.Interfaces
         Task<Employee?> GetByEmailAsync(string email);
 
         Task<Employee?> GetByDniAsync(string dni);
-
-        Task<Employee?> GetByIdWithUser(int id);
     }
 }

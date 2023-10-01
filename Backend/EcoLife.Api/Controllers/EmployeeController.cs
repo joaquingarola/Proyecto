@@ -80,7 +80,12 @@ namespace EcoLife.Api.Controllers
         [HttpDelete("{employeeId}")]
         async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int employeeId)
         {
+            var employee = await _uow.EmployeeRepository.GetByIdAsync(employeeId);
+            var user = await _uow.UserRepository.GetByUser(employee.Email);
+
+            await _uow.UserRepository.Delete(user!.Id);
             await _uow.EmployeeRepository.Delete(employeeId);
+
             return Ok();
         }
     }
