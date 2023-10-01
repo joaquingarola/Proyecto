@@ -1,0 +1,42 @@
+<div class="container">
+  <form [formGroup]="firstEntryForm" (ngSubmit)="onSubmit()" class="container__form">
+    <h2 class="container__form__title">Como es la primera vez que inicias sesión, tenés que crear una nueva contraseña.</h2>
+    <h3 class="container__form__description">Recordá que la misma debe cumplir con las siguientes características</h3>
+    <mat-list>
+      <mat-list-item class="container__form__item">
+        <mat-icon matListItemIcon>check</mat-icon>
+        <span class="container__form__item__text">Debe tener entre 8 y 30 caracteres</span>
+      </mat-list-item>
+      <mat-list-item class="container__form__item">
+        <mat-icon matListItemIcon>check</mat-icon>
+        <span class="container__form__item__text">Debe tener al menos 1 número</span>
+      </mat-list-item>
+      <mat-list-item class="container__form__item">
+        <mat-icon matListItemIcon>check</mat-icon>
+        <span class="container__form__item__text">Debe tener al menos 1 mayúscula</span>
+      </mat-list-item>
+      <mat-list-item class="container__form__item">
+        <mat-icon matListItemIcon>check</mat-icon>
+        <span class="container__form__item__text">Debe tener al menos 1 minúscula</span>
+      </mat-list-item>
+     </mat-list>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required placeholder="Ingresá tu contraseña" autocomplete="off" minlength="8" maxlength="30">
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Repetir contraseña</mat-label>
+      <input matInput [type]="hideRepeatedPassword ? 'password' : 'text'" formControlName="repeatedPassword" required placeholder="Repetí tu contraseña" autocomplete="off" minlength="8" maxlength="30">
+      <button mat-icon-button matSuffix (click)="hideRepeatedPassword = !hideRepeatedPassword" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hideRepeatedPassword">
+        <mat-icon>{{hideRepeatedPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="error.length !==0" class="container__form__error">
+      <span>{{error}}</span>
+    </div>
+    <button mat-raised-button class="container__form__button" color="primary" type="submit" [disabled]="firstEntryForm.pristine || firstEntryForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Cambiar contraseña</button>
+  </form>
+</div>

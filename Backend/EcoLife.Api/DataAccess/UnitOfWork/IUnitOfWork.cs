@@ -9,5 +9,6 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IMaintenanceRepository MaintenanceRepository { get; }
         public IEmployeeRepository EmployeeRepository { get; }
         public IRoleRepository RoleRepository { get; }
+        public IUserRepository UserRepository { get; }
     }
 }

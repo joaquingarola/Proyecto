@@ -5,3 +5,5 @@ export * from './vehicle-model';
 export * from './zone-model';
 export * from './employee-model';
 export * from './role-model';
+export * from './login-model';
+export * from './user-response-model';

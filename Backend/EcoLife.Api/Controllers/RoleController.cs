@@ -1,10 +1,12 @@
 ﻿using EcoLife.Api.DataAccess.UnitOfWork;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcoLife.Api.Controllers
 {
     [Route("api/roles")]
+    [Authorize]
     [ApiController]
     public class RoleController : Controller
     {

@@ -1,0 +1,53 @@
+.container{
+  padding: 120px;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+
+  &__form {
+    background-color: aliceblue;
+    width: 800px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid grey;
+    border-radius: 30px;
+    box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);
+    -webkit-box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);
+    -moz-box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);    
+
+    &__title{
+      text-align: center;
+    }
+
+    &__description{
+      font-size: 16px;
+      margin: 0;
+    }
+
+    &__item {
+      height: auto !important;
+      margin: 0 0 10px 0;
+
+      .mat-icon {
+        margin: 0 5px 0 0 !important;
+      }
+
+      &__text {
+        font-size: 14px !important;
+      }
+    }
+
+    &__error{
+      text-align: center;
+      color: red;
+      margin: 0 0 10px 0;
+    }
+
+    &__button {
+      max-width: 200px;
+      margin: auto;
+    }
+  }
+}

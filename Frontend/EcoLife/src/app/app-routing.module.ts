@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ZonesComponent } from './components/zones/zones.component';
-import { VehiclesComponent } from './components/vehicles/vehicles.component';
-import { MaintenanceComponent } from './components/maintenance/maintenance.component';
-import { EmployeeComponent } from './components/employee/employee.component';
+import { ZonesComponent } from './components/admin/zones/zones.component';
+import { VehiclesComponent } from './components/admin/vehicles/vehicles.component';
+import { MaintenanceComponent } from './components/admin/maintenance/maintenance.component';
+import { EmployeeComponent } from './components/admin/employee/employee.component';
+import { LoginComponent } from './components/shared/login/login.component';
+import { authGuard } from './guards/auth.guard';
+import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
+import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
 
 const routes: Routes = [
-  {path: 'zones', component: ZonesComponent},
-  {path: 'vehicles', component: VehiclesComponent},
-  {path: 'maintenances', component: MaintenanceComponent}, 
-  {path: 'employees', component: EmployeeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'zones', component: ZonesComponent, canActivate: [authGuard]},
+  {path: 'vehicles', component: VehiclesComponent, canActivate: [authGuard]},
+  {path: 'maintenances', component: MaintenanceComponent, canActivate: [authGuard]}, 
+  {path: 'employees', component: EmployeeComponent/* , canActivate: [authGuard] */},
+  {path: 'first-entry', component: FirstEntryComponent, canActivate: [authGuard]},
+  {path: 'collector', component: StartingPageComponent},
   {path: '', redirectTo: 'zones', pathMatch: 'full'},
   {path: '**', redirectTo: 'zones'}
 ];

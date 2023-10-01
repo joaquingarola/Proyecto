@@ -16,24 +16,29 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ZonesComponent } from './components/zones/zones.component';
-import { VehiclesComponent } from './components/vehicles/vehicles.component';
+import { ZonesComponent } from './components/admin/zones/zones.component';
+import { VehiclesComponent } from './components/admin/vehicles/vehicles.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
-import { ZonesFormModalComponent } from './components/zones/zones-form-modal/zones-form-modal.component';
-import { VehiclesFormModalComponent } from './components/vehicles/vehicles-form-modal/vehicles-form-modal.component';
-import { NotifyMaintenanceFormModalComponent } from './components/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
-import { MaintenanceComponent } from './components/maintenance/maintenance.component';
-import { FinishMaintenanceFormModalComponent } from './components/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
+import { ZonesFormModalComponent } from './components/admin/zones/zones-form-modal/zones-form-modal.component';
+import { VehiclesFormModalComponent } from './components/admin/vehicles/vehicles-form-modal/vehicles-form-modal.component';
+import { NotifyMaintenanceFormModalComponent } from './components/admin/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
+import { MaintenanceComponent } from './components/admin/maintenance/maintenance.component';
+import { FinishMaintenanceFormModalComponent } from './components/admin/maintenance/finish-maintenance-form-modal/finish-maintenance-form-modal.component';
 import { ProgressBarComponent } from './components/shared/progress-bar/progress-bar.component';
 import { CustomPaginator } from './custom-classes/custom-paginator/custom-paginator';
-import { EditMaintenanceFormModalComponent } from './components/maintenance/edit-maintenance-form-modal/edit-maintenance-form-modal.component';
-import { EmployeeComponent } from './components/employee/employee.component';
-import { EmployeeFormModalComponent } from './components/employee/employee-form-modal/employee-form-modal.component';
+import { EditMaintenanceFormModalComponent } from './components/admin/maintenance/edit-maintenance-form-modal/edit-maintenance-form-modal.component';
+import { EmployeeComponent } from './components/admin/employee/employee.component';
+import { EmployeeFormModalComponent } from './components/admin/employee/employee-form-modal/employee-form-modal.component';
 import { MatSelectModule } from '@angular/material/select';
+import { LoginComponent } from './components/shared/login/login.component';
+import { httpInterceptorProviders } from './interceptors/auth.interceptor';
+import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
+import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
 
 
 @NgModule({
@@ -51,7 +56,10 @@ import { MatSelectModule } from '@angular/material/select';
     ProgressBarComponent,
     EditMaintenanceFormModalComponent,
     EmployeeComponent,
-    EmployeeFormModalComponent
+    EmployeeFormModalComponent,
+    LoginComponent,
+    StartingPageComponent,
+    FirstEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -73,9 +81,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatProgressBarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule
   ],
-  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

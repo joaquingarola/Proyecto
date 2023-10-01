@@ -1,0 +1,33 @@
+.modal-form{
+  width: 400px;
+
+  &__title {
+      text-align: center;
+  }
+
+  &__content {
+      padding-top: 10px;
+  }
+
+  &__action {
+      padding: 0px 25px 20px;
+          button {
+              flex: 1;
+          }
+  }
+
+  &__error{
+    text-align: center;
+    color: red;
+    margin: 0 0 10px 0;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+
+  mat-form-field {
+      width: 100%;
+  }
+}

@@ -14,5 +14,15 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
             => await context.Set<Employee>()
                 .Include(m => m.Role)
                 .ToListAsync();
+
+        public async Task<Employee?> GetByEmailAsync(string email)
+            => await context.Set<Employee>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == email);
+
+        public async Task<Employee?> GetByDniAsync(string dni)
+            => await context.Set<Employee>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Dni == dni);
     }
 }

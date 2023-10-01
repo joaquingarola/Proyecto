@@ -2,12 +2,15 @@
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Dtos;
 using EcoLife.Api.Entities;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace EcoLife.Api.Controllers
 {
     [Route("api/maintenances")]
+    [Authorize]
     [ApiController]
     public class MaintenanceController : Controller
     {

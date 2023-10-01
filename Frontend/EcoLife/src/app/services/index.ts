@@ -5,3 +5,6 @@ export * from './vehicle/vehicle.service';
 export * from './zone/zone.service';
 export * from './employee/employee.service';
 export * from './role/role.service';
+export * from './auth/auth.service';
+export * from './storage/storage.service';
+export * from './settings/settings.service';
