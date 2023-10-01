@@ -30,6 +30,10 @@ export class LoginComponent {
     })
   }
 
+  changeVisibility(): void {
+    this.hide = !this.hide;
+  }
+
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;

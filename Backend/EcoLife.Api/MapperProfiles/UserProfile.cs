@@ -13,6 +13,7 @@ namespace EcoLife.Api.MapperProfiles
             CreateMap<Employee, User>()
                 .ForMember(x => x.Username, s => s.MapFrom(o => o.Email))
                 .ForMember(x => x.Password, m => m.MapFrom<RandomPasswordResolver>())
+                .ForMember(x => x.IsFirstEntry, m => m.MapFrom(o => true))
                 .ForMember(x => x.Employee, m => m.MapFrom(o => o));
 
             CreateMap<User, UserResponseDto>();

@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container__form">
+  <form [formGroup]="loginForm" class="container__form">
     <h1 class="container__form__title">Iniciar sesión</h1>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
@@ -8,13 +8,13 @@
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
       <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required placeholder="Ingresa tu contraseña" autocomplete="off">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hide">
+      <button mat-icon-button matSuffix (click)="changeVisibility()" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
     <div *ngIf="error.length !==0" class="container__form__error">
       <span>{{error}}</span>
     </div>
-    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.pristine || loginForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Login</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loginForm.pristine || loginForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Login</button>
   </form>
 </div>

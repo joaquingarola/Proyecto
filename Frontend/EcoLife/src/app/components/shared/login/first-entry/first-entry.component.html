@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="firstEntryForm" (ngSubmit)="onSubmit()" class="container__form">
+  <form [formGroup]="firstEntryForm" class="container__form">
     <h2 class="container__form__title">Como es la primera vez que inicias sesión, tenés que crear una nueva contraseña.</h2>
     <h3 class="container__form__description">Recordá que la misma debe cumplir con las siguientes características</h3>
     <mat-list>
@@ -37,6 +37,6 @@
     <div *ngIf="error.length !==0" class="container__form__error">
       <span>{{error}}</span>
     </div>
-    <button mat-raised-button class="container__form__button" color="primary" type="submit" [disabled]="firstEntryForm.pristine || firstEntryForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Cambiar contraseña</button>
+    <button mat-raised-button (click)="onSubmit()" class="container__form__button" color="primary" type="submit" [disabled]="firstEntryForm.pristine || firstEntryForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Cambiar contraseña</button>
   </form>
 </div>
