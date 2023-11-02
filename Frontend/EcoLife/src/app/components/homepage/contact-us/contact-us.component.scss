@@ -1,26 +1,73 @@
 .container {
   display: flex;
   justify-content: center;
-  gap: 200px;
+  gap: 150px;
+  
 
-  &__description {
-    width: 250px;
+  &__left{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 20%;
+
+    &__description {
+      width: 450px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      margin: 8px;
+      line-height: 2;
+      display: flex;
+      font-size: 18px;
+    }
+  
+    &__emoticons{
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      margin-right: 180px;
+      line-height: 2;
+      
+      
+      &__instagram{
+        width: 40px;
+        cursor: pointer; 
+        border-radius: 15%;
+        margin-right: 100px;
+        
+        
+      }
+  
+      &__linkedin{
+        width: 40px;
+        cursor: pointer; 
+        margin-right: 100px;
+      }
+    
+    }
   }
+
+
+
 
   &__contact {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 500px;
+    width: 400px;
     border-radius: 20px;
     background-color: white;
-    padding: 20px;
+    padding: 1%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); 
+    
 
     &__form { 
       display: flex;
       justify-content: center;
       width: 400px;
+      
+      
 
       &__content {
         width: 100%;
@@ -39,3 +86,36 @@
   justify-content: center;
   cursor: pointer;
 }
+
+.subtitle1{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  padding-left: 38%;
+  margin-top: 30px;
+  
+}
+
+.subtitle2{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  margin-top: 25px;
+  margin-right: 210px;
+  font-size: 18px;
+  
+}
+
+.title{
+  text-align: center; 
+  margin: 20px;
+ 
+}
+
+.element{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 38px;
+  color: blue;
+  margin-top: 25px;
+}
+
+

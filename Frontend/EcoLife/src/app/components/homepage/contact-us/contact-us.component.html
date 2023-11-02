@@ -1,46 +1,54 @@
-<div>
-  <h1>Contactanos</h1>
-</div>
+<div class = "title">
+  <h3 class = "element" > Contactanos </h3>
+<h4 class = "subtitle1">¡Completá el siguiente formulario para ponernos en contacto!</h4>
 <div class="container">
-  <div class="container__description">
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
-    <p> asdasd </p> <br>
+  <div class="container__left">
+    <div class="container__left__description">
+      <p>En Ecolife nos interesa tu opinión. En ésta sección podrás dejarnos tu comentario acerca del servicio que brindamos. Tu opinión nos ayudará a crecer.</p>
+    </div>
+    <h4 class = "subtitle2">Redes sociales</h4>
+    <div class = "container__left__emoticons">
+      <a href="https://www.instagram.com/tu_usuario/" target="_blank" >
+        <img src="../../../../assets/logo instagram.png" alt="Instagram Logo" class = "container__left__emoticons__instagram">
+      </a>
+      <a href="https://www.linkedin.com/tu_usuario/" target="_blank" >
+        <img src="../../../../assets/logo linkedin.png" alt="linkedin Logo" class = "container__left__emoticons__linkedin">     
+      </a>
+    </div>
   </div>
   <div class="container__contact">
-    <div>
-      <h1>Contactanos</h1>
-    </div>
     <form [formGroup]="contactForm" class="container__contact__form">
       <div mat-dialog-content class="container__contact__form__content">
         <div class="row">
           <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Patente</mat-label>
-            <input matInput type="text" placeholder="AA150BB" formControlName="name" maxlength="7" autocomplete="off">
+            <mat-label>Nombre y Apellido</mat-label>
+            <input matInput type="text" placeholder="Juan Perez" formControlName="name"  autocomplete="off">
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Descripción</mat-label>
-            <input matInput type="email" placeholder="Renault clio" formControlName="email" autocomplete="off">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="juan@gmail.com" formControlName="email" autocomplete="off">
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Descripción</mat-label>
-            <input matInput type="email" placeholder="Renault clio" formControlName="address" autocomplete="off">
+            <mat-label>Ciudad</mat-label>
+            <input matInput type="text" placeholder="Rosario" formControlName="city" autocomplete="off">
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Modelo</mat-label>
-            <input matInput type="text" placeholder="2016, 2022" formControlName="message" autocomplete="off">
+            <mat-label>Zona</mat-label>
+            <input matInput type="text" placeholder="Centro" formControlName="zone" autocomplete="off">
           </mat-form-field>
         </div>
+        <div>
+          <mat-form-field class="container__contact__form__content__element">
+            <mat-label>Deje su comentario</mat-label>
+              <textarea matInput  formControlName="description" autocomplete="off"></textarea>
+          </mat-form-field>
+        </div>     
         <div class="row" class="container__contact__form__content__element">
           <div (click)="fileInput.click()" class="actions">
             <mat-icon class="icon">upload_file</mat-icon>
@@ -54,4 +62,5 @@
       </div>
     </form>
   </div>
+</div>
 </div>

@@ -9,6 +9,7 @@ import { authGuard } from './guards/auth.guard';
 import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
 import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'first-entry', component: FirstEntryComponent, canActivate: [authGuard]},
   {path: 'collector', component: StartingPageComponent},
   {path: 'homepage', component: HomepageComponent},
+  {path: 'about-us', component: AboutUsComponent},
   {path: '', redirectTo: 'zones', pathMatch: 'full'},
   {path: '**', redirectTo: 'zones'}
 ];
