@@ -39,6 +39,8 @@ import { LoginComponent } from './components/shared/login/login.component';
 import { httpInterceptorProviders } from './interceptors/auth.interceptor';
 import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
 import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { FirstEntryComponent } from './components/shared/login/first-entry/first
     EmployeeFormModalComponent,
     LoginComponent,
     StartingPageComponent,
-    FirstEntryComponent
+    FirstEntryComponent,
+    HomepageComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
