@@ -41,6 +41,7 @@ import { StartingPageComponent } from './components/collector/starting-page/star
 import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
+import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { ContactUsComponent } from './components/homepage/contact-us/contact-us.
     StartingPageComponent,
     FirstEntryComponent,
     HomepageComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
