@@ -10,6 +10,7 @@ import { FirstEntryComponent } from './components/shared/login/first-entry/first
 import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
+import { FooterComponent } from './components/homepage/footer/footer.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'collector', component: StartingPageComponent},
   {path: 'homepage', component: HomepageComponent},
   {path: 'about-us', component: AboutUsComponent},
+  {path: 'footer', component: FooterComponent},
   {path: '', redirectTo: 'zones', pathMatch: 'full'},
   {path: '**', redirectTo: 'zones'}
 ];

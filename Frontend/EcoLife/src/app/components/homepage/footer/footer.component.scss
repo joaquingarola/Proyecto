@@ -1,0 +1,44 @@
+.container{
+    background-color: #074A98;
+    padding: 2% 2% 1% 2%;
+    display: flex;
+    align-items: center;
+    
+    
+
+    &__left{
+        justify-content: center;
+        cursor: pointer;
+        width: 50%;
+        
+    }
+}
+
+.material-symbols-outlined{
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    
+   
+
+}
+
+.mat-icon{
+    position: relative;
+    top: 6px;
+    color: rgb(0, 0, 0);
+}
+
+.container__down{
+    padding: 2% 2% 1% 2%;
+    background-color: #074A98;
+    font-family: 'Roboto', sans-serif;
+   
+}
+
+.elementor__divider{
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #074a91;
+    
+
+}

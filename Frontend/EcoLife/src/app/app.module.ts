@@ -42,6 +42,7 @@ import { FirstEntryComponent } from './components/shared/login/first-entry/first
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
+import { FooterComponent } from './components/homepage/footer/footer.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { AboutUsComponent } from './components/homepage/about-us/about-us.compon
     FirstEntryComponent,
     HomepageComponent,
     ContactUsComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
