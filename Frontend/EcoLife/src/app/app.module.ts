@@ -43,6 +43,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
 import { FooterComponent } from './components/homepage/footer/footer.component';
+import { HeaderComponent } from './components/homepage/header/header.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { FooterComponent } from './components/homepage/footer/footer.component';
     HomepageComponent,
     ContactUsComponent,
     AboutUsComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

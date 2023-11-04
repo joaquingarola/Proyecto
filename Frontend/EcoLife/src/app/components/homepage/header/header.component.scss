@@ -1,0 +1,62 @@
+.container {
+    background-color: white;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  
+    &__logo {
+      &__image {
+        width: 100px;
+        height: auto;
+        margin: 10px;
+      }
+    }
+  
+    &__menu {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-left: 30%;
+      
+
+      &__novedades,
+      &__nosotros,
+      &__contacto{
+        margin: 8%;
+        font-family: "Rubik", Sans-serif;
+        font-weight: 520;
+        color: blue;
+        font-size: 140%;
+        cursor: pointer;
+
+        &:hover {
+            border: 2px solid blue;
+            border-radius: 5px;
+            padding: 10px;
+            transition: all 0.3s ease;
+
+            // Agregamos sombreado y cambio de color al pasar el ratón
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: navy;
+        }
+    }
+}
+
+
+
+  
+    &__social-networks {
+      display: flex;
+      align-items: center;
+      margin-left: 25%;
+  
+      &__instagram,
+      &__linkedin {
+        width: 40px;
+        cursor: pointer;
+        margin-right: 20px;
+        filter: hue-rotate(180deg);
+      }
+    }
+  }
+

@@ -11,18 +11,21 @@ import { StartingPageComponent } from './components/collector/starting-page/star
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
 import { FooterComponent } from './components/homepage/footer/footer.component';
-
+import { HeaderComponent } from './components/homepage/header/header.component';
+import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'zones', component: ZonesComponent, canActivate: [authGuard]},
   {path: 'vehicles', component: VehiclesComponent, canActivate: [authGuard]},
   {path: 'maintenances', component: MaintenanceComponent, canActivate: [authGuard]}, 
   {path: 'employees', component: EmployeeComponent/* , canActivate: [authGuard] */},
-  {path: 'first-entry', component: FirstEntryComponent, canActivate: [authGuard]},
+  {path: 'first-entry', component: FirstEntryComponent/* , canActivate: [authGuard] */},
   {path: 'collector', component: StartingPageComponent},
   {path: 'homepage', component: HomepageComponent},
   {path: 'about-us', component: AboutUsComponent},
   {path: 'footer', component: FooterComponent},
+  {path: 'header', component: HeaderComponent},
+  { path: 'contact-us', component: ContactUsComponent },
   {path: '', redirectTo: 'zones', pathMatch: 'full'},
   {path: '**', redirectTo: 'zones'}
 ];
