@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'about-us', component: AboutUsComponent},
   {path: 'footer', component: FooterComponent},
   {path: 'header', component: HeaderComponent},
-  { path: 'contact-us', component: ContactUsComponent },
+  {path: 'contact-us', component: ContactUsComponent},
   {path: '', redirectTo: 'zones', pathMatch: 'full'},
   {path: '**', redirectTo: 'zones'}
 ];

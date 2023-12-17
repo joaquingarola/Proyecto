@@ -1,19 +1,16 @@
 <div class = "container">
-    <div class = "container__logo">
-        <img src="../../../../assets/logo_ecolife.jpg" alt="Ecolife Logo" class = "container__logo__image">
-    </div>
-    <div class = "container__menu">
-        <a  class = "container__menu__novedades"> Novedades </a>
-        <a (click)="scrollToComponent('about-us')" class = "container__menu__nosotros"> Nosotros </a>
-        <a (click)="scrollToComponent('contact-us')"  class = "container__menu__contacto"> Contacto </a>
-    </div>
-    <div class = "container__social-networks">
-        <a href="https://www.instagram.com/tu_usuario/" target="_blank" >
-            <img src="../../../../assets/logo instagram.png" alt="Instagram Logo" class = "container__social-networks__instagram">
-          </a>
-          <a href="https://www.linkedin.com/tu_usuario/" target="_blank" >
-         <img src="../../../../assets/logo linkedin.png" alt="linkedin Logo" class = "container__social-networks__linkedin">
-          </a>
-    </div>
-
+  <img src="../../../../assets/logo_ecolife.jpg" alt="Ecolife Logo" class = "container__logo">
+  <div class="container__menu">
+    <a  class="container__menu__option"> Novedades </a>
+    <a (click)="scrollToComponent('about-us')" class = "container__menu__option"> Nosotros </a>
+    <a (click)="scrollToComponent('contact-us')"  class = "container__menu__option"> Contacto </a>
+  </div>
+  <div class = "container__social-networks">
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="../../../../assets/logo_instagram.png" alt="Instagram Logo" class="container__social-networks__icon">
+    </a>
+    <a href="https://www.linkedin.com" target="_blank">
+      <img src="../../../../assets/logo_linkedin.png" alt="linkedin Logo" class="container__social-networks__icon">
+    </a>
+  </div>
 </div>

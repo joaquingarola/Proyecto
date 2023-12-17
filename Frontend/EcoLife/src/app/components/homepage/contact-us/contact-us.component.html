@@ -1,66 +1,66 @@
-<div id="contact-us" class = "title">
-  <h3 class = "element" > Contactanos </h3>
-<h4 class = "subtitle1">¡Completá el siguiente formulario para ponernos en contacto!</h4>
-<div class="container">
-  <div class="container__left">
-    <div class="container__left__description">
-      <p>En Ecolife nos interesa tu opinión. En ésta sección podrás dejarnos tu comentario acerca del servicio que brindamos. Tu opinión nos ayudará a crecer.</p>
+<div id="contact-us" class="container">
+  <h1 class="container__title"> Contactanos </h1>
+  <div class="container__body">
+    <div class="container__body__left">
+      <div class="container__body__left__description">
+        <p>En Ecolife nos interesa tu opinión. En ésta sección podrás dejarnos tu comentario acerca del servicio que brindamos. Tu opinión nos ayudará a crecer.</p>
+      </div>
+      <h4 class="container__body__left__subtitle">Redes sociales</h4>
+      <div class="container__body__left__social-media">
+        <a href="https://www.instagram.com/" target="_blank">
+          <img src="../../../../assets/logo_instagram.png" alt="Instagram Logo" class="container__body__left__social-media__icon">
+        </a>
+        <a href="https://www.linkedin.com/" target="_blank">
+          <img src="../../../../assets/logo_linkedin.png" alt="linkedin Logo" class="container__body__left__social-media__icon">     
+        </a>
+      </div>
     </div>
-    <h4 class = "subtitle2">Redes sociales</h4>
-    <div class = "container__left__emoticons">
-      <a href="https://www.instagram.com/tu_usuario/" target="_blank" >
-        <img src="../../../../assets/logo instagram.png" alt="Instagram Logo" class = "container__left__emoticons__instagram">
-      </a>
-      <a href="https://www.linkedin.com/tu_usuario/" target="_blank" >
-        <img src="../../../../assets/logo linkedin.png" alt="linkedin Logo" class = "container__left__emoticons__linkedin">     
-      </a>
-    </div>
-  </div>
-  <div class="container__contact">
-    <form [formGroup]="contactForm" class="container__contact__form">
-      <div mat-dialog-content class="container__contact__form__content">
-        <div class="row">
-          <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Nombre y Apellido</mat-label>
-            <input matInput type="text" placeholder="Juan Perez" formControlName="name"  autocomplete="off">
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" placeholder="juan@gmail.com" formControlName="email" autocomplete="off">
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Ciudad</mat-label>
-            <input matInput type="text" placeholder="Rosario" formControlName="city" autocomplete="off">
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field appearance="outline" class="container__contact__form__content__element">
-            <mat-label>Zona</mat-label>
-            <input matInput type="text" placeholder="Centro" formControlName="zone" autocomplete="off">
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="container__contact__form__content__element">
-            <mat-label>Deje su comentario</mat-label>
-              <textarea matInput  formControlName="description" autocomplete="off"></textarea>
-          </mat-form-field>
-        </div>     
-        <div class="row" class="container__contact__form__content__element">
-          <div (click)="fileInput.click()" class="actions">
-            <mat-icon class="icon">upload_file</mat-icon>
-            <p>Adjuntar archivos</p>
-            <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+    <div class="container__body__contact"> 
+      <h4 class="container__body__contact__subtitle">¡Completá el formulario para ponernos en contacto!</h4>
+      <form [formGroup]="contactForm" class="container__body__contact__form">
+        <div mat-dialog-content class="container__body__contact__form__content">
+          <div class="row">
+            <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
+              <mat-label>Nombre y Apellido</mat-label>
+              <input matInput type="text" placeholder="Juan Perez" formControlName="name"  autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="juan@gmail.com" formControlName="email" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
+              <mat-label>Ciudad</mat-label>
+              <input matInput type="text" placeholder="Rosario" formControlName="city" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
+              <mat-label>Zona</mat-label>
+              <input matInput type="text" placeholder="Centro" formControlName="zone" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="container__body__contact__form__content__element">
+              <mat-label>Deje su comentario</mat-label>
+                <textarea matInput  formControlName="description" autocomplete="off"></textarea>
+            </mat-form-field>
+          </div>     
+          <!-- <div class="row" class="container__body__contact__form__content__element">
+            <div (click)="fileInput.click()" class="actions">
+              <mat-icon class="icon">upload_file</mat-icon>
+              <p>Adjuntar archivos</p>
+              <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+            </div>
+          </div> -->
+          <div mat-dialog-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.pristine || contactForm.invalid">Enviar</button>
           </div>
         </div>
-        <div mat-dialog-actions>
-          <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.pristine || contactForm.invalid">Enviar</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </div>

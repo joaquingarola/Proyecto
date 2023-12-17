@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
 
 html, body { height: 100%; }
@@ -19,9 +18,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 }
 
 .table-title{
-  font-family: "Arial", sans-serif; /* Cambia la fuente a la que desees */
-  font-size: 24px; /* Tamaño de la fuente */
-  font-weight: bold; /* Estilo de la fuente (negrita) */
+  font-family: "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
   color: #333;
 }
 

@@ -1,51 +1,27 @@
 .container{
+    padding: 10px 0;
     background-color: #074A98;
-    padding: 2% 2% 1% 2%;
-    display: flex;
-    align-items: center;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.9);
     
-    
-
-    &__left{
+    &__info{
+        display: flex;
         justify-content: center;
-        cursor: pointer;
-        width: 50%;
-        
+        gap: 50px;
     }
-}
 
-.material-symbols-outlined{
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-    
-   
+    &__separator{
+        margin: 10px 0;
+        padding: 1px 0;
+        background-color: #2763a8;
+    }
 
+    &__rights {
+        text-align: center;
+    }
 }
 
 .mat-icon{
     position: relative;
-    top: 5px;
+    top: 7px;
     color: rgb(0, 0, 0);
-}
-
-.container__down{
-    padding: 2% 2% 1% 2%;
-    background-color: #074A98;
-    font-family: 'Roboto', sans-serif;
-
-   
-}
-
-.elementor__divider{
-    padding-top: 1px;
-    padding-bottom: 1px;
-    background-color: #2763a8;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
-.p{
-    width: 10px;
 }
