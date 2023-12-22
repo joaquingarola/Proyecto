@@ -9,30 +9,4 @@
     color: blue;
     margin-top: 25px;
   }
-
-  &__news {
-    width: 800px;
-
-    &__element {
-      padding: 20px;
-      border-radius: 15px;
-      margin: 10px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); 
-
-      &__title {
-        font-weight: 500;
-        font-size: 18px;
-        margin-bottom: 5px;
-      }
-
-      &__description {
-        margin-bottom: 5px;
-        text-align: justify;
-      }
-
-      &__date {
-        color: rgb(176, 176, 176);
-      }
-    }
-  }
 }

@@ -11,6 +11,7 @@ import { NewsFormComponent } from './news-form/news-form.component';
 })
 export class NewsPanelComponent implements OnInit {
   public newsList: NewModel[];
+
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta noticia?',
     confirmCaption: 'Si',

@@ -1,0 +1,29 @@
+<div class="container" *ngIf="visibleItems; else loadingTemplate">
+  <div class="container__items__previous-button">
+    <button *ngIf="currentFirstItem > 0" (click)="showPreviousItem()"><mat-icon class="icon">expand_less</mat-icon></button>
+  </div>
+  <div class="container__items__element" *ngFor="let item of visibleItems">
+    <div class="container__items__element__header">
+      <div class="container__items__element__header__title">
+        {{ item.title }}
+      </div>
+      <div class="container__items__element__header__actions" *ngIf="showActions">
+        <mat-icon (click)="editItem.emit(item)" class="icon">edit</mat-icon>
+        <mat-icon (click)="deleteItem.emit(item.id!)" class="icon" color="warn">delete</mat-icon>
+      </div>
+    </div>
+    <div class="container__items__element__description">
+      {{ item.description }}
+    </div>
+    <div class="container__items__element__date">
+      {{ item.date | date: 'dd/MM/yyyy' }}
+    </div>
+  </div>
+  <div class="container__items__forward-button">
+    <button *ngIf="currentFirstItem + maxItems < items.length" (click)="showNextItem()"><mat-icon class="icon">expand_more</mat-icon></button>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  Cargando.. <!-- Hacer -->
+</ng-template>

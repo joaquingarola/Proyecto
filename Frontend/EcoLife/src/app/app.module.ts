@@ -48,6 +48,7 @@ import { NewsComponent } from './components/homepage/news/news.component';
 import { NewsPanelComponent } from './components/admin/news-panel/news-panel.component';
 import { NewsFormComponent } from './components/admin/news-panel/news-form/news-form.component';
 import { DatePipe } from '@angular/common';
+import { ItemsListComponent } from './components/shared/items-list/items-list.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { DatePipe } from '@angular/common';
     HeaderComponent,
     NewsComponent,
     NewsPanelComponent,
-    NewsFormComponent
+    NewsFormComponent,
+    ItemsListComponent
   ],
   imports: [
     BrowserModule,
