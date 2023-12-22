@@ -1,0 +1,16 @@
+<div id="news" class="container">
+  <p class="container__title">Novedades</p>
+  <div class="container__news">
+    <div class="container__news__element" *ngFor="let new of newsList">
+      <div class="container__news__element__title">
+        {{ new.title }}
+      </div>
+      <div class="container__news__element__description">
+        {{ new.description }}
+      </div>
+      <div class="container__news__element__date">
+        {{ new.date | date: 'dd/MM/yyyy' }}
+      </div>
+    </div>
+  </div>
+</div>

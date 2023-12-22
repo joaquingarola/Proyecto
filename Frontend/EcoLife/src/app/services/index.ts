@@ -8,3 +8,4 @@ export * from './role/role.service';
 export * from './auth/auth.service';
 export * from './storage/storage.service';
 export * from './settings/settings.service';
+export * from './news/news.service';

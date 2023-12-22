@@ -7,3 +7,4 @@ export * from './employee-model';
 export * from './role-model';
 export * from './login-model';
 export * from './user-response-model';
+export * from './new-model';

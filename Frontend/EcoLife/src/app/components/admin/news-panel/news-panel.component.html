@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div class="container">
+		<p class="container__title">Novedades actuales</p>
+    <button (click)="addNew()" mat-raised-button color="primary" class="container__add-button">Agregar novedad</button>
+    <div class="container__news">
+      <div class="container__news__element" *ngFor="let new of newsList">
+        <div class="container__news__element__header">
+          <div class="container__news__element__header__title">
+            {{ new.title }}
+          </div>
+          <div class="container__news__element__header__actions">
+            <mat-icon (click)="editNew(new)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteNew(new.id!)" class="icon" color="warn">delete</mat-icon>
+          </div>
+        </div>
+        <div class="container__news__element__description">
+          {{ new.description }}
+        </div>
+        <div class="container__news__element__date">
+          {{ new.date | date: 'dd/MM/yyyy' }}
+        </div>
+      </div>
+    </div>
+</div>

@@ -69,6 +69,7 @@
     <Build Include="Tables\Roles.sql" />
     <Build Include="Tables\Employees.sql" />
     <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\News.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="EcoLife.Db.refactorlog" />

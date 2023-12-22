@@ -1,0 +1,28 @@
+<div class="modal-form">
+  <div mat-dialog-title class="modal-form__title">
+    <h1>{{data ? 'Modificar noticia': 'Agregar noticia'}}</h1>
+  </div>
+  <form [formGroup]="newsForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="modal-form__content">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Titulo</mat-label>
+          <input matInput type="text" placeholder="Titulo de la noticia" formControlName="title" autocomplete="off" maxlength="50"> 
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Descripcion</mat-label>
+          <textarea matInput placeholder="Breve descripción de la noticia" formControlName="description" autocomplete="off" maxlength="300"></textarea>
+        </mat-form-field>
+      </div>
+      <div *ngIf="error.length !==0" class="modal-form__error">
+        <span>{{error}}</span>
+      </div>
+    </div>
+    <div mat-dialog-actions class="modal-form__action">
+      <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="newsForm.pristine || newsForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">{{data ? 'Actualizar': 'Guardar'}}</button>
+    </div>
+  </form>
+</div>

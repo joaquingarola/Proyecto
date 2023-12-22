@@ -44,6 +44,10 @@ import { ContactUsComponent } from './components/homepage/contact-us/contact-us.
 import { AboutUsComponent } from './components/homepage/about-us/about-us.component';
 import { FooterComponent } from './components/homepage/footer/footer.component';
 import { HeaderComponent } from './components/homepage/header/header.component';
+import { NewsComponent } from './components/homepage/news/news.component';
+import { NewsPanelComponent } from './components/admin/news-panel/news-panel.component';
+import { NewsFormComponent } from './components/admin/news-panel/news-form/news-form.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -69,7 +73,10 @@ import { HeaderComponent } from './components/homepage/header/header.component';
     ContactUsComponent,
     AboutUsComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    NewsComponent,
+    NewsPanelComponent,
+    NewsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +99,8 @@ import { HeaderComponent } from './components/homepage/header/header.component';
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    DatePipe
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders],
   bootstrap: [AppComponent]
