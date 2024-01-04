@@ -1,5 +1,7 @@
 ﻿using System.Reflection.Metadata;
 
+using EcoLife.Api.Dtos;
+
 namespace EcoLife.Api.Entities
 {
     public class DamageDto

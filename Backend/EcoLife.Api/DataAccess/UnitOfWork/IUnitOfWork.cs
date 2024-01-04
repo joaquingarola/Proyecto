@@ -11,5 +11,6 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public INewRepository NewRepository { get; }
+        public IContainerRepository ContainerRepository { get; }
     }
 }

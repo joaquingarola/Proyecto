@@ -12,6 +12,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IRoleRepository RoleRepository { get; private set; }
         public IUserRepository UserRepository { get; private set; }
         public INewRepository NewRepository { get; private set; }
+        public IContainerRepository ContainerRepository { get; private set; }
 
         public UnitOfWork(EcoLifeContext context)
         {
@@ -22,6 +23,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
             RoleRepository = new RoleRepository(context);
             UserRepository = new UserRepository(context);
             NewRepository = new NewRepository(context);
+            ContainerRepository = new ContainerRepository(context);
         }
     }
 }

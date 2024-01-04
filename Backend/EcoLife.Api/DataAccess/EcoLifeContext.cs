@@ -15,5 +15,6 @@ namespace EcoLife.Api.DataAccess
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<New> News { get; set; }
+        public virtual DbSet<Container> Containers { get; set; }
     }
 }
