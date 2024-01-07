@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { VehicleModel } from '../../models/vehicle-model';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
-  private readonly API_URL = 'https://localhost:7202/api/vehicles';
+  private readonly API_URL = `${environment.apiUrl}api/vehicles`;
 
   constructor(private http: HttpClient) { }
 

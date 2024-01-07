@@ -15,6 +15,6 @@
     <div *ngIf="error.length !==0" class="container__form__error">
       <span>{{error}}</span>
     </div>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loginForm.pristine || loginForm.invalid" [class.spinner]="isLoading" [disabled]="isLoading">Login</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loginForm.pristine || loginForm.invalid || isLoading" [class.spinner]="isLoading">Login</button>
   </form>
 </div>

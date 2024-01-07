@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { RoleModel } from '../../models';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  private readonly API_URL = 'https://localhost:7202/api/roles';
+  private readonly API_URL = `${environment.apiUrl}api/roles`;
 
   constructor(private http: HttpClient) { }
 

@@ -9,3 +9,4 @@ export * from './auth/auth.service';
 export * from './storage/storage.service';
 export * from './settings/settings.service';
 export * from './news/news.service';
+export * from './container/container.service';

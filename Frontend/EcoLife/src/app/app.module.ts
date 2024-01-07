@@ -49,6 +49,8 @@ import { NewsPanelComponent } from './components/admin/news-panel/news-panel.com
 import { NewsFormComponent } from './components/admin/news-panel/news-form/news-form.component';
 import { DatePipe } from '@angular/common';
 import { ItemsListComponent } from './components/shared/items-list/items-list.component';
+import { ContainerComponent } from './components/admin/container/container.component';
+import { ContainerFormModalComponent } from './components/admin/container/container-form-modal/container-form-modal.component';
 
 
 @NgModule({
@@ -78,7 +80,9 @@ import { ItemsListComponent } from './components/shared/items-list/items-list.co
     NewsComponent,
     NewsPanelComponent,
     NewsFormComponent,
-    ItemsListComponent
+    ItemsListComponent,
+    ContainerComponent,
+    ContainerFormModalComponent
   ],
   imports: [
     BrowserModule,
