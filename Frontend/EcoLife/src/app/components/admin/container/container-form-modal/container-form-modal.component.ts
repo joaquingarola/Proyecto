@@ -71,7 +71,7 @@ export class ContainerFormModalComponent {
   onFormSubmit(): void {
     if (this.containerForm.valid) {
       this.isLoading = true;
-      if (this.data) {
+      if (this.data.selectedContainer) {
         this.containerService
           .updateContainer(this.data.selectedContainer!.id!, this.containerForm.value)
           .subscribe({
