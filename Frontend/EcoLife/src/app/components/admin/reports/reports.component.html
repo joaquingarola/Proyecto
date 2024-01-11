@@ -1,0 +1,90 @@
+<mat-card>
+  <mat-card-title>Reportes de Recolección de Residuos</mat-card-title>
+  <mat-card-content class="filter-container">
+
+    <h2 class="filter-subtitle">Cantidad de contenedores recolectados por zona</h2>
+
+    <div class="filter-row">
+      <mat-form-field>
+        <mat-label>Seleccionar Zona</mat-label>
+        <mat-select placeholder="Todas las Zonas" [(ngModel)]="selectedZone">
+          <mat-option *ngFor="let zone of zones" [value]="zone">{{ zone }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Fecha Desde</mat-label>
+        <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="dateDesde">
+        <mat-datepicker-toggle matSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDesde></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Fecha Hasta</mat-label>
+        <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="dateHasta">
+        <mat-datepicker-toggle matSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+        <mat-datepicker #pickerHasta></mat-datepicker>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="generateReport()">Generar Reporte Contenedores</button>
+    </div>
+
+    <div class="result-container" *ngIf="showResults">
+      <div class="result-card" *ngFor="let result of filteredData">
+        <mat-card>
+          <mat-card-content class="result-card-content">
+            <p>Zona Seleccionada: {{ selectedZone }}</p>
+            <p>Cantidad de contenedores recolectados: {{ result.cantidadContenedores }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <h2 class="filter-subtitle">Recolecciones realizadas por conductor</h2>
+
+    <div class="filter-row">
+      <mat-form-field>
+        <mat-label>Seleccionar Conductor</mat-label>
+        <mat-select placeholder="Todos los Conductores" [(ngModel)]="selectedDriver">
+          <mat-option *ngFor="let driver of drivers" [value]="driver">{{ driver }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Seleccionar Vehículo (Opcional)</mat-label>
+        <mat-select placeholder="Todos los Vehículos" [(ngModel)]="selectedVehicle">
+          <mat-option value="">Todos los Vehículos</mat-option>
+          <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">{{ vehicle }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Fecha Desde</mat-label>
+        <input matInput [matDatepicker]="pickerDriverDesde" [(ngModel)]="dateDriverDesde">
+        <mat-datepicker-toggle matSuffix [for]="pickerDriverDesde"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDriverDesde></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Fecha Hasta</mat-label>
+        <input matInput [matDatepicker]="pickerDriverHasta" [(ngModel)]="dateDriverHasta">
+        <mat-datepicker-toggle matSuffix [for]="pickerDriverHasta"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDriverHasta></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="generateDriverReport()">Generar Reporte Conductores</button>
+    </div>
+
+    <div class="result-container" *ngIf="showDriverResults">
+      <div class="result-card" *ngFor="let driverResult of driverResults">
+        <mat-card>
+          <mat-card-content class="result-card-content">
+            <p>Conductor: {{ driverResult.conductor }}</p>
+            <p>Vehículo: {{ driverResult.vehiculo || 'No especificado' }}</p>
+            <p>Cantidad de Viajes realizados: {{ driverResult.cantidadViajes }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

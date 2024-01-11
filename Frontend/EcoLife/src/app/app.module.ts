@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { MatNativeDateModule, MatOption } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,11 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +39,6 @@ import { CustomPaginator } from './custom-classes/custom-paginator/custom-pagina
 import { EditMaintenanceFormModalComponent } from './components/admin/maintenance/edit-maintenance-form-modal/edit-maintenance-form-modal.component';
 import { EmployeeComponent } from './components/admin/employee/employee.component';
 import { EmployeeFormModalComponent } from './components/admin/employee/employee-form-modal/employee-form-modal.component';
-import { MatSelectModule } from '@angular/material/select';
 import { LoginComponent } from './components/shared/login/login.component';
 import { httpInterceptorProviders } from './interceptors/auth.interceptor';
 import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
@@ -49,10 +53,13 @@ import { NewsPanelComponent } from './components/admin/news-panel/news-panel.com
 import { NewsFormComponent } from './components/admin/news-panel/news-form/news-form.component';
 import { DatePipe } from '@angular/common';
 import { ItemsListComponent } from './components/shared/items-list/items-list.component';
+import { ReportsComponent } from './components/admin/reports/reports.component';
 import { ContainerComponent } from './components/admin/container/container.component';
 import { ContainerFormModalComponent } from './components/admin/container/container-form-modal/container-form-modal.component';
 import { MapComponent } from './components/shared/map/map.component';
 
+// Configura la aplicación para usar español
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -82,6 +89,7 @@ import { MapComponent } from './components/shared/map/map.component';
     NewsPanelComponent,
     NewsFormComponent,
     ItemsListComponent,
+    ReportsComponent,
     ContainerComponent,
     ContainerFormModalComponent,
     MapComponent
@@ -108,9 +116,11 @@ import { MapComponent } from './components/shared/map/map.component';
     MatSortModule,
     MatSelectModule,
     MatListModule,
-    DatePipe
+    DatePipe,
+    MatExpansionModule,
+    MatCardModule
   ],
-  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
