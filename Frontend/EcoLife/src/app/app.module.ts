@@ -54,6 +54,9 @@ import { NewsFormComponent } from './components/admin/news-panel/news-form/news-
 import { DatePipe } from '@angular/common';
 import { ItemsListComponent } from './components/shared/items-list/items-list.component';
 import { ReportsComponent } from './components/admin/reports/reports.component';
+import { ContainerComponent } from './components/admin/container/container.component';
+import { ContainerFormModalComponent } from './components/admin/container/container-form-modal/container-form-modal.component';
+import { MapComponent } from './components/shared/map/map.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -86,7 +89,10 @@ registerLocaleData(localeEs, 'es');
     NewsPanelComponent,
     NewsFormComponent,
     ItemsListComponent,
-    ReportsComponent
+    ReportsComponent,
+    ContainerComponent,
+    ContainerFormModalComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

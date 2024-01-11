@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { FinishMaintenanceModel } from 'src/app/models/finish-maintenance-model';
 import { MaintenanceModel } from 'src/app/models/maintenance-model';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaintenanceService {
-
-  private readonly API_URL = 'https://localhost:7202/api/maintenances';
+  
+  private readonly API_URL = `${environment.apiUrl}api/maintenances`;
 
   constructor(private http: HttpClient) { }
 

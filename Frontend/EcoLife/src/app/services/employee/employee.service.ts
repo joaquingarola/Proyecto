@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { EmployeeModel } from '../../models';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-
-  private readonly API_URL = 'https://localhost:7202/api/employees';
+  private readonly API_URL = `${environment.apiUrl}api/employees`;
 
   constructor(private http: HttpClient) { }
 

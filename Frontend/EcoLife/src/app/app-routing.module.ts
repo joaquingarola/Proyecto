@@ -11,20 +11,22 @@ import { StartingPageComponent } from './components/collector/starting-page/star
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { NewsPanelComponent } from './components/admin/news-panel/news-panel.component';
 import { ReportsComponent } from './components/admin/reports/reports.component';
+import { ContainerComponent } from './components/admin/container/container.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'zones', component: ZonesComponent, canActivate: [authGuard]},
   {path: 'vehicles', component: VehiclesComponent, canActivate: [authGuard]},
   {path: 'maintenances', component: MaintenanceComponent, canActivate: [authGuard]}, 
-  {path: 'employees', component: EmployeeComponent/* , canActivate: [authGuard] */},
-  {path: 'first-entry', component: FirstEntryComponent/* , canActivate: [authGuard] */},
+  {path: 'employees', component: EmployeeComponent, canActivate: [authGuard] },
+  {path: 'first-entry', component: FirstEntryComponent, canActivate: [authGuard] },
   {path: 'collector', component: StartingPageComponent},
   {path: 'reports', component: ReportsComponent},
   {path: 'homepage', component: HomepageComponent},
   {path: 'news', component: NewsPanelComponent, canActivate: [authGuard]},
-  {path: '', redirectTo: 'zones', pathMatch: 'full'},
-  {path: '**', redirectTo: 'zones'}
+  {path: 'containers', component: ContainerComponent, canActivate: [authGuard]},
+  {path: '', redirectTo: 'news', pathMatch: 'full'},
+  {path: '**', redirectTo: 'news'}
 ];
 
 @NgModule({

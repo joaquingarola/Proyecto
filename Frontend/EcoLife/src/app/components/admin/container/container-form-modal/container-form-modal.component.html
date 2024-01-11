@@ -1,0 +1,71 @@
+<div class="modal">
+  <div mat-dialog-title class="modal__title">
+    <h1>{{data ? 'Modificar datos contenedor': 'Nuevo contenedor'}}</h1>
+  </div>
+  <div class="modal__content">
+    <div class="modal__content__form">
+      <form [formGroup]="containerForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content class="modal__content__form__content">
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Capacidad</mat-label>
+              <input matInput type="number" placeholder="10" formControlName="capacity" autocomplete="off"> 
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo de residuo</mat-label>
+              <mat-select formControlName="wasteType" [(value)]="selectedType">
+                <mat-option *ngFor="let type of containerTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Estado del contenedor</mat-label>
+              <mat-select formControlName="status" [(value)]="selectedStatus">
+                <mat-option *ngFor="let status of containerStatus" [value]="status">
+                  {{status}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Zona</mat-label>
+              <mat-select formControlName="zoneId" [(value)]="selectedZone">
+                <mat-option *ngFor="let zone of zones" [value]="zone.id">
+                  {{zone.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row disabled-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Latitud</mat-label>
+              <input matInput type="number" placeholder="52.4548" formControlName="latitude" autocomplete="off" readonly> 
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline" class="mat-form-field-readonly">
+              <mat-label>Longitud</mat-label>
+              <input matInput type="number" placeholder="60.5261" formControlName="longitude" autocomplete="off" readonly> 
+            </mat-form-field>
+          </div>
+          <div *ngIf="error.length !==0" class="modal__content__form__error">
+            <span>{{error}}</span>
+          </div>
+        </div>
+        <div mat-dialog-actions class="modal__content__form__action">
+          <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!containerForm.dirty || containerForm.invalid || isLoading" [class.spinner]="isLoading">{{data ? 'Actualizar': 'Guardar'}}</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal__content__map">
+      <app-map [selectedContainer]="containerCoords" [othersContainers]="othersContainersCoords" (coords)="setNewCoords($event)"></app-map>
+    </div>
+  </div>
+</div>
