@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { ContainerModel, ZoneModel } from '../../../../models';
-import { ContainerService, ZoneService } from '../../../../services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import * as L from 'leaflet';
+
+import { ContainerModel, ContainerSelection, CoordinatesModel, ZoneModel } from '../../../../models';
+import { ContainerService, ZoneService } from '../../../../services';
 import { ContainerStatus } from '../constants/container-status';
 import { ContainerType } from '../constants/container-type';
 
@@ -22,6 +23,8 @@ export class ContainerFormModalComponent {
   public selectedType: string;
   public zones: ZoneModel[];
   public selectedZone: number;
+  public containerCoords: L.LatLngTuple;
+  public othersContainersCoords: Array<L.LatLngTuple>;
   public isLoading = false;
 
   constructor(
@@ -29,23 +32,28 @@ export class ContainerFormModalComponent {
     private containerService: ContainerService,
     private zoneService: ZoneService,
     private _dialogRef: MatDialogRef<ContainerFormModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ContainerModel
+    @Inject(MAT_DIALOG_DATA) public data: ContainerSelection
   ) { }
 
   ngOnInit(): void {
     this.getZones();
-    this.selectedStatus = this.containerStatus.find(s => s === this.data?.status) ?? this.containerStatus[0];
-    this.selectedType = this.containerTypes.find(t => t === this.data?.wasteType) ?? this.containerTypes[0];
     this.containerForm = this.fb.group({
       latitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
       capacity: ['', [Validators.required]],
       wasteType: ['', [Validators.required]],
-      lastEmptying: ['', [Validators.required]],
       status: ['', [Validators.required]],
       zoneId: ['', [Validators.required]]
     });
-    this.containerForm.patchValue(this.data);
+
+    if(this.data.selectedContainer) {
+      this.containerForm.patchValue(this.data.selectedContainer);
+      this.containerCoords = [this.data.selectedContainer!.latitude, this.data.selectedContainer!.longitude];
+    }
+
+    if(this.data.othersContainers) {
+      this.othersContainersCoords = (this.data.othersContainers ?? []).map(container => [container.latitude, container.longitude]);
+    }
   }
 
   private getZones(): void{
@@ -53,7 +61,9 @@ export class ContainerFormModalComponent {
       .subscribe(
         (response) => { 
           this.zones = response;
-          this.selectedZone = this.data?.zoneId;
+          if(this.data.selectedContainer){
+            this.selectedZone = this.data?.selectedContainer.zoneId;
+          } 
         }
       );
   }
@@ -63,7 +73,7 @@ export class ContainerFormModalComponent {
       this.isLoading = true;
       if (this.data) {
         this.containerService
-          .updateContainer(this.data.id!, this.containerForm.value)
+          .updateContainer(this.data.selectedContainer!.id!, this.containerForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: (response: HttpErrorResponse) => {
@@ -80,4 +90,15 @@ export class ContainerFormModalComponent {
       }
     }
   };
+
+  setNewCoords(coords: CoordinatesModel | null): void {
+    if(coords) {
+      this.containerForm.controls['latitude'].setValue(coords.latitude);
+      this.containerForm.controls['longitude'].setValue(coords.longitude);
+    } else {
+      this.containerForm.controls['latitude'].setValue('');
+      this.containerForm.controls['longitude'].setValue('');
+    }
+    this.containerForm.markAsDirty();
+  }
 }

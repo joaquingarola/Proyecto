@@ -51,6 +51,7 @@ import { DatePipe } from '@angular/common';
 import { ItemsListComponent } from './components/shared/items-list/items-list.component';
 import { ContainerComponent } from './components/admin/container/container.component';
 import { ContainerFormModalComponent } from './components/admin/container/container-form-modal/container-form-modal.component';
+import { MapComponent } from './components/shared/map/map.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { ContainerFormModalComponent } from './components/admin/container/contai
     NewsFormComponent,
     ItemsListComponent,
     ContainerComponent,
-    ContainerFormModalComponent
+    ContainerFormModalComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

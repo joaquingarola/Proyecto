@@ -9,7 +9,8 @@ namespace EcoLife.Api.MapperProfiles
     {
         public ContainerProfile()
         {
-            CreateMap<ContainerDto, Container>();
+            CreateMap<ContainerDto, Container>()
+                .ForMember(x => x.LastEmptying, c => c.MapFrom(_ => DateTime.Now));
         }
     }
 }

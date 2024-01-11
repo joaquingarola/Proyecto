@@ -48,9 +48,10 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateContainerAsync([FromBody] Container editContainer)
+        async public Task<IActionResult> UpdateContainerAsync([FromBody] ContainerDto containerDto)
         {
-            var result = await _uow.ContainerRepository.Update(editContainer);
+            var container = _mapper.Map<Container>(containerDto);
+            var result = await _uow.ContainerRepository.Update(container);
             return Ok(result);
         }
     }

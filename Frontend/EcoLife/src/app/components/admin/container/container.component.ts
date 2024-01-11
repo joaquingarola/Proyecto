@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfirmationModalData, ContainerModel } from '../../../models';
+import { ConfirmationModalData, ContainerModel, ContainerSelection } from '../../../models';
 import { ContainerService, ModalConfirmationService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { ContainerFormModalComponent } from './container-form-modal/container-form-modal.component';
@@ -16,7 +16,7 @@ import { ContainerFormModalComponent } from './container-form-modal/container-fo
 export class ContainerComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["capacity", "wasteType", "status", "zone", "lastEmptying","latitude", "longitude", "options"];
+  public displayedColumns = ["capacity", "wasteType", "status", "zone", "lastEmptying", "latitude", "longitude", "options"];
   public containers: MatTableDataSource<ContainerModel>;
 
   private confirmationData: ConfirmationModalData = {
@@ -67,7 +67,9 @@ export class ContainerComponent {
     });
   }
 
-  public editContainer(data: ContainerModel): void {
+  public editContainer(cont: ContainerModel): void {
+    let otherContainers = this.containers.data.filter(x => x.id != cont.id);
+    let data: ContainerSelection = {selectedContainer: cont, othersContainers: otherContainers};
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
@@ -76,7 +78,8 @@ export class ContainerComponent {
   }
 
   public addContainer(): void {
-    const dialogRef = this.dialog.open(ContainerFormModalComponent);
+    let data: ContainerSelection = { othersContainers: this.containers.data };
+    const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: () => this.listContainers()
     });
