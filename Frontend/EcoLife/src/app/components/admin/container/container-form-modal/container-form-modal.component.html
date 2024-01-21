@@ -1,6 +1,6 @@
 <div class="modal">
   <div mat-dialog-title class="modal__title">
-    <h1>{{data ? 'Modificar datos contenedor': 'Nuevo contenedor'}}</h1>
+    <h1>{{data.selectedContainer ? 'Modificar datos contenedor': 'Nuevo contenedor'}}</h1>
   </div>
   <div class="modal__content">
     <div class="modal__content__form">
@@ -44,14 +44,8 @@
           </div>
           <div class="row disabled-input">
             <mat-form-field appearance="outline">
-              <mat-label>Latitud</mat-label>
-              <input matInput type="number" placeholder="52.4548" formControlName="latitude" autocomplete="off" readonly> 
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline" class="mat-form-field-readonly">
-              <mat-label>Longitud</mat-label>
-              <input matInput type="number" placeholder="60.5261" formControlName="longitude" autocomplete="off" readonly> 
+              <mat-label>Dirección</mat-label>
+              <input matInput type="text" placeholder="San Luis 1500, Rosario" formControlName="address" autocomplete="off" readonly> 
             </mat-form-field>
           </div>
           <div *ngIf="error.length !==0" class="modal__content__form__error">

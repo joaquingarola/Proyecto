@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import { ContainerModel, ContainerSelection, CoordinatesModel, ZoneModel } from '../../../../models';
+import { ContainerModel, ContainerSelection, CoordinatesModel, NominatimAddressModel, NominatimPlaceModel, ZoneModel } from '../../../../models';
 import { ContainerService, ZoneService } from '../../../../services';
 import { ContainerStatus } from '../constants/container-status';
 import { ContainerType } from '../constants/container-type';
@@ -38,12 +38,13 @@ export class ContainerFormModalComponent {
   ngOnInit(): void {
     this.getZones();
     this.containerForm = this.fb.group({
-      latitude: ['', [Validators.required]],
-      longitude: ['', [Validators.required]],
+      address: ['', [Validators.required]],
       capacity: ['', [Validators.required]],
       wasteType: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      zoneId: ['', [Validators.required]]
+      zoneId: ['', [Validators.required]],
+      latitude: ['', [Validators.required]],
+      longitude: ['', [Validators.required]]
     });
 
     if(this.data.selectedContainer) {
@@ -91,11 +92,14 @@ export class ContainerFormModalComponent {
     }
   };
 
-  setNewCoords(coords: CoordinatesModel | null): void {
-    if(coords) {
-      this.containerForm.controls['latitude'].setValue(coords.latitude);
-      this.containerForm.controls['longitude'].setValue(coords.longitude);
+  setNewCoords(location: NominatimPlaceModel | null): void {
+    if(location) {
+      let address = `${location.address.road} ${location.address?.house_number}, ${location.address.city}`
+      this.containerForm.controls['address'].setValue(address);
+      this.containerForm.controls['latitude'].setValue(location.lat);
+      this.containerForm.controls['longitude'].setValue(location.lon);
     } else {
+      this.containerForm.controls['address'].setValue('');
       this.containerForm.controls['latitude'].setValue('');
       this.containerForm.controls['longitude'].setValue('');
     }

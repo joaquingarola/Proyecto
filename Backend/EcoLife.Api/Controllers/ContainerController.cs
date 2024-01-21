@@ -40,7 +40,7 @@ namespace EcoLife.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{newId}")]
+        [HttpDelete("{containerId}")]
         async public Task<IActionResult> DeleteContainerByIdAsync([FromRoute, Required] int containerId)
         {
             await _uow.ContainerRepository.Delete(containerId);

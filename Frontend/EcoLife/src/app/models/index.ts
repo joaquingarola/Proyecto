@@ -11,3 +11,5 @@ export * from './new-model';
 export * from './container-model';
 export * from './coordinates-model';
 export * from './container-selection';
+export * from './nominatim-address-model';
+export * from './nominatim-place-model';

@@ -5,6 +5,7 @@ export interface ContainerModel {
   latitude: number,
   longitude: number,
   capacity: number,
+  address: string,
   wasteType: string,
   lastEmptying: Date,
   status: string,

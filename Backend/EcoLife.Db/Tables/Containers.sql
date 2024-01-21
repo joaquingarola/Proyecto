@@ -7,7 +7,8 @@
     [WasteType] NVARCHAR(50) NOT NULL, 
     [LastEmptying] DATETIME NOT NULL, 
     [Status] NVARCHAR(50) NOT NULL, 
-    [ZoneId] INT NOT NULL
+    [ZoneId] INT NOT NULL,
+    [Address] NVARCHAR(200) NOT NULL
 
     CONSTRAINT [FK_Containers_Zones] FOREIGN KEY ([ZoneId]) REFERENCES [Zones]([Id])
 )
