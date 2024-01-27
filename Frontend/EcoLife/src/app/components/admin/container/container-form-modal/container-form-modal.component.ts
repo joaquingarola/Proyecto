@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import { ContainerModel, ContainerSelection, CoordinatesModel, NominatimAddressModel, NominatimPlaceModel, ZoneModel } from '../../../../models';
+import { ContainerModel, ItemSelection, NominatimPlaceModel, ZoneModel } from '../../../../models';
 import { ContainerService, ZoneService } from '../../../../services';
 import { ContainerStatus } from '../constants/container-status';
 import { ContainerType } from '../constants/container-type';
@@ -32,7 +32,7 @@ export class ContainerFormModalComponent {
     private containerService: ContainerService,
     private zoneService: ZoneService,
     private _dialogRef: MatDialogRef<ContainerFormModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ContainerSelection
+    @Inject(MAT_DIALOG_DATA) public data: ItemSelection<ContainerModel>
   ) { }
 
   ngOnInit(): void {
@@ -47,13 +47,13 @@ export class ContainerFormModalComponent {
       longitude: ['', [Validators.required]]
     });
 
-    if(this.data.selectedContainer) {
-      this.containerForm.patchValue(this.data.selectedContainer);
-      this.containerCoords = [this.data.selectedContainer!.latitude, this.data.selectedContainer!.longitude];
+    if(this.data.selectedItem) {
+      this.containerForm.patchValue(this.data.selectedItem);
+      this.containerCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
     }
 
-    if(this.data.othersContainers) {
-      this.othersContainersCoords = (this.data.othersContainers ?? []).map(container => [container.latitude, container.longitude]);
+    if(this.data.othersItems) {
+      this.othersContainersCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
     }
   }
 
@@ -62,8 +62,8 @@ export class ContainerFormModalComponent {
       .subscribe(
         (response) => { 
           this.zones = response;
-          if(this.data.selectedContainer){
-            this.selectedZone = this.data?.selectedContainer.zoneId;
+          if(this.data.selectedItem){
+            this.selectedZone = this.data?.selectedItem.zoneId;
           } 
         }
       );
@@ -72,9 +72,9 @@ export class ContainerFormModalComponent {
   onFormSubmit(): void {
     if (this.containerForm.valid) {
       this.isLoading = true;
-      if (this.data.selectedContainer) {
+      if (this.data.selectedItem) {
         this.containerService
-          .updateContainer(this.data.selectedContainer!.id!, this.containerForm.value)
+          .updateContainer(this.data.selectedItem!.id!, this.containerForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: (response: HttpErrorResponse) => {

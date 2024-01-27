@@ -71,6 +71,8 @@
     <Build Include="Tables\Users.sql" />
     <Build Include="Tables\News.sql" />
     <Build Include="Tables\Containers.sql" />
+    <Build Include="Tables\VehicleCenters.sql" />
+    <Build Include="Tables\WasteCenters.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="EcoLife.Db.refactorlog" />

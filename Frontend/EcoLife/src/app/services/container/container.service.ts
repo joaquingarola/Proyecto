@@ -17,8 +17,8 @@ export class ContainerService {
     return this.http.get<ContainerModel[]>(`${this.API_URL}`);
   }
 
-  public add(zone: ContainerModel): Observable<Object> {
-    return this.http.post(`${this.API_URL}`, zone);
+  public add(container: ContainerModel): Observable<Object> {
+    return this.http.post(`${this.API_URL}`, container);
   }
 
   public deleteContainer(id: number): Observable<Object> {

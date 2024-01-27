@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfirmationModalData, ContainerModel, ContainerSelection } from '../../../models';
+import { ConfirmationModalData, ContainerModel, ItemSelection } from '../../../models';
 import { ContainerService, ModalConfirmationService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { ContainerFormModalComponent } from './container-form-modal/container-form-modal.component';
@@ -69,7 +69,7 @@ export class ContainerComponent {
 
   public editContainer(cont: ContainerModel): void {
     let otherContainers = this.containers.data.filter(x => x.id != cont.id);
-    let data: ContainerSelection = {selectedContainer: cont, othersContainers: otherContainers};
+    let data: ItemSelection<ContainerModel> = {selectedItem: cont, othersItems: otherContainers};
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
@@ -78,7 +78,7 @@ export class ContainerComponent {
   }
 
   public addContainer(): void {
-    let data: ContainerSelection = { othersContainers: this.containers.data };
+    let data: ItemSelection<ContainerModel> = { othersItems: this.containers.data };
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: () => this.listContainers()

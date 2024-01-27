@@ -1,0 +1,8 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <p class="container__title">Rutas</p>
+  <button (click)="planify()" mat-raised-button color="primary" class="container__new-route">Planificar nueva ruta</button>
+  <div class="container__map" *ngIf="showMap">
+    <app-map [route]="coordsList" [disabledClick]="true"></app-map>
+  </div>
+</div>

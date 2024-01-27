@@ -1,0 +1,45 @@
+<div class="modal">
+  <div mat-dialog-title class="modal__title">
+    <h1>{{data.selectedItem ? 'Modificar datos centro de residuos': 'Nuevo centro de residuos'}}</h1>
+  </div>
+  <div class="modal__content">
+    <div class="modal__content__form">
+      <form [formGroup]="wasteCenterForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content class="modal__content__form__content">
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Descripción</mat-label>
+              <input matInput type="text" placeholder="Ubicado en zona centro" formControlName="description" autocomplete="off"> 
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo de residuo</mat-label>
+              <mat-select formControlName="wasteType" [(value)]="selectedType">
+                <mat-option *ngFor="let type of containerTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row disabled-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Dirección</mat-label>
+              <input matInput type="text" placeholder="San Luis 1500, Rosario" formControlName="address" autocomplete="off" readonly> 
+            </mat-form-field>
+          </div>
+          <div *ngIf="error.length !==0" class="modal__content__form__error">
+            <span>{{error}}</span>
+          </div>
+        </div>
+        <div mat-dialog-actions class="modal__content__form__action">
+          <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!wasteCenterForm.dirty || wasteCenterForm.invalid || isLoading" [class.spinner]="isLoading">{{data.selectedItem ? 'Actualizar': 'Guardar'}}</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal__content__map">
+      <app-map [selectedContainer]="wasteCenterCoords" [othersContainers]="othersWasteCenterCoords" (coords)="setNewCoords($event)"></app-map>
+    </div>
+  </div>
+</div>

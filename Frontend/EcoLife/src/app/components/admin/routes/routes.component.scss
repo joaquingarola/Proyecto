@@ -1,0 +1,26 @@
+.container{
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Arial", sans-serif;
+  }
+
+  &__new-route {
+    width: 200px;
+    margin: 10px auto;
+  }
+
+  &__map {
+    padding-top: 10px;
+    width: 1200px;
+    height: 550px;
+    margin: 10px auto;
+  }
+}

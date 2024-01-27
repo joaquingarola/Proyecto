@@ -1,0 +1,38 @@
+.container{
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  
+  &__data {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &__filter {
+        width: 100%;
+      }
+
+      &__table {
+        margin-bottom: 10px;
+
+        &__no-results {
+          font-weight: 500;
+        }
+      }
+
+      &__add-button{
+          margin-top: 1rem;
+      }
+
+      &__paginator {
+        width: 100%;
+      }
+  }
+}
+
+.icon{
+  cursor: pointer;
+}

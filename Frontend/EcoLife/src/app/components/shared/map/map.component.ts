@@ -1,6 +1,7 @@
 import * as L from 'leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import "leaflet-routing-machine";
 
 import { NominatimPlaceModel } from '../../../models';
 import { GeocodeService } from '../../../services';
@@ -11,11 +12,13 @@ import { GeocodeService } from '../../../services';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
+  @Input() route: L.LatLng[];
   @Input() selectedContainer: L.LatLngTuple; 
   @Input() othersContainers: Array<L.LatLngTuple>; 
   @Input() disabledClick: boolean = false;
   @Output() coords = new EventEmitter<NominatimPlaceModel | null>();
 
+  private routeFirstSection: L.LatLng[];
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
   private map: L.Map;
   private marker: L.Marker;
@@ -35,7 +38,7 @@ export class MapComponent {
   ) {}
 
   ngAfterViewInit(): void {
-    this.map = L.map('map').setView(this.selectedContainer ?? this.defaultCoords, 16);
+    this.map = L.map('map').setView(this.getViewCoords(), 16);
 
     const searchControl = GeoSearchControl({
       provider: new OpenStreetMapProvider({
@@ -63,6 +66,15 @@ export class MapComponent {
         let marker = new L.Marker(coords, {icon: this.containerDisabledIcon});
         marker.addTo(this.map);
       });
+    }
+
+    if(this.route) {
+      if(this.route.length >=2) {
+        this.routeFirstSection = this.route.slice(0,2);
+        this.route.splice(0,2);
+        this.addRoute(this.routeFirstSection, true);
+      }
+      this.addRoute(this.route);
     }
 
     if(this.selectedContainer) {
@@ -108,5 +120,42 @@ export class MapComponent {
       this.geocodeService.getAddress(selectedCoords)
         .subscribe(response => this.coords.emit(response));
     }
+  }
+
+  private addRoute(coords: L.LatLng[], firstSection: boolean = false): void {
+    L.Routing.control({
+      plan: new L.Routing.Plan(coords,
+        {
+          createMarker: function(i, waypoint, n){
+            let icon = L.icon({
+              iconUrl: firstSection ? '../../../../assets/container_icon.png' : '../../../../assets/container_disabled_icon.png',
+              iconSize: [48, 48],
+              iconAnchor: [6, 42]
+            });
+            return L.marker(waypoint.latLng, { icon: icon });
+          }
+        }
+      ),
+      routeWhileDragging: true,
+      lineOptions: {
+        styles: [{ color: 'green', opacity: firstSection ? 1 : 0.3, weight: 5 }],
+        extendToWaypoints: false,
+        addWaypoints: false,
+        missingRouteTolerance: 5
+      }
+    }).addTo(this.map);
+  }
+
+  private getViewCoords(): L.LatLngTuple {
+    if(this.selectedContainer) {
+      return this.selectedContainer;
+    }
+
+    if(this.route) {
+      let firstItem: L.LatLngTuple = [this.route[0].lat, this.route[0].lng];
+      return firstItem;
+    }
+
+    return this.defaultCoords;
   }
 }

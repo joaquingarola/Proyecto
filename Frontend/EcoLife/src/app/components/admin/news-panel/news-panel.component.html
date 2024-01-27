@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
-		<p class="container__title">Novedades actuales</p>
-    <button (click)="addNew()" mat-raised-button color="primary" class="container__add-button">Agregar novedad</button>
-    <app-items-list [items]="newsList" [showActions]="true" (editItem)="editNew($event)" (deleteItem)="deleteNew($event)"></app-items-list>
+  <p class="container__title">Novedades actuales</p>
+  <button (click)="addNew()" mat-raised-button color="primary" class="container__add-button">Agregar novedad</button>
+  <app-items-list [items]="newsList" [showActions]="true" (editItem)="editNew($event)" (deleteItem)="deleteNew($event)"></app-items-list>
 </div>

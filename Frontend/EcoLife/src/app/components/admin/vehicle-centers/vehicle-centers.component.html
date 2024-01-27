@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<div class="container">
+	<div class="container__data">
+		<p class="table-title">Lista de centros de vehículos</p>
+		<mat-form-field class="container__data__filter">
+			<mat-label>Filtrar</mat-label>
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción o dirección" #input autocomplete="off">
+		</mat-form-field>
+		<table mat-table [dataSource]="vehicleCenters" class="mat-elevation-z8 container__data__table" matSort>
+			<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Descripción </th>
+					<td mat-cell *matCellDef="let vehicleCenter" class="centered-cell"> {{vehicleCenter.description}} </td>
+			</ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Dirección </th>
+        <td mat-cell *matCellDef="let vehicleCenter" class="centered-cell"> {{vehicleCenter.address}} </td>
+      </ng-container>
+			<ng-container matColumnDef="options">
+					<th mat-header-cell *matHeaderCellDef class="centered-header"> Opciones </th>
+					<td mat-cell *matCellDef="let vehicleCenter" class="centered-cell">
+						<mat-icon (click)="editVehicleCenter(vehicleCenter)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteVehicleCenter(vehicleCenter.id)" class="icon" color="warn">delete</mat-icon>
+					</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			<tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell container__data__table__no-results" colspan="6">No se encontraron centros de vehículos que coincidan con "{{input.value}}"</td>
+      </tr>
+		</table>
+		<mat-paginator 
+			class="container__data__paginator" 
+			[length]="100"
+			[pageSize]="10"
+			[pageSizeOptions]="[1,5,10,20]">
+		</mat-paginator>
+		<button mat-raised-button (click)="addVehicleCenter()" color="primary" class="container__data__add-button">Agregar nuevo centro de vehículos</button>
+	</div>
+</div>

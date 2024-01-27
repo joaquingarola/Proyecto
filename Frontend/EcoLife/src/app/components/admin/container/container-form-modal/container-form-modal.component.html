@@ -1,6 +1,6 @@
 <div class="modal">
   <div mat-dialog-title class="modal__title">
-    <h1>{{data.selectedContainer ? 'Modificar datos contenedor': 'Nuevo contenedor'}}</h1>
+    <h1>{{data.selectedItem ? 'Modificar datos contenedor': 'Nuevo contenedor'}}</h1>
   </div>
   <div class="modal__content">
     <div class="modal__content__form">
@@ -54,7 +54,7 @@
         </div>
         <div mat-dialog-actions class="modal__content__form__action">
           <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="!containerForm.dirty || containerForm.invalid || isLoading" [class.spinner]="isLoading">{{data.selectedContainer ? 'Actualizar': 'Guardar'}}</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!containerForm.dirty || containerForm.invalid || isLoading" [class.spinner]="isLoading">{{data.selectedItem ? 'Actualizar': 'Guardar'}}</button>
         </div>
       </form>
     </div>

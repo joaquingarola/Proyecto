@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="container">
+	<div class="container__data">
+		<p class="table-title">Lista de Centros de Residuos</p>
+		<mat-form-field class="container__data__filter">
+			<mat-label>Filtrar</mat-label>
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción, tipo de residuo o dirección" #input autocomplete="off">
+		</mat-form-field>
+		<table mat-table [dataSource]="wasteCenters" class="mat-elevation-z8 container__data__table" matSort>
+			<ng-container matColumnDef="description">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Descripción </th>
+					<td mat-cell *matCellDef="let wasteCenter" class="centered-cell"> {{wasteCenter.description}} </td>
+			</ng-container>
+      <ng-container matColumnDef="wasteType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Tipo de residuo </th>
+        <td mat-cell *matCellDef="let wasteCenter" class="centered-cell"> {{wasteCenter.wasteType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Dirección </th>
+        <td mat-cell *matCellDef="let wasteCenter" class="centered-cell"> {{wasteCenter.address}} </td>
+      </ng-container>
+			<ng-container matColumnDef="options">
+					<th mat-header-cell *matHeaderCellDef class="centered-header"> Opciones </th>
+					<td mat-cell *matCellDef="let wasteCenter" class="centered-cell">
+						<mat-icon (click)="editWasteCenter(wasteCenter)" class="icon">edit</mat-icon>
+						<mat-icon (click)="deleteWasteCenter(wasteCenter.id)" class="icon" color="warn">delete</mat-icon>
+					</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			<tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell container__data__table__no-results" colspan="6">No se encontraron centros de residuos que coincidan con "{{input.value}}"</td>
+      </tr>
+		</table>
+		<mat-paginator 
+			class="container__data__paginator" 
+			[length]="100"
+			[pageSize]="10"
+			[pageSizeOptions]="[1,5,10,20]">
+		</mat-paginator>
+		<button mat-raised-button (click)="addWasteCenter()" color="primary" class="container__data__add-button">Agregar nuevo centro de residuo</button>
+	</div>
+</div>
+

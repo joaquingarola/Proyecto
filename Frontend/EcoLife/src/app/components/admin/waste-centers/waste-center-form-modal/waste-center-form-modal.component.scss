@@ -1,0 +1,48 @@
+.modal{
+  width: 1200px;
+  
+  &__title {
+    text-align: center;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+
+    &__form {
+      width: 350px;
+  
+      &__content {
+        padding-top: 10px;
+      }
+  
+      &__action {
+        padding: 0px 25px 20px;
+          button {
+            flex: 1;
+          }
+      }
+  
+      &__error{
+        text-align: center;
+        color: red;
+        margin: 0 0 10px 0;
+      }
+    }
+
+    &__map {
+      padding-top: 10px;
+      width: 800px;
+      height: 450px;
+    }
+  } 
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+
+  mat-form-field {
+      width: 100%;
+  }
+}

@@ -11,3 +11,5 @@ export * from './settings/settings.service';
 export * from './news/news.service';
 export * from './container/container.service';
 export * from './geocode/geocode.service';
+export * from './vehicle-center/vehicle-center.service';
+export * from './waste-center/waste-center.service';

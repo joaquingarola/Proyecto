@@ -57,6 +57,11 @@ import { ReportsComponent } from './components/admin/reports/reports.component';
 import { ContainerComponent } from './components/admin/container/container.component';
 import { ContainerFormModalComponent } from './components/admin/container/container-form-modal/container-form-modal.component';
 import { MapComponent } from './components/shared/map/map.component';
+import { RoutesComponent } from './components/admin/routes/routes.component';
+import { WasteCentersComponent } from './components/admin/waste-centers/waste-centers.component';
+import { VehicleCentersComponent } from './components/admin/vehicle-centers/vehicle-centers.component';
+import { VehicleCenterFormModalComponent } from './components/admin/vehicle-centers/vehicle-center-form-modal/vehicle-center-form-modal.component';
+import { WasteCenterFormModalComponent } from './components/admin/waste-centers/waste-center-form-modal/waste-center-form-modal.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -92,7 +97,12 @@ registerLocaleData(localeEs, 'es');
     ReportsComponent,
     ContainerComponent,
     ContainerFormModalComponent,
-    MapComponent
+    MapComponent,
+    RoutesComponent,
+    WasteCentersComponent,
+    VehicleCentersComponent,
+    VehicleCenterFormModalComponent,
+    WasteCenterFormModalComponent
   ],
   imports: [
     BrowserModule,

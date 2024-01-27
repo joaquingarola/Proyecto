@@ -12,6 +12,9 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { NewsPanelComponent } from './components/admin/news-panel/news-panel.component';
 import { ReportsComponent } from './components/admin/reports/reports.component';
 import { ContainerComponent } from './components/admin/container/container.component';
+import { RoutesComponent } from './components/admin/routes/routes.component';
+import { VehicleCentersComponent } from './components/admin/vehicle-centers/vehicle-centers.component';
+import { WasteCentersComponent } from './components/admin/waste-centers/waste-centers.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +28,9 @@ const routes: Routes = [
   {path: 'homepage', component: HomepageComponent},
   {path: 'news', component: NewsPanelComponent, canActivate: [authGuard]},
   {path: 'containers', component: ContainerComponent, canActivate: [authGuard]},
+  {path: 'routes', component: RoutesComponent, canActivate: [authGuard]},
+  {path: 'vehicle-centers', component: VehicleCentersComponent, canActivate: [authGuard]},
+  {path: 'waste-centers', component: WasteCentersComponent, canActivate: [authGuard]},
   {path: '', redirectTo: 'news', pathMatch: 'full'},
   {path: '**', redirectTo: 'news'}
 ];
