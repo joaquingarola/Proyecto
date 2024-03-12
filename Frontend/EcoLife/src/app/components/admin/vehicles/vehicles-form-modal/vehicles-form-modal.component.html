@@ -30,7 +30,17 @@
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-    </div>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Centro de Vehículo</mat-label>
+          <mat-select formControlName="vehicleCenterId" [(value)]="selectedVehicleCenter">
+            <mat-option *ngFor="let vehicleCenter of vehicleCenters" [value]="vehicleCenter.id">
+              {{vehicleCenter.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <div mat-dialog-actions class="modal-form__action">
       <button mat-raised-button type="button" [mat-dialog-close]="false">Cancelar</button>

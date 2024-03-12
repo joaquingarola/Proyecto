@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public int Model { get; set; }
         public DateTime BuyDate { get; set; }
+        public int VehicleCenterId { get; set; }
+        public virtual VehicleCenter? VehicleCenter { get; set; }
     }
 }

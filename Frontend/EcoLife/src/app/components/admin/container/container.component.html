@@ -2,6 +2,7 @@
 <div class="container">
 	<div class="container__data">
 		<p class="table-title">Lista de contenedores</p>
+		<button mat-raised-button (click)="addContainer()" color="primary" class="container__data__add-button">Agregar nuevo contenedor</button>
 		<mat-form-field class="container__data__filter">
 			<mat-label>Filtrar</mat-label>
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por residuo, estado o zona" #input autocomplete="off">
@@ -50,6 +51,5 @@
 			[pageSize]="10"
 			[pageSizeOptions]="[1,5,10,20]">
 		</mat-paginator>
-		<button mat-raised-button (click)="addContainer()" color="primary" class="container__data__add-button">Agregar nuevo contenedor</button>
 	</div>
 </div>

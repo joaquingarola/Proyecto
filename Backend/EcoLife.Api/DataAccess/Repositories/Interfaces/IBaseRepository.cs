@@ -11,5 +11,7 @@
         Task<TEntity> GetByIdAsync(int id);
 
         Task<TEntity> Delete(int id);
+
+        Task SaveChangesAsync();
     }
 }

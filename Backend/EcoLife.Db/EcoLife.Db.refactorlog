@@ -21,4 +21,53 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Username" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="63f96415-2b6a-44a5-8661-b96bacef8e63" ChangeDateTime="02/20/2024 23:34:10">
+    <Property Name="ElementName" Value="[dbo].[Routes].[ZoneId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Routes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Periodicity" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cadb7229-187e-4fc8-95e6-de6ade07434b" ChangeDateTime="03/12/2024 03:48:51">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[IdVehicle]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VehicleId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4c6c6d0d-2bf7-4d33-9e8a-5d10dbe22819" ChangeDateTime="03/12/2024 03:48:55">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[IdVehicleCenter]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VehicleCenterId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="72f7a732-a71c-460e-a53e-9906c135b972" ChangeDateTime="03/12/2024 03:49:01">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[IdWasteCenter]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WasteCenterId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="707442bf-6a75-4736-a774-dda19fe7df82" ChangeDateTime="03/12/2024 03:49:05">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[IdEmployee]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EmployeeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8700eee9-35b4-4a66-b3b0-ac5581565f68" ChangeDateTime="03/12/2024 03:49:08">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[IdRoute]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RouteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0127a74e-3825-4cc7-a7b9-bd6ba34fb9d0" ChangeDateTime="03/12/2024 03:52:10">
+    <Property Name="ElementName" Value="[dbo].[Recolections].[State]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recolections]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Status" />
+  </Operation>
 </Operations>

@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 namespace EcoLife.Api.Controllers
 {
     [Route("api/vehicles")]
-    [Authorize]
     [ApiController]
     public class VehicleController : Controller
     {
@@ -26,7 +25,7 @@ namespace EcoLife.Api.Controllers
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var vehicles = await _uow.VehicleRepository.GetAllAsync();
+            var vehicles = await _uow.VehicleRepository.GetAllWithCenter();
             return Ok(vehicles);
         }
 

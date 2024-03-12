@@ -32,6 +32,13 @@ namespace EcoLife.Api.Controllers
             return Ok(containers);
         }
 
+        [HttpGet("without-route")]
+        async public Task<IActionResult> GetAllWithoutRouteAsync()
+        {
+            var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
+            return Ok(containers.Where(x => x.RouteId == null));
+        }
+
         [HttpPost]
         async public Task<IActionResult> PostContainerAsync([FromBody] ContainerDto containerDto)
         {

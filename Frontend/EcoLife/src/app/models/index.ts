@@ -15,3 +15,7 @@ export * from './nominatim-address-model';
 export * from './nominatim-place-model';
 export * from './vehicle-center-model';
 export * from './waste-center-model';
+export * from './route-model';
+export * from './new-route-model';
+export * from './recolection-model';
+export * from './new-recolection.model';

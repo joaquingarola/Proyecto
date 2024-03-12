@@ -14,5 +14,14 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
             => await context.Set<Container>()
                 .Include(m => m.Zone)
                 .ToListAsync();
+
+        public async Task<List<Container>> GetAllWithRouteAsync()
+            => await context.Set<Container>()
+                .ToListAsync();
+
+        public async Task<List<Container>> GetByRoute(int routeId)
+            => await context.Set<Container>()
+                .Where(x => x.RouteId == routeId)
+                .ToListAsync();
     }
 }

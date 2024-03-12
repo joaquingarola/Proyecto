@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import "leaflet-routing-machine";
 
 import { NominatimPlaceModel } from '../../../models';
@@ -14,9 +14,17 @@ import { GeocodeService } from '../../../services';
 export class MapComponent {
   @Input() route: L.LatLng[];
   @Input() selectedContainer: L.LatLngTuple; 
+  @Input() containersRecolection: Array<L.LatLngTuple>;
   @Input() othersContainers: Array<L.LatLngTuple>; 
+  @Input() selelectedContainersRoute: Array<L.LatLng>; 
+  @Input() wasteCenters: Array<L.LatLngTuple>; 
+  @Input() vehicleCenters: Array<L.LatLngTuple>; 
   @Input() disabledClick: boolean = false;
+  @Input() createRoute: boolean = false;
   @Output() coords = new EventEmitter<NominatimPlaceModel | null>();
+  @Output() selectedCoords = new EventEmitter<L.LatLng>();
+  @Output() selectedWasteCenter = new EventEmitter<L.LatLng>();
+  @Output() selectedVehicleCenter = new EventEmitter<L.LatLng>();
 
   private routeFirstSection: L.LatLng[];
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
@@ -29,6 +37,26 @@ export class MapComponent {
   });
   public containerDisabledIcon = L.icon({
     iconUrl: '../../../../assets/container_disabled_icon.png',
+    iconSize: [48, 48],
+    iconAnchor: [6, 42]
+  });
+  public vehicleCenterIcon = L.icon({
+    iconUrl: '../../../../assets/vehicle_icon.png',
+    iconSize: [48, 48],
+    iconAnchor: [6, 42]
+  });
+  public vehicleCenterDisabledIcon = L.icon({
+    iconUrl: '../../../../assets/vehicle_disabled_icon.png',
+    iconSize: [48, 48],
+    iconAnchor: [6, 42]
+  });
+  public wasteCenterIcon = L.icon({
+    iconUrl: '../../../../assets/waste_icon.png',
+    iconSize: [48, 48],
+    iconAnchor: [6, 42]
+  });
+  public wasteCenterDisabledIcon = L.icon({
+    iconUrl: '../../../../assets/waste_disabled_icon.png',
     iconSize: [48, 48],
     iconAnchor: [6, 42]
   });
@@ -64,18 +92,59 @@ export class MapComponent {
     if(this.othersContainers) {
       this.othersContainers.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.containerDisabledIcon});
-        marker.addTo(this.map);
+        if(!this.createRoute) {
+          marker.addTo(this.map);
+        } else {
+          marker.addTo(this.map).on('click', 
+          (e: L.LeafletMouseEvent) => {
+            if(this.selelectedContainersRoute.includes(e.latlng)) {
+              e.target.setIcon(this.containerDisabledIcon);
+            } else {
+              e.target.setIcon(this.containerIcon);
+            }
+            this.selectedCoords.emit(e.latlng)
+          });
+        }
       });
     }
 
-    if(this.route) {
+    if(this.selelectedContainersRoute) {
+      this.selelectedContainersRoute.forEach((coords: L.LatLng) => {
+        let marker = new L.Marker(coords, {icon: this.containerIcon});
+
+        marker.addTo(this.map).on('click', 
+        (e: L.LeafletMouseEvent) => {
+          if(this.selelectedContainersRoute.includes(e.latlng)) {
+            e.target.setIcon(this.containerDisabledIcon);
+          } else {
+            e.target.setIcon(this.containerIcon);
+          }
+          this.selectedCoords.emit(e.latlng)
+        });
+      });
+    }
+
+    if(this.containersRecolection) {
+      this.containersRecolection.forEach((coords: L.LatLngTuple) => {
+        let marker = new L.Marker(coords, {icon: this.containerIcon});
+        marker.addTo(this.map);
+      })
+    }
+
+    this.loadVehicleCenters();
+
+    this.loadWasteCenters();
+
+    this.addRoute(this.route, true);
+
+    /* if(this.route) {
       if(this.route.length >=2) {
         this.routeFirstSection = this.route.slice(0,2);
         this.route.splice(0,2);
         this.addRoute(this.routeFirstSection, true);
       }
       this.addRoute(this.route);
-    }
+    } */
 
     if(this.selectedContainer) {
       this.marker = new L.Marker(this.selectedContainer, {icon: this.containerIcon});
@@ -108,6 +177,32 @@ export class MapComponent {
         this.updateCoords(e.latlng, false);
       }
     });
+  }
+
+  private loadVehicleCenters(): void {
+    if(this.vehicleCenters) {
+      this.vehicleCenters.forEach((coords: L.LatLngTuple) => {
+        let marker = new L.Marker(coords, {icon: this.vehicleCenterDisabledIcon});
+        marker.addTo(this.map).on('click', 
+          (e: L.LeafletMouseEvent) => {
+            this.selectedVehicleCenter.emit(e.latlng);
+            e.target.setIcon(this.vehicleCenterIcon);
+          });
+      });
+    }
+  }
+
+  private loadWasteCenters(): void {
+    if(this.wasteCenters) {
+      this.wasteCenters.forEach((coords: L.LatLngTuple) => {
+        let marker = new L.Marker(coords, {icon: this.wasteCenterDisabledIcon});
+        marker.addTo(this.map).on('click', 
+          (e: L.LeafletMouseEvent) => {
+            this.selectedWasteCenter.emit(e.latlng);
+            e.target.setIcon(this.wasteCenterIcon);
+          });
+      });
+    }
   }
 
   private updateCoords(latlng: L.LatLng, markerClick: boolean): void {

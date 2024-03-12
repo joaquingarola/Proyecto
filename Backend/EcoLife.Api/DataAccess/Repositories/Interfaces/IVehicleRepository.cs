@@ -2,5 +2,8 @@
 
 namespace EcoLife.Api.DataAccess.Repositories.Interfaces
 {
-    public interface IVehicleRepository : IBaseRepository<Vehicle> { }
+    public interface IVehicleRepository : IBaseRepository<Vehicle> 
+    {
+        Task<List<Vehicle>> GetAllWithCenter();
+    }
 }

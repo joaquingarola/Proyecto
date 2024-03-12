@@ -4,5 +4,8 @@
     [Patent] NVARCHAR(7) NOT NULL, 
     [Description] NVARCHAR(50) NOT NULL, 
     [Model] INT NOT NULL, 
-    [BuyDate] DATETIME NOT NULL
+    [BuyDate] DATETIME NOT NULL,
+    [VehicleCenterId] INT NULL
+
+    CONSTRAINT [FK_Vehicles_VehicleCenters] FOREIGN KEY ([VehicleCenterId]) REFERENCES [VehicleCenters]([Id])
 )

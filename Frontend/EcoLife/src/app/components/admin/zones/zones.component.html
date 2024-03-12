@@ -2,6 +2,7 @@
 <div class="container">
 	<div class="container__data">
 		<p class="table-title">Lista de zonas</p>
+		<button mat-raised-button color="primary" (click)="addZone()" class="container__data__add-button">Agregar nueva zona</button>
 		<mat-form-field class="container__data__filter">
 			<mat-label>Filtrar</mat-label>
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción u horas" #input autocomplete="off">
@@ -11,12 +12,10 @@
 					<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Descripción </th>
 					<td mat-cell *matCellDef="let zone" class="centered-cell"> {{zone.description}} </td>
 			</ng-container>
-
 			<ng-container matColumnDef="maximumHours">
 				<th mat-header-cell *matHeaderCellDef mat-sort-header  class="centered-header" > Cantidad máxima de horas </th>
 				<td mat-cell *matCellDef="let zone" class="centered-cell"> {{zone.maximumHours}} </td>
 			</ng-container>
-
 			<ng-container matColumnDef="options">
 					<th mat-header-cell *matHeaderCellDef class="centered-header"> Opciones </th>
 					<td mat-cell *matCellDef="let zone" class="centered-cell">
@@ -24,20 +23,17 @@
 						<mat-icon (click)="deleteZone(zone.id)" class="icon" color="warn">delete</mat-icon>
 					</td>
 			</ng-container>
-
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 			<tr class="mat-row" *matNoDataRow>
         <td class="mat-cell container__data__table__no-results" colspan="6">No se encontraron mantenimientos que coincidan con "{{input.value}}"</td>
       </tr>
 		</table>
-
 		<mat-paginator 
 			class="container__data__paginator" 
 			[length]="100"
 			[pageSize]="10"
 			[pageSizeOptions]="[1,5,10,20]">
 		</mat-paginator>
-		<button mat-raised-button color="primary" (click)="addZone()" class="container__data__add-button">Agregar nueva zona</button>
 	</div>
 </div>

@@ -68,8 +68,8 @@ export class ContainerComponent {
   }
 
   public editContainer(cont: ContainerModel): void {
-    let otherContainers = this.containers.data.filter(x => x.id != cont.id);
-    let data: ItemSelection<ContainerModel> = {selectedItem: cont, othersItems: otherContainers};
+    const otherContainers = this.containers.data.filter(x => x.id != cont.id);
+    const data: ItemSelection<ContainerModel> = {selectedItem: cont, othersItems: otherContainers};
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
@@ -78,7 +78,7 @@ export class ContainerComponent {
   }
 
   public addContainer(): void {
-    let data: ItemSelection<ContainerModel> = { othersItems: this.containers.data };
+    const data: ItemSelection<ContainerModel> = { othersItems: this.containers.data };
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
     dialogRef.afterClosed().subscribe({
       next: () => this.listContainers()

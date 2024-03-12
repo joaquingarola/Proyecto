@@ -46,7 +46,7 @@ export class EmployeeFormModalComponent implements OnInit {
       .subscribe(
         (response) => { 
           this.roles = response;
-          this.selectedRole = this.data.roleId;
+          this.selectedRole = this.data?.roleId;
         }
       );
   }

@@ -2,6 +2,7 @@
 <div class="container">
 	<div class="container__data">
 		<p class="table-title">Lista de Centros de Residuos</p>
+		<button mat-raised-button (click)="addWasteCenter()" color="primary" class="container__data__add-button">Agregar nuevo centro de residuo</button>
 		<mat-form-field class="container__data__filter">
 			<mat-label>Filtrar</mat-label>
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción, tipo de residuo o dirección" #input autocomplete="off">
@@ -38,7 +39,6 @@
 			[pageSize]="10"
 			[pageSizeOptions]="[1,5,10,20]">
 		</mat-paginator>
-		<button mat-raised-button (click)="addWasteCenter()" color="primary" class="container__data__add-button">Agregar nuevo centro de residuo</button>
 	</div>
 </div>
 

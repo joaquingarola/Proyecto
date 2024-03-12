@@ -1,0 +1,86 @@
+<div class="modal">
+  <div mat-dialog-title class="modal__title">
+    <h1>{{data.recolection ? 'Modificar datos recolección': 'Nueva recolección'}}</h1>
+  </div>
+  <div class="modal__content">
+    <div class="modal__content__form">
+      <form [formGroup]="recolectionForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content class="modal__content__form__content">
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Descripción</mat-label>
+              <input matInput type="text" placeholder="Recolección zona centro" formControlName="description" autocomplete="off" maxlength="200"> 
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Centro de Vehículo</mat-label>
+              <mat-select formControlName="vehicleCenterId" [(value)]="selectedVehicleCenter" (selectionChange)="onVehicleCenterChange()">
+                <mat-option *ngFor="let vehicleCenter of vehicleCenters" [value]="vehicleCenter.id">
+                  {{vehicleCenter.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Vehículo</mat-label>
+              <mat-select formControlName="vehicleId" [(value)]="selectedVehicle" [disabled]="!selectedVehicleCenter">
+                <mat-option *ngFor="let vehicle of vehiclesByCenter" [value]="vehicle.id">
+                  {{vehicle.patent}} - {{vehicle.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Empleado</mat-label>
+              <mat-select formControlName="employeeId" [(value)]="selectedEmployee">
+                <mat-option *ngFor="let employee of employees" [value]="employee.id">
+                  {{employee.name}} - {{employee.surname}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Centro de Residuos</mat-label>
+              <mat-select formControlName="wasteCenterId" [(value)]="selectedWasteCenter">
+                <mat-option *ngFor="let wasteCenter of wasteCenters" [value]="wasteCenter.id">
+                  {{wasteCenter.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de la recolección</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div *ngIf="error.length !==0" class="modal__content__form__error">
+            <span>{{error}}</span>
+          </div>
+        </div>
+        <div mat-dialog-actions class="modal__content__form__action">
+          <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!recolectionForm.dirty || recolectionForm.invalid || isLoading" [class.spinner]="isLoading">{{data.recolection ? 'Actualizar': 'Guardar'}}</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal__content__map">
+      <app-map 
+        [containersRecolection] = "containersRoute"
+        [wasteCenters] = "data.wasteCenters!"
+        [vehicleCenters] = "data.vehicleCenters!"
+        [disabledClick] = "true"
+        (selectedVehicleCenter) = "updateSelectedVehicleCenter($event)"
+        (selectedWasteCenter) = "updateSelectedWasteCenter($event)"
+      >
+      </app-map>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ export interface EmployeeModel {
   id?: number,
   dni: string,
   name: string,
-  surName: string,
+  surname: string,
   email: string,
   phoneNumber: string,
   birthdate: Date,

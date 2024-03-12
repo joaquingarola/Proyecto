@@ -14,5 +14,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IContainerRepository ContainerRepository { get; }
         public IWasteCenterRepository WasteCenterRepository { get; }
         public IVehicleCenterRepository VehicleCenterRepository { get; }
+        public IRouteRepository RouteRepository { get; }
+        public IRecolectionRepository RecolectionRepository { get; }
     }
 }

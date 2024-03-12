@@ -62,6 +62,8 @@ import { WasteCentersComponent } from './components/admin/waste-centers/waste-ce
 import { VehicleCentersComponent } from './components/admin/vehicle-centers/vehicle-centers.component';
 import { VehicleCenterFormModalComponent } from './components/admin/vehicle-centers/vehicle-center-form-modal/vehicle-center-form-modal.component';
 import { WasteCenterFormModalComponent } from './components/admin/waste-centers/waste-center-form-modal/waste-center-form-modal.component';
+import { RoutesFormModalComponent } from './components/admin/routes/routes-form-modal/routes-form-modal.component';
+import { PlanifyRecolectionComponent } from './components/admin/routes/planify-recolection/planify-recolection.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -102,7 +104,9 @@ registerLocaleData(localeEs, 'es');
     WasteCentersComponent,
     VehicleCentersComponent,
     VehicleCenterFormModalComponent,
-    WasteCenterFormModalComponent
+    WasteCenterFormModalComponent,
+    RoutesFormModalComponent,
+    PlanifyRecolectionComponent
   ],
   imports: [
     BrowserModule,
