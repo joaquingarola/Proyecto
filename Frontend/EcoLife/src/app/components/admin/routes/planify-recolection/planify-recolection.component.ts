@@ -20,13 +20,16 @@ export class PlanifyRecolectionComponent {
   public selectedVehicle: number;
   public wasteCenters: WasteCenterModel[];
   public wasteCentersCoords: L.LatLngTuple[];
-  public selectedWasteCenter: number;
+  public selectedWasteCenter: number | null;
+  public updateWasteCenterByForm: L.LatLngTuple;
   public vehicleCenters: VehicleCenterModel[];
   public vehicleCentersCoords: L.LatLngTuple[];
-  public selectedVehicleCenter: number;
+  public selectedVehicleCenter: number | null;
+  public updateVehicleCenterByForm: L.LatLngTuple;
   public error =  "";
   public recolectionForm: FormGroup;
   public isLoading = false
+  public actualDate = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -81,17 +84,37 @@ export class PlanifyRecolectionComponent {
     ); 
   }
 
+  public updateSelectedWasteCenter(coords: L.LatLng | null): void {
+    if(coords) { 
+      this.selectedWasteCenter = this.wasteCenters.find(x => x.latitude == coords.lat && x.longitude == coords.lng)?.id!;
+    } else {
+      this.selectedWasteCenter = null;
+    }
+  }
+
+  public onWasteCenterChange(): void {
+    const wasteCenter = this.wasteCenters.find(x => x.id == this.selectedWasteCenter);
+    this.updateWasteCenterByForm = [wasteCenter!.latitude, wasteCenter!.longitude];
+  }
+
+  public updateSelectedVehicleCenter(coords: L.LatLng | null): void {
+    if(coords) { 
+      this.selectedVehicleCenter = this.vehicleCenters.find(x => x.latitude == coords.lat && x.longitude == coords.lng)?.id!;
+    } else {
+      this.selectedVehicleCenter = null;
+    }
+    this.updateVehiclesByCenter();
+  }
+
   public onVehicleCenterChange(): void {
+    this.updateVehiclesByCenter();
+    const vehicleCenter = this.vehicleCenters.find(x => x.id == this.selectedVehicleCenter);
+    this.updateVehicleCenterByForm = [vehicleCenter!.latitude, vehicleCenter!.longitude];
+  }
+
+  private updateVehiclesByCenter(): void {
+    this.recolectionForm.get('vehicleId')?.setValue('');
     this.vehiclesByCenter = this.vehicles.filter(x => x.vehicleCenter?.id == this.selectedVehicleCenter);
-  }
-
-  public updateSelectedWasteCenter(coords: L.LatLng): void {
-    this.selectedWasteCenter = this.wasteCenters.find(x => x.latitude == coords.lat && x.longitude == coords.lng)?.id!;
-  }
-
-  public updateSelectedVehicleCenter(coords: L.LatLng): void {
-    this.selectedVehicleCenter = this.vehicleCenters.find(x => x.latitude == coords.lat && x.longitude == coords.lng)?.id!;
-    this.onVehicleCenterChange();
   }
   
     /* public planify(): void {

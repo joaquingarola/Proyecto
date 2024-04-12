@@ -11,21 +11,26 @@ import { GeocodeService } from '../../../services';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent {
+export class MapComponent implements OnChanges {
   @Input() route: L.LatLng[];
   @Input() selectedContainer: L.LatLngTuple; 
   @Input() containersRecolection: Array<L.LatLngTuple>;
   @Input() othersContainers: Array<L.LatLngTuple>; 
   @Input() selelectedContainersRoute: Array<L.LatLng>; 
   @Input() wasteCenters: Array<L.LatLngTuple>; 
-  @Input() vehicleCenters: Array<L.LatLngTuple>; 
+  @Input() selectedWasteCenter: L.LatLngTuple | null;
+  @Input() vehicleCenters: Array<L.LatLngTuple>;
+  @Input() selectedVehicleCenter: L.LatLngTuple | null; 
   @Input() disabledClick: boolean = false;
   @Input() createRoute: boolean = false;
   @Output() coords = new EventEmitter<NominatimPlaceModel | null>();
   @Output() selectedCoords = new EventEmitter<L.LatLng>();
-  @Output() selectedWasteCenter = new EventEmitter<L.LatLng>();
-  @Output() selectedVehicleCenter = new EventEmitter<L.LatLng>();
+  @Output() selectedWasteCenterUpdate = new EventEmitter<L.LatLng | null>();
+  @Output() selectedVehicleCenterUpdate = new EventEmitter<L.LatLng | null>();
 
+  private markers: L.Marker[] = [];
+  private actualWasteCenter : L.Marker;
+  private actualVehicleCenter : L.Marker;
   private routeFirstSection: L.LatLng[];
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
   private map: L.Map;
@@ -64,6 +69,16 @@ export class MapComponent {
   constructor(
     private geocodeService: GeocodeService,
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes?.['selectedVehicleCenter']?.currentValue) {
+      this.updateVehicleCenter(changes?.['selectedVehicleCenter']?.currentValue)
+    }
+
+    if(changes?.['selectedWasteCenter']?.currentValue) {
+      this.updateWasteCenter(changes?.['selectedWasteCenter']?.currentValue)
+    }
+  }
 
   ngAfterViewInit(): void {
     this.map = L.map('map').setView(this.getViewCoords(), 16);
@@ -185,11 +200,31 @@ export class MapComponent {
         let marker = new L.Marker(coords, {icon: this.vehicleCenterDisabledIcon});
         marker.addTo(this.map).on('click', 
           (e: L.LeafletMouseEvent) => {
-            this.selectedVehicleCenter.emit(e.latlng);
-            e.target.setIcon(this.vehicleCenterIcon);
+            let actualLatLng = this.actualVehicleCenter?.getLatLng();
+            if(actualLatLng?.lat == e.latlng.lat && actualLatLng?.lng == e.latlng.lng) {
+              e.target.setIcon(this.vehicleCenterDisabledIcon);
+              this.selectedVehicleCenterUpdate.emit(null);
+              this.actualVehicleCenter.setLatLng([0,0]);
+            } else {
+              let oldMarker = this.markers.find(m => m.getLatLng().lat == actualLatLng?.lat && m.getLatLng().lng == actualLatLng?.lng);
+              oldMarker?.setIcon(this.vehicleCenterDisabledIcon);
+              this.selectedVehicleCenterUpdate.emit(e.latlng);
+              this.actualVehicleCenter = new L.Marker(e.latlng);
+              e.target.setIcon(this.vehicleCenterIcon);
+            }
           });
+        this.markers.push(marker);
       });
     }
+  }
+
+  private updateVehicleCenter(newCoords: L.LatLngTuple): void {
+    let actualLatLng = this.actualVehicleCenter?.getLatLng();
+    let oldMarker = this.markers.find(m => m.getLatLng().lat == actualLatLng?.lat && m.getLatLng().lng == actualLatLng?.lng);
+    oldMarker?.setIcon(this.vehicleCenterDisabledIcon);
+    let newMarker = this.markers.find(m => m.getLatLng().lat == newCoords[0] && m.getLatLng().lng == newCoords[1]);
+    newMarker?.setIcon(this.vehicleCenterIcon);
+    this.actualVehicleCenter = new L.Marker(newCoords);
   }
 
   private loadWasteCenters(): void {
@@ -198,11 +233,31 @@ export class MapComponent {
         let marker = new L.Marker(coords, {icon: this.wasteCenterDisabledIcon});
         marker.addTo(this.map).on('click', 
           (e: L.LeafletMouseEvent) => {
-            this.selectedWasteCenter.emit(e.latlng);
-            e.target.setIcon(this.wasteCenterIcon);
+            let actualLatLng = this.actualWasteCenter?.getLatLng();
+            if(actualLatLng?.lat == e.latlng.lat && actualLatLng?.lng == e.latlng.lng) {
+              e.target.setIcon(this.wasteCenterDisabledIcon);
+              this.selectedWasteCenterUpdate.emit(null);
+              this.actualWasteCenter.setLatLng([0,0]);
+            } else {
+              let oldMarker = this.markers.find(m => m.getLatLng().lat == actualLatLng?.lat && m.getLatLng().lng == actualLatLng?.lng);
+              oldMarker?.setIcon(this.wasteCenterDisabledIcon);
+              this.selectedWasteCenterUpdate.emit(e.latlng);
+              this.actualWasteCenter = new L.Marker(e.latlng);
+              e.target.setIcon(this.wasteCenterIcon);
+            }
           });
+        this.markers.push(marker);
       });
     }
+  }
+
+  private updateWasteCenter(newCoords: L.LatLngTuple): void {
+    let actualLatLng = this.actualWasteCenter?.getLatLng();
+    let oldMarker = this.markers.find(m => m.getLatLng().lat == actualLatLng?.lat && m.getLatLng().lng == actualLatLng?.lng);
+    oldMarker?.setIcon(this.wasteCenterDisabledIcon);
+    let newMarker = this.markers.find(m => m.getLatLng().lat == newCoords[0] && m.getLatLng().lng == newCoords[1]);
+    newMarker?.setIcon(this.wasteCenterIcon);
+    this.actualWasteCenter = new L.Marker(newCoords);
   }
 
   private updateCoords(latlng: L.LatLng, markerClick: boolean): void {

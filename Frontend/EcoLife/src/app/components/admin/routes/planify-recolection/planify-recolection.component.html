@@ -34,6 +34,16 @@
           </div>
           <div class="row">
             <mat-form-field appearance="outline">
+              <mat-label>Centro de Residuos</mat-label>
+              <mat-select formControlName="wasteCenterId" [(value)]="selectedWasteCenter" (selectionChange)="onWasteCenterChange()">
+                <mat-option *ngFor="let wasteCenter of wasteCenters" [value]="wasteCenter.id">
+                  {{wasteCenter.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
               <mat-label>Empleado</mat-label>
               <mat-select formControlName="employeeId" [(value)]="selectedEmployee">
                 <mat-option *ngFor="let employee of employees" [value]="employee.id">
@@ -44,18 +54,8 @@
           </div>
           <div class="row">
             <mat-form-field appearance="outline">
-              <mat-label>Centro de Residuos</mat-label>
-              <mat-select formControlName="wasteCenterId" [(value)]="selectedWasteCenter">
-                <mat-option *ngFor="let wasteCenter of wasteCenters" [value]="wasteCenter.id">
-                  {{wasteCenter.description}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
               <mat-label>Fecha de la recolección</mat-label>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="actualDate"> 
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
@@ -77,8 +77,10 @@
         [wasteCenters] = "data.wasteCenters!"
         [vehicleCenters] = "data.vehicleCenters!"
         [disabledClick] = "true"
-        (selectedVehicleCenter) = "updateSelectedVehicleCenter($event)"
-        (selectedWasteCenter) = "updateSelectedWasteCenter($event)"
+        [selectedVehicleCenter] = "updateVehicleCenterByForm"
+        [selectedWasteCenter] = "updateWasteCenterByForm"
+        (selectedVehicleCenterUpdate) = "updateSelectedVehicleCenter($event)"
+        (selectedWasteCenterUpdate) = "updateSelectedWasteCenter($event)"
       >
       </app-map>
     </div>
