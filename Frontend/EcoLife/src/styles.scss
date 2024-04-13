@@ -54,3 +54,8 @@ mat-form-field {
 .leaflet-routing-alternatives-container {
   display: none !important;
 } 
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
