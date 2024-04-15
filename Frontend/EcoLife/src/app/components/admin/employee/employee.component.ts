@@ -4,8 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ConfirmationModalData, EmployeeModel } from '../../../models';
-import { EmployeeService, ModalConfirmationService } from '../../../services';
+import { ConfirmationModalData, EmployeeModel, SnackbarType } from '../../../models';
+import { EmployeeService, ModalConfirmationService, SnackbarNotificationService } from '../../../services';
 import { EmployeeFormModalComponent } from './employee-form-modal/employee-form-modal.component';
 
 @Component({
@@ -28,6 +28,7 @@ export class EmployeeComponent {
   constructor(
     private employeeService: EmployeeService,
     private modalConfirmationService: ModalConfirmationService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private dialog: MatDialog){ }
   
   ngOnInit(): void {
@@ -62,7 +63,15 @@ export class EmployeeComponent {
       .subscribe(response => {
         if(response){
           this.employeeService.deleteEmployee(id)
-            .subscribe(() => this.listEmployee())
+            .subscribe({
+              next: () => {
+                this.listEmployee();
+                this.snackbarNotificationService.open({ text: 'Empleado eliminado con éxito.', type: SnackbarType.Success });
+              },
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el empleado.', type: SnackbarType.Error });
+              }
+            })
         }
     });
   }
@@ -70,15 +79,23 @@ export class EmployeeComponent {
   public editEmployee(data: EmployeeModel): void {
     const dialogRef = this.dialog.open(EmployeeFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listEmployee()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listEmployee();
+          this.snackbarNotificationService.open({ text: 'Empleado actualizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addEmployee(): void {
     const dialogRef = this.dialog.open(EmployeeFormModalComponent);
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listEmployee()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listEmployee();
+          this.snackbarNotificationService.open({ text: 'Empleado agregado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 }

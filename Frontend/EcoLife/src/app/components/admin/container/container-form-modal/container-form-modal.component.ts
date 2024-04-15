@@ -77,15 +77,15 @@ export class ContainerFormModalComponent {
           .updateContainer(this.data.selectedItem!.id!, this.containerForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+            error: () => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       } else {
         this.containerService.add(this.containerForm.value).subscribe({
           next: () => this._dialogRef.close(true),
-          error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         }).add(() => this.isLoading = false);
       }

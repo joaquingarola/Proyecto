@@ -59,3 +59,23 @@ input::-ms-reveal,
 input::-ms-clear {
   display: none;
 }
+
+.mdc-snackbar__surface {
+  padding: 0 !important;
+}
+
+.green-snackbar {
+  .mat-mdc-simple-snack-bar {
+    background: #4CAF50;
+  }
+}
+
+.red-snackbar {
+  .mat-mdc-simple-snack-bar {
+    background: #CE2029;
+  }
+}
+
+.mat-icon {
+  cursor: pointer;
+}

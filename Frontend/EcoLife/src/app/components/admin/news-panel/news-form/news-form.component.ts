@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewsService } from '../../../../services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NewModel } from '../../../../models';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-news-form',
@@ -11,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./news-form.component.scss']
 })
 export class NewsFormComponent {
+  @Output() coorectlySaved = new EventEmitter<boolean>();
   public error =  "";
   public newsForm: FormGroup;
   public isLoading = false;
@@ -38,15 +38,15 @@ export class NewsFormComponent {
           .updateNew(this.data.id!, this.newsForm.value, this.data.date)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+            error: () => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       } else {
         this.newService.addNews(this.newsForm.value).subscribe({
           next: () => this._dialogRef.close(true),
-          error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         }).add(() => this.isLoading = false);
       }

@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { VehicleModel, ConfirmationModalData } from '../../../models';
+import { VehicleModel, ConfirmationModalData, SnackbarType } from '../../../models';
 import { VehicleService, ModalConfirmationService, SnackbarNotificationService } from '../../../services';
 import { VehiclesFormModalComponent } from './vehicles-form-modal/vehicles-form-modal.component';
 import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-modal/notify-maintenance-form-modal.component';
@@ -67,9 +67,9 @@ export class VehiclesComponent {
             .subscribe({
               next: () => {
                 this.listVehicles();
-                this.snackbarNotificationService.open('Se elimino el vehículo con éxito');
+                this.snackbarNotificationService.open({ text: 'Vehículo eliminado con éxito.', type: SnackbarType.Success });
               },
-              error: () => this.snackbarNotificationService.open('Error: Existen mantenimientos para el vehículo')
+              error: () => this.snackbarNotificationService.open({ text: 'Ocurrió un error al eliminar el vehículo.', type: SnackbarType.Error })
             })
         }
       });
@@ -78,27 +78,35 @@ export class VehiclesComponent {
   public editVehicle(data: VehicleModel): void {
     const dialogRef = this.dialog.open(VehiclesFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: (res) => this.listVehicles()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listVehicles();
+          this.snackbarNotificationService.open({ text: 'Vehículo actualizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addVehicle(): void {
     const dialogRef = this.dialog.open(VehiclesFormModalComponent);
-    dialogRef.afterClosed().subscribe({
-      next: (res) => { 
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+      if(res) {
         this.listVehicles();
-        this.snackbarNotificationService.open('aa');
+        this.snackbarNotificationService.open({ text: 'Vehículo agregado con éxito.', type: SnackbarType.Success });
       }
     });
   }
 
   public notifyMaintenance(data: VehicleModel): void{
     const dialogRef = this.dialog.open(NotifyMaintenanceFormModalComponent, { data });
-
-    /* dialogRef.afterClosed().subscribe({
-      next: (res) => this.listVehicles()
-    }); */
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+      if(res) {
+        this.listVehicles();
+        this.snackbarNotificationService.open({ text: 'Mantenimiento notificado con éxito.', type: SnackbarType.Success });
+      }
+    });
   }
 }
 

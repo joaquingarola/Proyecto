@@ -14,6 +14,7 @@ import { FinishMaintenanceModel, MaintenanceModel } from '../../../../models';
 export class FinishMaintenanceFormModalComponent {
   public maintenanceForm: FormGroup;
   public actualDate = new Date();
+  public error =  "";
 
   constructor(
     private fb: FormBuilder,
@@ -32,8 +33,8 @@ export class FinishMaintenanceFormModalComponent {
       this.maintenanceService.finishMaintenance(this.data.id!, maintenance)
         .subscribe({
           next: () => this._dialogRef.close(true),
-          error: (err: any) => {
-            console.error(err);
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           }
         })
     };

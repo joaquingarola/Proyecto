@@ -64,8 +64,8 @@ export class RoutesFormModalComponent {
         this.routeService.update(route)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+            error: (r) => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             }
           }).add(() => this.isLoading = false);
       } else {
@@ -75,7 +75,7 @@ export class RoutesFormModalComponent {
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       }

@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfirmationModalData, ItemSelection, VehicleCenterModel } from '../../../models';
-import { ModalConfirmationService, VehicleCenterService } from '../../../services';
+import { ConfirmationModalData, ItemSelection, SnackbarType, VehicleCenterModel } from '../../../models';
+import { ModalConfirmationService, SnackbarNotificationService, VehicleCenterService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { VehicleCenterFormModalComponent } from './vehicle-center-form-modal/vehicle-center-form-modal.component';
 
@@ -28,6 +28,7 @@ export class VehicleCentersComponent {
   constructor(
     private vehicleCenterService: VehicleCenterService,
     private modalConfirmationService: ModalConfirmationService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private dialog: MatDialog){ }
   
   ngOnInit(): void {
@@ -62,7 +63,15 @@ export class VehicleCentersComponent {
       .subscribe(response => {
         if(response){
           this.vehicleCenterService.deleteVehicleCenter(id)
-            .subscribe(() => this.listVehicleCenters())
+          .subscribe({
+            next: () => {
+              this.listVehicleCenters();
+              this.snackbarNotificationService.open({ text: 'Centro de vehículos eliminado con éxito.', type: SnackbarType.Success });
+            },
+            error: () => {
+              this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el centro de vehículos.', type: SnackbarType.Error });
+            }
+          })
         }
     });
   }
@@ -72,16 +81,25 @@ export class VehicleCentersComponent {
     let data: ItemSelection<VehicleCenterModel> = {selectedItem: cont, othersItems: otherContainers};
     const dialogRef = this.dialog.open(VehicleCenterFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listVehicleCenters()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listVehicleCenters();
+          this.snackbarNotificationService.open({ text: 'Centro de vehículos actualizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addVehicleCenter(): void {
     let data: ItemSelection<VehicleCenterModel> = { othersItems: this.vehicleCenters.data };
     const dialogRef = this.dialog.open(VehicleCenterFormModalComponent, { data });
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listVehicleCenters()
-    });
+
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listVehicleCenters();
+          this.snackbarNotificationService.open({ text: 'Centro de vehículos agregado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 }

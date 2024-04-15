@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfirmationModalData, ContainerModel, ItemSelection } from '../../../models';
-import { ContainerService, ModalConfirmationService } from '../../../services';
+import { ConfirmationModalData, ContainerModel, ItemSelection, SnackbarType } from '../../../models';
+import { ContainerService, ModalConfirmationService, SnackbarNotificationService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { ContainerFormModalComponent } from './container-form-modal/container-form-modal.component';
 
@@ -28,6 +28,7 @@ export class ContainerComponent {
   constructor(
     private containerService: ContainerService,
     private modalConfirmationService: ModalConfirmationService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private dialog: MatDialog){ }
   
   ngOnInit(): void {
@@ -62,7 +63,15 @@ export class ContainerComponent {
       .subscribe(response => {
         if(response){
           this.containerService.deleteContainer(id)
-            .subscribe(() => this.listContainers())
+            .subscribe({
+              next: () => {
+                this.listContainers();
+                this.snackbarNotificationService.open({ text: 'Contenedor eliminado con éxito.', type: SnackbarType.Success });
+              },
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el contenedor.', type: SnackbarType.Error });
+              }
+            })
         }
     });
   }
@@ -72,16 +81,24 @@ export class ContainerComponent {
     const data: ItemSelection<ContainerModel> = {selectedItem: cont, othersItems: otherContainers};
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listContainers()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listContainers();
+          this.snackbarNotificationService.open({ text: 'Contenedor actualizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addContainer(): void {
     const data: ItemSelection<ContainerModel> = { othersItems: this.containers.data };
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listContainers()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listContainers();
+          this.snackbarNotificationService.open({ text: 'Contenedor agregado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 }

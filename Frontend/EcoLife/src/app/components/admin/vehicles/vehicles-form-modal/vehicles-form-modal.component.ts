@@ -15,6 +15,7 @@ export class VehiclesFormModalComponent {
   public vehicleCenters: VehicleCenterModel[];
   public selectedVehicleCenter: number;
   public actualDate = new Date();
+  public error =  "";
 
   constructor(
     private fb: FormBuilder,
@@ -53,16 +54,16 @@ export class VehiclesFormModalComponent {
         this.vehicleService
           .updateVehicle(this.data.id!, this.vehicleForm.value)
           .subscribe({
-            next: (val: any) => this._dialogRef.close(true),
-            error: (err: any) => {
-              console.error(err);
+            next: () => this._dialogRef.close(true),
+            error: () => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           });
       } else {
         this.vehicleService.add(this.vehicleForm.value).subscribe({
-          next: (res: any) => this._dialogRef.close(true),
-          error: (err: any) => {
-            console.error(err);
+          next: () => this._dialogRef.close(true),
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         });
       }

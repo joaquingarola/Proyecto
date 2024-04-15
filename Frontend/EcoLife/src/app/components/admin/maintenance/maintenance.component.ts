@@ -4,10 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { MaintenanceService, ModalConfirmationService } from '../../../services';
+import { MaintenanceService, ModalConfirmationService, SnackbarNotificationService } from '../../../services';
 import { StatusEnum } from './status.enum';
 import { FinishMaintenanceFormModalComponent } from './finish-maintenance-form-modal/finish-maintenance-form-modal.component';
-import { ConfirmationModalData, MaintenanceModel } from '../../../models';
+import { ConfirmationModalData, MaintenanceModel, SnackbarType } from '../../../models';
 import { EditMaintenanceFormModalComponent } from './edit-maintenance-form-modal/edit-maintenance-form-modal.component';
 
 @Component({
@@ -29,6 +29,7 @@ export class MaintenanceComponent  {
 
   constructor(
     private maintenanceService: MaintenanceService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private modalConfirmationService: ModalConfirmationService,
     private dialog: MatDialog){ }
   
@@ -62,9 +63,13 @@ export class MaintenanceComponent  {
   public finishMaintenance(data: MaintenanceModel): void {
     const dialogRef = this.dialog.open(FinishMaintenanceFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listMaintenances()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listMaintenances();
+          this.snackbarNotificationService.open({ text: 'Mantenimiento finalizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public deleteMaintenance(id: number): void {
@@ -72,7 +77,15 @@ export class MaintenanceComponent  {
       .subscribe(response => {
         if(response){
           this.maintenanceService.deleteMaintenance(id)
-            .subscribe(() => this.listMaintenances())
+            .subscribe({
+              next: () => {
+                this.listMaintenances();
+                this.snackbarNotificationService.open({ text: 'Mantenimiento eliminado con éxito.', type: SnackbarType.Success });
+              },
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el mantenimiento.', type: SnackbarType.Error });
+              }
+            })
         }
     });
   }
@@ -80,8 +93,12 @@ export class MaintenanceComponent  {
   public editMaintenance(data: MaintenanceModel): void {
     const dialogRef = this.dialog.open(EditMaintenanceFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listMaintenances()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listMaintenances();
+          this.snackbarNotificationService.open({ text: 'Mantenimiento actualizado con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 }

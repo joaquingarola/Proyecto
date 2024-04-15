@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 
 import { ContainerService, ModalConfirmationService, RouteService, SnackbarNotificationService, VehicleCenterService, WasteCenterService } from '../../../services';
-import { ConfirmationModalData, ContainerModel, NewRecolectionModel, NewRouteModel, RecolectionModel, RouteModel, VehicleCenterModel, WasteCenterModel } from '../../../models';
+import { ConfirmationModalData, ContainerModel, NewRecolectionModel, NewRouteModel, RecolectionModel, RouteModel, SnackbarType, VehicleCenterModel, WasteCenterModel } from '../../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { RoutesFormModalComponent } from './routes-form-modal/routes-form-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
@@ -82,11 +82,13 @@ export class RoutesComponent {
               next: () => {
                 this.getContainers();
                 this.listRoutes();
-                this.snackbarNotificationService.open('Se elimino la ruta con éxito');
+                this.snackbarNotificationService.open({ text: 'Ruta eliminada con éxito.', type: SnackbarType.Success });
               },
-              error: () => this.snackbarNotificationService.open('Hubo un error al eliminar la ruta')
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar la ruta.', type: SnackbarType.Error });
+              }
             })
-        }
+          }
       });
   }
 
@@ -96,35 +98,42 @@ export class RoutesComponent {
     const data: NewRouteModel = { route: editRoute, containers: containersTotal, containersWithoutRoute: this.containersWithoutRoute };
     const dialogRef = this.dialog.open(RoutesFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => { 
-        this.getContainers(),
-        this.listRoutes()
-      }
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.getContainers(),
+          this.listRoutes()
+          this.snackbarNotificationService.open({ text: 'Ruta actualizada con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public planify(route: RouteModel): void {
     const data: NewRecolectionModel = { route: route, wasteCenters: this.wasteCentersCoords, vehicleCenters: this.vehicleCentersCoords };
     const dialogRef = this.dialog.open(PlanifyRecolectionComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => { 
-        this.listRoutes()
-      }
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.getContainers(),
+          this.listRoutes()
+          this.snackbarNotificationService.open({ text: 'Recolección planificada con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addRoute(): void {
     const data: NewRouteModel = { containers: this.containers, containersWithoutRoute: this.containersWithoutRoute };
     const dialogRef = this.dialog.open(RoutesFormModalComponent, { data } );
     
-    dialogRef.afterClosed().subscribe({
-      next: () => { 
-        this.getContainers(),
-        this.listRoutes()
-      }
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.getContainers(),
+          this.listRoutes()
+          this.snackbarNotificationService.open({ text: 'Ruta agregada con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public getContainers(): void {

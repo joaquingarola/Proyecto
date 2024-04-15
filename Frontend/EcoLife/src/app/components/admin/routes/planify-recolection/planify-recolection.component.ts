@@ -116,15 +116,6 @@ export class PlanifyRecolectionComponent {
     this.recolectionForm.get('vehicleId')?.setValue('');
     this.vehiclesByCenter = this.vehicles.filter(x => x.vehicleCenter?.id == this.selectedVehicleCenter);
   }
-  
-    /* public planify(): void {
-    this.containerService.getAll()
-      .subscribe(
-        (response) => {
-          this.coordsList = response.map(x => L.latLng(x.latitude, x.longitude));
-          this.showMap = true;
-        })    
-  }*/
 
   private getVehicleCenters(): void {
     this.vehicleCenterService.getAll()
@@ -151,8 +142,8 @@ export class PlanifyRecolectionComponent {
       this.isLoading = true;
       this.recolectionService.add(this.recolectionForm.value).subscribe({
         next: () => this._dialogRef.close(true),
-        error: (response: HttpErrorResponse) => {
-          this.error = response.error;
+        error: () => {
+          this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
         },
       }).add(() => this.isLoading = false);
     }

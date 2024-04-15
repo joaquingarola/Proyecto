@@ -59,15 +59,15 @@ export class EmployeeFormModalComponent implements OnInit {
           .updateEmployee(this.data.id!, this.employeeForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+            error: () => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       } else {
         this.employeeService.add(this.employeeForm.value).subscribe({
           next: () => this._dialogRef.close(true),
-          error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         }).add(() => this.isLoading = false);
       }

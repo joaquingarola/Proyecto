@@ -56,15 +56,15 @@ export class WasteCenterFormModalComponent {
           .updateWasteCenter(this.data.selectedItem!.id!, this.wasteCenterForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
-              this.error = response.error;
+            error: () => {
+              this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       } else {
         this.wasteCenterService.add(this.wasteCenterForm.value).subscribe({
           next: () => this._dialogRef.close(true),
-          error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         }).add(() => this.isLoading = false);
       }

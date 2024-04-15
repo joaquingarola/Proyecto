@@ -20,6 +20,9 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
+      <div *ngIf="error.length !==0" class="modal-form__error">
+        <span>{{error}}</span>
+      </div>
     </div>
     <div mat-dialog-actions class="modal-form__action">
       <button mat-raised-button type="button" [mat-dialog-close]="false">Cancelar</button>

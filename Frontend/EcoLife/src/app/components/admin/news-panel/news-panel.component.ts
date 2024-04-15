@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalConfirmationService, NewsService } from '../../../services';
-import { ConfirmationModalData, NewModel } from '../../../models';
+import { ModalConfirmationService, NewsService, SnackbarNotificationService } from '../../../services';
+import { ConfirmationModalData, NewModel, SnackbarType } from '../../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsFormComponent } from './news-form/news-form.component';
 
@@ -21,6 +21,7 @@ export class NewsPanelComponent implements OnInit {
   constructor(
     private newsService: NewsService,
     private modalConfirmationService: ModalConfirmationService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private dialog: MatDialog
   ) { }
 
@@ -41,7 +42,15 @@ export class NewsPanelComponent implements OnInit {
       .subscribe(response => {
         if(response){
           this.newsService.deleteNew(id)
-            .subscribe(() => this.listNews())
+            .subscribe({
+              next: () => {
+                this.listNews();
+                this.snackbarNotificationService.open({ text: 'Novedad eliminada con éxito.', type: SnackbarType.Success });
+              },
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar la novedad.', type: SnackbarType.Error });
+              }
+            })
         }
     });
   }
@@ -49,15 +58,23 @@ export class NewsPanelComponent implements OnInit {
   public editNew(data: NewModel): void {
     const dialogRef = this.dialog.open(NewsFormComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listNews()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listNews();
+          this.snackbarNotificationService.open({ text: 'Novedad actualizada con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 
   public addNew(): void {
     const dialogRef = this.dialog.open(NewsFormComponent);
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listNews()
-    });
+    dialogRef.afterClosed()
+      .subscribe((res: boolean) => {
+        if(res) {
+          this.listNews();
+          this.snackbarNotificationService.open({ text: 'Novedad agregada con éxito.', type: SnackbarType.Success });
+        }
+      });
   }
 }

@@ -11,6 +11,7 @@ import { MaintenanceModel } from '../../../../models';
 })
 export class EditMaintenanceFormModalComponent {
   public maintenanceForm: FormGroup;
+  public error =  "";
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +36,7 @@ export class EditMaintenanceFormModalComponent {
         .updateMaintenance(this.data.id!, maintenance)
         .subscribe({
           next: () => this._dialogRef.close(true),
-          error: (err: any) => console.error(err)
+          error: () => this.error = 'Ocurrió un error. Por favor intentelo más tarde.'
         });
     } 
   };

@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfirmationModalData, WasteCenterModel, ItemSelection } from '../../../models';
-import { WasteCenterService, ModalConfirmationService } from '../../../services';
+import { ConfirmationModalData, WasteCenterModel, ItemSelection, SnackbarType } from '../../../models';
+import { WasteCenterService, ModalConfirmationService, SnackbarNotificationService } from '../../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { WasteCenterFormModalComponent } from './waste-center-form-modal/waste-center-form-modal.component';
 
@@ -28,6 +28,7 @@ export class WasteCentersComponent {
   constructor(
     private wasteCenterService: WasteCenterService,
     private modalConfirmationService: ModalConfirmationService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private dialog: MatDialog){ }
   
   ngOnInit(): void {
@@ -62,7 +63,15 @@ export class WasteCentersComponent {
       .subscribe(response => {
         if(response){
           this.wasteCenterService.deleteWasteCenter(id)
-            .subscribe(() => this.listWasteCenters())
+            .subscribe({
+              next: () => {
+                this.listWasteCenters();
+                this.snackbarNotificationService.open({ text: 'Centro de residuos eliminado con éxito.', type: SnackbarType.Success });
+              },
+              error: () => {
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el centro de residuos.', type: SnackbarType.Error });
+              }
+            })
         }
     });
   }
@@ -72,16 +81,25 @@ export class WasteCentersComponent {
     let data: ItemSelection<WasteCenterModel> = {selectedItem: wasteCenter, othersItems: otherWasteCenter};
     const dialogRef = this.dialog.open(WasteCenterFormModalComponent, { data });
 
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listWasteCenters()
+    dialogRef.afterClosed()
+    .subscribe((res: boolean) => {
+      if(res) {
+        this.listWasteCenters();
+        this.snackbarNotificationService.open({ text: 'Centro de residuos actualizado con éxito.', type: SnackbarType.Success });
+      }
     });
   }
 
   public addWasteCenter(): void {
     let data: ItemSelection<WasteCenterModel> = { othersItems: this.wasteCenters.data };
     const dialogRef = this.dialog.open(WasteCenterFormModalComponent, { data });
-    dialogRef.afterClosed().subscribe({
-      next: () => this.listWasteCenters()
+    
+    dialogRef.afterClosed()
+    .subscribe((res: boolean) => {
+      if(res) {
+        this.listWasteCenters();
+        this.snackbarNotificationService.open({ text: 'Centro de residuos agregado con éxito.', type: SnackbarType.Success });
+      }
     });
   }
 }

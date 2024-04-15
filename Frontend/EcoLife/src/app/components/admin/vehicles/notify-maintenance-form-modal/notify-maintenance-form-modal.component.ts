@@ -12,6 +12,7 @@ import { MaintenanceService } from '../../../../services';
 })
 export class NotifyMaintenanceFormModalComponent {
   public maintenanceForm: FormGroup;
+  public error =  "";
 
   constructor(
     private fb: FormBuilder,
@@ -32,8 +33,8 @@ export class NotifyMaintenanceFormModalComponent {
       this.maintenanceService.add(maintenance)
         .subscribe({
           next: () => this._dialogRef.close(true),
-          error: (err: any) => {
-            console.error(err);
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           }
         })
     };
