@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import { WasteCenterModel, ItemSelection, NominatimPlaceModel } from '../../../../models';
+import { WasteCenterModel, ItemSelection, NominatimPlaceModel, SelectedItem, SelectedItemType, OtherItems } from '../../../../models';
 import { WasteCenterService } from '../../../../services';
 import { ContainerType } from '../../container/constants/container-type';
 
@@ -18,8 +18,8 @@ export class WasteCenterFormModalComponent {
   public wasteCenterForm: FormGroup;
   public containerTypes = ContainerType;
   public selectedType: string;
-  public wasteCenterCoords: L.LatLngTuple;
-  public othersWasteCenterCoords: Array<L.LatLngTuple>;
+  public wasteCenterCoords: SelectedItem = { type: SelectedItemType.WasteCenter };
+  public othersWasteCenterCoords: OtherItems = { type: SelectedItemType.wasteCenterDisabled };
   public isLoading = false;
 
   constructor(
@@ -40,11 +40,11 @@ export class WasteCenterFormModalComponent {
 
     if(this.data.selectedItem) {
       this.wasteCenterForm.patchValue(this.data.selectedItem);
-      this.wasteCenterCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
+      this.wasteCenterCoords.itemCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
     }
 
     if(this.data.othersItems) {
-      this.othersWasteCenterCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
+      this.othersWasteCenterCoords.itemsCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
     }
   }
 

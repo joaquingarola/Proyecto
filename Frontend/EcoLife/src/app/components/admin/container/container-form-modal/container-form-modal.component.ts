@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import { ContainerModel, ItemSelection, NominatimPlaceModel, ZoneModel } from '../../../../models';
+import { ContainerModel, ItemSelection, NominatimPlaceModel, OtherItems, SelectedItem, SelectedItemType, ZoneModel } from '../../../../models';
 import { ContainerService, ZoneService } from '../../../../services';
 import { ContainerStatus } from '../constants/container-status';
 import { ContainerType } from '../constants/container-type';
@@ -23,8 +23,8 @@ export class ContainerFormModalComponent {
   public selectedType: string;
   public zones: ZoneModel[];
   public selectedZone: number;
-  public containerCoords: L.LatLngTuple;
-  public othersContainersCoords: Array<L.LatLngTuple>;
+  public containerCoords: SelectedItem = { type: SelectedItemType.Container };
+  public othersContainersCoords: OtherItems = { type: SelectedItemType.ContainerDisabled };
   public isLoading = false;
 
   constructor(
@@ -49,11 +49,11 @@ export class ContainerFormModalComponent {
 
     if(this.data.selectedItem) {
       this.containerForm.patchValue(this.data.selectedItem);
-      this.containerCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
+      this.containerCoords.itemCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
     }
 
     if(this.data.othersItems) {
-      this.othersContainersCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
+      this.othersContainersCoords.itemsCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
     }
   }
 

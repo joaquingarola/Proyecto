@@ -2,11 +2,10 @@ import { Component, Inject } from '@angular/core';
 
 import * as L from 'leaflet';
 
-import { ContainerModel, NewRouteModel, RouteModel } from '../../../../models';
+import { ContainerModel, NewRouteModel, OtherItems, RouteModel, SelectedItemType } from '../../../../models';
 import { RouteService } from '../../../../services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-routes-form-modal',
@@ -16,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RoutesFormModalComponent {
   public routeForm: FormGroup;
   public containers: ContainerModel[];
-  public containersWithoutRoute: Array<L.LatLngTuple> = [[-32.949404085714285, -60.647539989795916]]; 
+  public containersWithoutRoute: OtherItems = { type: SelectedItemType.ContainerDisabled }; 
   public selectedContainers: Array<L.LatLng> = [];
   public error =  "";
   public isLoading = false;
@@ -29,7 +28,7 @@ export class RoutesFormModalComponent {
 
   ngOnInit(): void {
     this.containers = this.data.containers;
-    this.containersWithoutRoute = this.data.containersWithoutRoute;
+    this.containersWithoutRoute.itemsCoords = this.data.containersWithoutRoute;
     this.routeForm = this.fb.group({
       description: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
@@ -74,7 +73,7 @@ export class RoutesFormModalComponent {
         this.routeService.add(route)
           .subscribe({
             next: () => this._dialogRef.close(true),
-            error: (response: HttpErrorResponse) => {
+            error: () => {
               this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);

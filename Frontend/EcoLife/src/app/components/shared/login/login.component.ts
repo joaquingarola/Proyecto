@@ -47,7 +47,11 @@ export class LoginComponent {
               this.router.navigate(['/zones']);
           },
           error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+            if(response.status) {
+              this.error = response.error;
+            } else {
+              this.error = "Ocurrió un error. Inténtelo más tarde."
+            }
           }
         }).add(() => this.isLoading = false);
     }

@@ -39,7 +39,7 @@
       </form>
     </div>
     <div class="modal__content__map">
-      <app-map [selectedContainer]="wasteCenterCoords" [othersContainers]="othersWasteCenterCoords" (coords)="setNewCoords($event)"></app-map>
+      <app-map [selectedItem]="wasteCenterCoords" [otherItems]="othersWasteCenterCoords" (coords)="setNewCoords($event)"></app-map>
     </div>
   </div>
 </div>

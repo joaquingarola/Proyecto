@@ -3,7 +3,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import "leaflet-routing-machine";
 
-import { NominatimPlaceModel } from '../../../models';
+import { NominatimPlaceModel, OtherItems, SelectedItem, SelectedItemType } from '../../../models';
 import { GeocodeService } from '../../../services';
 
 @Component({
@@ -13,9 +13,9 @@ import { GeocodeService } from '../../../services';
 })
 export class MapComponent implements OnChanges {
   @Input() route: L.LatLng[];
-  @Input() selectedContainer: L.LatLngTuple; 
+  @Input() selectedItem: SelectedItem; 
   @Input() containersRecolection: Array<L.LatLngTuple>;
-  @Input() othersContainers: Array<L.LatLngTuple>; 
+  @Input() otherItems: OtherItems; 
   @Input() selelectedContainersRoute: Array<L.LatLng>; 
   @Input() wasteCenters: Array<L.LatLngTuple>; 
   @Input() selectedWasteCenter: L.LatLngTuple | null;
@@ -66,6 +66,15 @@ export class MapComponent implements OnChanges {
     iconAnchor: [6, 42]
   });
 
+  public icons: { [key in SelectedItemType]: L.Icon } = {
+    [SelectedItemType.Container]: this.containerIcon,
+    [SelectedItemType.ContainerDisabled]: this.containerDisabledIcon,
+    [SelectedItemType.VehicleCenter]: this.vehicleCenterIcon,
+    [SelectedItemType.VehicleCenterDisabled]: this.vehicleCenterDisabledIcon,
+    [SelectedItemType.WasteCenter]: this.wasteCenterIcon,
+    [SelectedItemType.wasteCenterDisabled]: this.wasteCenterDisabledIcon
+  };
+
   constructor(
     private geocodeService: GeocodeService,
   ) {}
@@ -104,9 +113,9 @@ export class MapComponent implements OnChanges {
       maxZoom: 19
     }).addTo(this.map);
 
-    if(this.othersContainers) {
-      this.othersContainers.forEach((coords: L.LatLngTuple) => {
-        let marker = new L.Marker(coords, {icon: this.containerDisabledIcon});
+    if(this.otherItems.itemsCoords) {
+      this.otherItems.itemsCoords.forEach((coords: L.LatLngTuple) => {
+        let marker = new L.Marker(coords, {icon: this.icons[this.otherItems.type]});
         if(!this.createRoute) {
           marker.addTo(this.map);
         } else {
@@ -161,8 +170,8 @@ export class MapComponent implements OnChanges {
       this.addRoute(this.route);
     } */
 
-    if(this.selectedContainer) {
-      this.marker = new L.Marker(this.selectedContainer, {icon: this.containerIcon});
+    if(this.selectedItem?.itemCoords) {
+      this.marker = new L.Marker(this.selectedItem.itemCoords, { icon: this.icons[this.selectedItem.type] });
       this.marker.addTo(this.map).on('click', 
         (e: L.LeafletMouseEvent) => {
           if(this.disabledClick) {
@@ -182,7 +191,7 @@ export class MapComponent implements OnChanges {
           this.map.removeLayer(this.marker);
         }
         
-        this.marker = new L.Marker(e.latlng, {icon: this.containerIcon});
+        this.marker = new L.Marker(e.latlng, { icon: this.icons[this.selectedItem.type] });
         this.marker.addTo(this.map).on('click', 
           (e: L.LeafletMouseEvent) => {
             e.target.remove();
@@ -297,8 +306,8 @@ export class MapComponent implements OnChanges {
   }
 
   private getViewCoords(): L.LatLngTuple {
-    if(this.selectedContainer) {
-      return this.selectedContainer;
+    if(this.selectedItem?.itemCoords) {
+      return this.selectedItem.itemCoords;
     }
 
     if(this.route) {

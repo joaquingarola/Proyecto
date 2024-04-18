@@ -36,7 +36,7 @@
     </div>
     <div class="modal__content__map">
       <app-map 
-        [othersContainers] = "containersWithoutRoute"
+        [otherItems] = "containersWithoutRoute"
         [disabledClick] = "true"
         [createRoute] = "true"
         (selectedCoords) = "containerClick($event)"

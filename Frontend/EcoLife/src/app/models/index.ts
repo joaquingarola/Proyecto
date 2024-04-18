@@ -20,3 +20,4 @@ export * from './new-route-model';
 export * from './recolection-model';
 export * from './new-recolection.model';
 export * from './snackbar-model';
+export * from './selected-item-model';

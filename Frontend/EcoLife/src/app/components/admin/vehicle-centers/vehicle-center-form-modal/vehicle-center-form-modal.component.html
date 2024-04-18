@@ -29,7 +29,7 @@
       </form>
     </div>
     <div class="modal__content__map">
-      <app-map [selectedContainer]="vehicleCenterCoords" [othersContainers]="othersVehicleCenterCoords" (coords)="setNewCoords($event)"></app-map>
+      <app-map [selectedItem]="vehicleCenterCoords" [otherItems]="othersVehicleCenterCoords" (coords)="setNewCoords($event)"></app-map>
     </div>
   </div>
 </div>

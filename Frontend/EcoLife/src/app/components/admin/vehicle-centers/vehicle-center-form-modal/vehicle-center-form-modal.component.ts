@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import { VehicleCenterModel, ItemSelection, NominatimPlaceModel } from '../../../../models';
+import { VehicleCenterModel, ItemSelection, NominatimPlaceModel, SelectedItem, SelectedItemType, OtherItems } from '../../../../models';
 import { VehicleCenterService } from '../../../../services';
 
 @Component({
@@ -15,8 +15,8 @@ import { VehicleCenterService } from '../../../../services';
 export class VehicleCenterFormModalComponent {
   public error =  "";
   public vehicleCenterForm: FormGroup;
-  public vehicleCenterCoords: L.LatLngTuple;
-  public othersVehicleCenterCoords: Array<L.LatLngTuple>;
+  public vehicleCenterCoords: SelectedItem = { type: SelectedItemType.VehicleCenter };
+  public othersVehicleCenterCoords: OtherItems = { type: SelectedItemType.VehicleCenterDisabled };
   public isLoading = false;
 
   constructor(
@@ -36,11 +36,11 @@ export class VehicleCenterFormModalComponent {
 
     if(this.data.selectedItem) {
       this.vehicleCenterForm.patchValue(this.data.selectedItem);
-      this.vehicleCenterCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
+      this.vehicleCenterCoords.itemCoords = [this.data.selectedItem!.latitude, this.data.selectedItem!.longitude];
     }
 
     if(this.data.othersItems) {
-      this.othersVehicleCenterCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
+      this.othersVehicleCenterCoords.itemsCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
     }
   }
 
