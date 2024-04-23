@@ -17,6 +17,10 @@ export class EmployeeService {
     return this.http.get<EmployeeModel[]>(`${this.API_URL}`);
   }
 
+  public getAllRecolectors(): Observable<EmployeeModel[]> {
+    return this.http.get<EmployeeModel[]>(`${this.API_URL}/recolectors`);
+  }
+
   public getById(id: number): Observable<EmployeeModel> {
     return this.http.get<EmployeeModel>(`${this.API_URL}/${id}`);
   }

@@ -101,8 +101,8 @@ export class RoutesComponent {
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {
         if(res) {
-          this.getContainers(),
-          this.listRoutes()
+          this.getContainers();
+          this.listRoutes();
           this.snackbarNotificationService.open({ text: 'Ruta actualizada con éxito.', type: SnackbarType.Success });
         }
       });
@@ -115,8 +115,8 @@ export class RoutesComponent {
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {
         if(res) {
-          this.getContainers(),
-          this.listRoutes()
+          this.getContainers();
+          this.listRoutes();
           this.snackbarNotificationService.open({ text: 'Recolección planificada con éxito.', type: SnackbarType.Success });
         }
       });
@@ -129,8 +129,8 @@ export class RoutesComponent {
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {
         if(res) {
-          this.getContainers(),
-          this.listRoutes()
+          this.getContainers();
+          this.listRoutes();
           this.snackbarNotificationService.open({ text: 'Ruta agregada con éxito.', type: SnackbarType.Success });
         }
       });

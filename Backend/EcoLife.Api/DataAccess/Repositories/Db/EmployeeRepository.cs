@@ -15,6 +15,12 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.Role)
                 .ToListAsync();
 
+        public async Task<List<Employee>> GetAllRecolectorsAsync()
+            => await context.Set<Employee>()
+                .Include(m => m.Role)
+                .Where(e => e.RoleId == 2)
+                .ToListAsync();
+
         public async Task<Employee?> GetByEmailAsync(string email)
             => await context.Set<Employee>()
                 .AsNoTracking()

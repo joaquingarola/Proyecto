@@ -47,7 +47,7 @@
               <mat-label>Empleado</mat-label>
               <mat-select formControlName="employeeId" [(value)]="selectedEmployee">
                 <mat-option *ngFor="let employee of employees" [value]="employee.id">
-                  {{employee.name}} - {{employee.surname}}
+                  {{employee.surname}}, {{employee.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

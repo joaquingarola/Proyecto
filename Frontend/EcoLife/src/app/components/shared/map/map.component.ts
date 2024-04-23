@@ -113,7 +113,7 @@ export class MapComponent implements OnChanges {
       maxZoom: 19
     }).addTo(this.map);
 
-    if(this.otherItems.itemsCoords) {
+    if(this.otherItems?.itemsCoords) {
       this.otherItems.itemsCoords.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.icons[this.otherItems.type]});
         if(!this.createRoute) {

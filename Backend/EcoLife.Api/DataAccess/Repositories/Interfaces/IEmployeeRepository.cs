@@ -6,6 +6,8 @@ namespace EcoLife.Api.DataAccess.Repositories.Interfaces
     {
         Task<List<Employee>> GetAllWithRoleAsync();
 
+        Task<List<Employee>> GetAllRecolectorsAsync();
+
         Task<Employee?> GetByEmailAsync(string email);
 
         Task<Employee?> GetByDniAsync(string dni);

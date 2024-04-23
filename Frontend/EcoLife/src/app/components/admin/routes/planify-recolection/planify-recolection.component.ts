@@ -53,7 +53,7 @@ export class PlanifyRecolectionComponent {
     });
 
     this.mapContainers();
-    this.getEmployees();
+    this.getRecolectors();
     this.getVehicles();
     this.getVehicleCenters();
     this.getWasteCenters();
@@ -66,8 +66,8 @@ export class PlanifyRecolectionComponent {
     console.log(this.containersRoute)
   }
 
-  private getEmployees(): void {
-    this.employeeService.getAll()
+  private getRecolectors(): void {
+    this.employeeService.getAllRecolectors()
     .subscribe(
       (response) => {
         this.employees = response;

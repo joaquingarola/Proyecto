@@ -33,6 +33,13 @@ namespace EcoLife.Api.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("recolectors")]
+        async public Task<IActionResult> GetAllRecolectorsAsync()
+        {
+            var employees = await _uow.EmployeeRepository.GetAllRecolectorsAsync();
+            return Ok(employees);
+        }
+
         [HttpGet("{employeeId}")]
         async public Task<IActionResult> GetByIdAsync([FromRoute, Required] int employeeId)
         {
@@ -65,11 +72,11 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> UpdateEmployeeAsync([FromBody] Employee editEmployee)
         {
             var employeeByEmail = await _uow.EmployeeRepository.GetByEmailAsync(editEmployee.Email);
-            if (employeeByEmail?.Id != editEmployee.Id)
+            if (employeeByEmail != null && employeeByEmail.Id != editEmployee.Id)
                 return BadRequest("Ya existe un usuario con ese email");
 
             var employeeByDni = await _uow.EmployeeRepository.GetByDniAsync(editEmployee.Dni);
-            if (employeeByDni?.Id != editEmployee.Id)
+            if (employeeByDni != null && employeeByDni.Id != editEmployee.Id)
                 return BadRequest("Ya existe un usuario con ese dni");
 
             var result = await _uow.EmployeeRepository.Update(editEmployee);

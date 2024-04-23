@@ -36,7 +36,8 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> GetAllWithoutRouteAsync()
         {
             var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
-            return Ok(containers.Where(x => x.RouteId == null));
+
+            return Ok(containers.Where(x => x.RouteId == null && x.Status == "Activo"));
         }
 
         [HttpPost]
