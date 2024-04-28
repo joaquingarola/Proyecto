@@ -64,6 +64,7 @@ import { VehicleCenterFormModalComponent } from './components/admin/vehicle-cent
 import { WasteCenterFormModalComponent } from './components/admin/waste-centers/waste-center-form-modal/waste-center-form-modal.component';
 import { RoutesFormModalComponent } from './components/admin/routes/routes-form-modal/routes-form-modal.component';
 import { PlanifyRecolectionComponent } from './components/admin/routes/planify-recolection/planify-recolection.component';
+import { MenubarModule } from 'primeng/menubar';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -132,7 +133,8 @@ registerLocaleData(localeEs, 'es');
     MatListModule,
     DatePipe,
     MatExpansionModule,
-    MatCardModule
+    MatCardModule,
+    MenubarModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-<div class="header">
+<!-- <div class="header">
     <div class="header__options">
         <a mat-flat-button routerLink="/news" class="header__options__item">Novedades</a>
         <a mat-flat-button routerLink="/zones" class="header__options__item">Zonas</a>
@@ -11,4 +11,15 @@
         <a mat-flat-button routerLink="/waste-centers" class="header__options__item">Centros de residuos</a>
     </div>
     <button mat-raised-button color="warn" type="submit" (click)="logOut()">Logout</button>
+</div> -->
+
+<div class="card">
+    <p-menubar [model]="items">
+        <ng-template pTemplate="start">
+            <img src="../../../../assets/logo_ecolife.jpg" alt="Ecolife Logo" class = "logo">
+        </ng-template>
+        <ng-template pTemplate="end">
+            <button mat-raised-button color="warn" type="submit" (click)="logOut()">Logout</button>
+        </ng-template>
+    </p-menubar>
 </div>
