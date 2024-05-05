@@ -43,3 +43,10 @@
 .logo {
     width: 80px;
 }
+
+.card {
+    &__actions {
+        display: flex;
+        justify-content: center;
+    }
+}

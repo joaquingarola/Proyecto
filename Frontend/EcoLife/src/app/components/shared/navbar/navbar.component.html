@@ -1,25 +1,24 @@
-<!-- <div class="header">
-    <div class="header__options">
-        <a mat-flat-button routerLink="/news" class="header__options__item">Novedades</a>
-        <a mat-flat-button routerLink="/zones" class="header__options__item">Zonas</a>
-        <a mat-flat-button routerLink="/vehicles" class="header__options__item">Vehículos</a>
-        <a mat-flat-button routerLink="/maintenances" class="header__options__item">Mantenimientos</a>
-        <a mat-flat-button routerLink="/employees" class="header__options__item">Empleados</a>
-        <a mat-flat-button routerLink="/containers" class="header__options__item">Contenedores</a>
-        <a mat-flat-button routerLink="/routes" class="header__options__item">Rutas</a>
-        <a mat-flat-button routerLink="/vehicle-centers" class="header__options__item">Centros de vehículos</a>
-        <a mat-flat-button routerLink="/waste-centers" class="header__options__item">Centros de residuos</a>
-    </div>
-    <button mat-raised-button color="warn" type="submit" (click)="logOut()">Logout</button>
-</div> -->
-
 <div class="card">
     <p-menubar [model]="items">
         <ng-template pTemplate="start">
             <img src="../../../../assets/logo_ecolife.jpg" alt="Ecolife Logo" class = "logo">
         </ng-template>
         <ng-template pTemplate="end">
-            <button mat-raised-button color="warn" type="submit" (click)="logOut()">Logout</button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>person</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <mat-card class="user-card">
+                    <mat-card-header>
+                      <mat-card-title class="center">{{ user.role?.description }}</mat-card-title>
+                      <mat-card-subtitle class="center">{{ user.surname }}, {{user.name}}</mat-card-subtitle>
+                      <mat-card-subtitle class="center">{{ user.email }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-actions class="card__actions">
+                      <button mat-button color="warn" (click)="logOut()">Cerrar sesión</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-menu>
         </ng-template>
     </p-menubar>
 </div>

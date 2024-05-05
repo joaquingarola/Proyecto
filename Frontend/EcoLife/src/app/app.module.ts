@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@Angular/material/menu';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
@@ -134,7 +135,8 @@ registerLocaleData(localeEs, 'es');
     DatePipe,
     MatExpansionModule,
     MatCardModule,
-    MenubarModule
+    MenubarModule,
+    MatMenuModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
