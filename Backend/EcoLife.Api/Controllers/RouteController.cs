@@ -50,6 +50,13 @@ namespace EcoLife.Api.Controllers
             return Ok(routes);
         }
 
+        [HttpGet("{routeId}")]
+        async public Task<IActionResult> GetRouteByIdAsync([FromRoute, Required] int routeId)
+        {
+            var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
+            return Ok(route);
+        }
+
         [HttpPost("update")]
         async public Task<IActionResult> UpdateRouteAsync([FromBody] RouteEntity editRoute)
         {

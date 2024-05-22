@@ -5,7 +5,7 @@
     <button (click)="addRoute()" mat-raised-button color="primary" class="container__data__add-button">Agregar ruta</button>
 		<mat-form-field class="container__data__filter">
 			<mat-label>Filtrar</mat-label>
-			<input matInput (keyup)="applyFilter($event)" placeholder="Podés descripción o periodicidad" #input autocomplete="off">
+			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar descripción o periodicidad" #input autocomplete="off">
 		</mat-form-field>
 		<table mat-table [dataSource]="routes" class="mat-elevation-z8 container__data__table" matSort>
 			<ng-container matColumnDef="periodicity">

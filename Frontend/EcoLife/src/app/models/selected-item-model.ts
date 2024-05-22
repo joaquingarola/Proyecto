@@ -16,3 +16,8 @@ export interface OtherItems {
   itemsCoords?: Array<L.LatLngTuple>,
   type: SelectedItemType
 }
+
+export interface RouteItem {
+  itemCoords?: L.LatLng,
+  type: SelectedItemType
+}

@@ -3,7 +3,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import "leaflet-routing-machine";
 
-import { NominatimPlaceModel, OtherItems, SelectedItem, SelectedItemType } from '../../../models';
+import { NominatimPlaceModel, OtherItems, RouteItem, SelectedItem, SelectedItemType } from '../../../models';
 import { GeocodeService } from '../../../services';
 
 @Component({
@@ -14,6 +14,7 @@ import { GeocodeService } from '../../../services';
 export class MapComponent implements OnChanges {
   @Input() route: L.LatLng[];
   @Input() selectedItem: SelectedItem; 
+  @Input() selectedLastItem: SelectedItem; 
   @Input() containersRecolection: Array<L.LatLngTuple>;
   @Input() otherItems: OtherItems; 
   @Input() selelectedContainersRoute: Array<L.LatLng>; 
@@ -113,6 +114,23 @@ export class MapComponent implements OnChanges {
       maxZoom: 19
     }).addTo(this.map);
 
+    if(this.selectedLastItem?.itemCoords) {
+      this.marker = new L.Marker(this.selectedLastItem.itemCoords, { icon: this.icons[this.selectedLastItem.type] });
+      this.marker.addTo(this.map);
+      if(this.selectedItem?.itemCoords) {
+        /* const coords: L.LatLng[] = []; */
+        const coords: RouteItem[] = [];
+        coords.push( { itemCoords: new L.LatLng(this.selectedItem.itemCoords[0], this.selectedItem.itemCoords[1]), type: SelectedItemType.VehicleCenter });
+        this.containersRecolection.forEach((containerCoord: L.LatLngTuple) => {
+          coords.push({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container })
+        });
+        coords.push( { itemCoords: new L.LatLng(this.selectedLastItem.itemCoords[0], this.selectedLastItem.itemCoords[1]), type: SelectedItemType.WasteCenter });
+        this.drawViewRecolectionRoute(coords);
+      }
+
+      return;
+    }
+
     if(this.otherItems?.itemsCoords) {
       this.otherItems.itemsCoords.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.icons[this.otherItems.type]});
@@ -148,12 +166,12 @@ export class MapComponent implements OnChanges {
       });
     }
 
-    if(this.containersRecolection) {
+    /* if(this.containersRecolection) {
       this.containersRecolection.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.containerIcon});
         marker.addTo(this.map);
       })
-    }
+    } */
 
     this.loadVehicleCenters();
 
@@ -298,6 +316,28 @@ export class MapComponent implements OnChanges {
       routeWhileDragging: true,
       lineOptions: {
         styles: [{ color: 'green', opacity: firstSection ? 1 : 0.3, weight: 5 }],
+        extendToWaypoints: false,
+        addWaypoints: false,
+        missingRouteTolerance: 5
+      }
+    }).addTo(this.map);
+  }
+
+  private drawViewRecolectionRoute(items: RouteItem[]): void {
+    const coords: L.LatLng[] = items.map(x => x.itemCoords!);
+    const iconsArray: L.Icon[] = items.map(x => this.icons[x.type]);
+    
+    L.Routing.control({
+      plan: new L.Routing.Plan(coords,
+        {
+          createMarker: function(i, waypoint, n){
+            return L.marker(waypoint.latLng, { icon: iconsArray[i] });
+          }
+        }
+      ),
+      routeWhileDragging: true,
+      lineOptions: {
+        styles: [{ color: 'green', opacity: 1, weight: 5 }],
         extendToWaypoints: false,
         addWaypoints: false,
         missingRouteTolerance: 5

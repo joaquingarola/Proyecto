@@ -28,7 +28,7 @@ namespace EcoLife.Api.Controllers
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var recolections = await _uow.RecolectionRepository.GetAllAsync();
+            var recolections = await _uow.RecolectionRepository.GetAllWithEntities();
             return Ok(recolections);
         }
 

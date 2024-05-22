@@ -25,6 +25,10 @@ export class RouteService {
     return this.http.get<RouteModel[]>(`${this.API_URL}`);
   }
 
+  public getById(id: number): Observable<RouteModel> {
+    return this.http.get<RouteModel>(`${this.API_URL}/${id}`);
+  }
+
   public deleteRoute(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
   }

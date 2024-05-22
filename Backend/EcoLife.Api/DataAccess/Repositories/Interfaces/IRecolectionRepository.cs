@@ -2,5 +2,8 @@
 
 namespace EcoLife.Api.DataAccess.Repositories.Interfaces
 {
-    public interface IRecolectionRepository : IBaseRepository<Recolection> { }
+    public interface IRecolectionRepository : IBaseRepository<Recolection> 
+    {
+        Task<List<Recolection>> GetAllWithEntities();
+    }
 }

@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@Angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
@@ -66,6 +67,8 @@ import { WasteCenterFormModalComponent } from './components/admin/waste-centers/
 import { RoutesFormModalComponent } from './components/admin/routes/routes-form-modal/routes-form-modal.component';
 import { PlanifyRecolectionComponent } from './components/admin/routes/planify-recolection/planify-recolection.component';
 import { MenubarModule } from 'primeng/menubar';
+import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
+import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -108,7 +111,9 @@ registerLocaleData(localeEs, 'es');
     VehicleCenterFormModalComponent,
     WasteCenterFormModalComponent,
     RoutesFormModalComponent,
-    PlanifyRecolectionComponent
+    PlanifyRecolectionComponent,
+    RecolectionsComponent,
+    ViewRecolectionComponent
   ],
   imports: [
     BrowserModule,
@@ -136,7 +141,8 @@ registerLocaleData(localeEs, 'es');
     MatExpansionModule,
     MatCardModule,
     MenubarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]

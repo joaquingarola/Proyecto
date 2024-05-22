@@ -56,7 +56,8 @@ export class NavbarComponent {
           routerLink: '/routes'
         },
         {
-          label: 'Listado recolecciones'
+          label: 'Listado recolecciones',
+          routerLink: '/recolections'
         }
       ]
     },

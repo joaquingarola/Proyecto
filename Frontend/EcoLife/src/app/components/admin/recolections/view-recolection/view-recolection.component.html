@@ -1,0 +1,17 @@
+
+<div class="modal">
+  <div *ngIf="loading; else notLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<ng-template #notLoading>
+  <div class="modal__map">
+    <app-map 
+      [containersRecolection] = "containersRoute"
+      [selectedItem] = "vehicleCenter"
+      [selectedLastItem] = "wasteCenter"
+      [disabledClick] = "true"
+    >
+    </app-map>
+  </div>
+</ng-template>

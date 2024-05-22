@@ -17,4 +17,16 @@ export class RecolectionService {
   public add(recolection: RecolectionModel): Observable<Object> {
     return this.http.post(`${this.API_URL}`, recolection);
   }
+
+  public update(recolection: RecolectionModel): Observable<Object> {
+    return this.http.post(`${this.API_URL}/update`, recolection);
+  }
+
+  public getAll(): Observable<RecolectionModel[]> {
+    return this.http.get<RecolectionModel[]>(`${this.API_URL}`);
+  }
+
+  public delete(id: number): Observable<Object> {
+    return this.http.delete(`${this.API_URL}/${id}`);
+  }
 }

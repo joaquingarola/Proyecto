@@ -15,6 +15,7 @@ import { ContainerComponent } from './components/admin/container/container.compo
 import { RoutesComponent } from './components/admin/routes/routes.component';
 import { VehicleCentersComponent } from './components/admin/vehicle-centers/vehicle-centers.component';
 import { WasteCentersComponent } from './components/admin/waste-centers/waste-centers.component';
+import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'routes', component: RoutesComponent, canActivate: [authGuard]},
   {path: 'vehicle-centers', component: VehicleCentersComponent, canActivate: [authGuard]},
   {path: 'waste-centers', component: WasteCentersComponent, canActivate: [authGuard]},
+  {path: 'recolections', component: RecolectionsComponent, canActivate: [authGuard]},
   {path: '', redirectTo: 'news', pathMatch: 'full'},
   {path: '**', redirectTo: 'news'}
 ];
