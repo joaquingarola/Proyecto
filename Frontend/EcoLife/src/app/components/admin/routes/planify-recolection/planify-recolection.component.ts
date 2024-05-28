@@ -60,20 +60,12 @@ export class PlanifyRecolectionComponent {
 
     this.getRoute();
     this.getRecolectors();
-    this.getVehicleCenters();
-    this.getWasteCenters();
 
     this.recolectionForm.get('routeId')?.setValue(this.data.routeId);
 
     if(this.data.recolection) {
       this.updateForm();
     }
-
-    setTimeout(() => {
-      this.updateWasteCenterSelect();
-      this.updateVehicleSelects();
-      this.recolectionForm.markAsPristine();
-    }, 500);
   }
 
   private updateForm(): void {
@@ -114,6 +106,7 @@ export class PlanifyRecolectionComponent {
         this.route = response;
         this.containersRoute = (response.containers ?? []).map(container => [container.latitude, container.longitude]);
         this.isLoadingRoute = false;
+        this.getVehicleCenters();
       }
     );  
   }
@@ -134,6 +127,7 @@ export class PlanifyRecolectionComponent {
       (response) => {
         this.vehicles = response;
         this.isLoadingVehicleCenters = false;
+        this.getWasteCenters();
       }
     ); 
   }
@@ -189,6 +183,10 @@ export class PlanifyRecolectionComponent {
         this.wasteCenters = response;
         this.wasteCentersCoords = (response ?? []).map(container => [container.latitude, container.longitude]);
         this.isLoadingWasteCenters = false;
+        setTimeout(() => {
+          this.updateWasteCenterSelect();
+          this.updateVehicleSelects();
+        }, 500);
       }
     );  
   } 
