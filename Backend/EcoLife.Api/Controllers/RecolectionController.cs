@@ -54,7 +54,7 @@ namespace EcoLife.Api.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPost("update")]
         async public Task<IActionResult> UpdateAsync([FromBody] Recolection editRecolection)
         {
             var result = await _uow.RecolectionRepository.Update(editRecolection);

@@ -1,4 +1,10 @@
 <div class="modal">
+  <div *ngIf="isLoadingEntities(); else notLoading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<ng-template #notLoading>
   <div mat-dialog-title class="modal__title">
     <h1>{{data.recolection ? 'Modificar datos recolección': 'Nueva recolección'}}</h1>
   </div>
@@ -66,16 +72,16 @@
           </div>
         </div>
         <div mat-dialog-actions class="modal__content__form__action">
-          <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoading">Cancelar</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="!recolectionForm.dirty || recolectionForm.invalid || isLoading" [class.spinner]="isLoading">{{data.recolection ? 'Actualizar': 'Guardar'}}</button>
+          <button mat-raised-button type="button" [mat-dialog-close]="false" [disabled]="isLoadingButton">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!isRecoletionDifferent() || recolectionForm.invalid || isLoadingButton" [class.spinner]="isLoadingButton">{{data.recolection ? 'Actualizar': 'Guardar'}}</button>
         </div>
       </form>
     </div>
     <div class="modal__content__map">
       <app-map 
         [containersRecolection] = "containersRoute"
-        [wasteCenters] = "data.wasteCenters!"
-        [vehicleCenters] = "data.vehicleCenters!"
+        [wasteCenters] = "wasteCentersCoords"
+        [vehicleCenters] = "vehicleCentersCoords"
         [disabledClick] = "true"
         [selectedVehicleCenter] = "updateVehicleCenterByForm"
         [selectedWasteCenter] = "updateWasteCenterByForm"
@@ -85,4 +91,4 @@
       </app-map>
     </div>
   </div>
-</div>
+</ng-template>

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 
-import { ContainerService, ModalConfirmationService, RouteService, SnackbarNotificationService, VehicleCenterService, WasteCenterService } from '../../../services';
-import { ConfirmationModalData, ContainerModel, NewRecolectionModel, NewRouteModel, RecolectionModel, RouteModel, SnackbarType, VehicleCenterModel, WasteCenterModel } from '../../../models';
+import { ContainerService, ModalConfirmationService, RouteService, SnackbarNotificationService } from '../../../services';
+import { ConfirmationModalData, ContainerModel, NewRecolectionModel, NewRouteModel, RouteModel, SnackbarType, VehicleCenterModel, WasteCenterModel } from '../../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { RoutesFormModalComponent } from './routes-form-modal/routes-form-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
@@ -39,14 +39,10 @@ export class RoutesComponent {
     private routeService: RouteService,
     private containerService: ContainerService,
     private modalConfirmationService: ModalConfirmationService,
-    private snackbarNotificationService: SnackbarNotificationService,
-    private wasteCenterService: WasteCenterService,
-    private vehicleCenterService: VehicleCenterService) { }
+    private snackbarNotificationService: SnackbarNotificationService) { }
 
   ngOnInit(): void {
     this.getContainers();
-    this.getWasteCenter();
-    this.getVehicleCenter();
     this.listRoutes();
   }
 
@@ -109,7 +105,7 @@ export class RoutesComponent {
   }
 
   public planify(route: RouteModel): void {
-    const data: NewRecolectionModel = { route: route, wasteCenters: this.wasteCentersCoords, vehicleCenters: this.vehicleCentersCoords };
+    const data: NewRecolectionModel = { routeId: route.id! };
     const dialogRef = this.dialog.open(PlanifyRecolectionComponent, { data });
 
     dialogRef.afterClosed()
@@ -143,25 +139,5 @@ export class RoutesComponent {
           this.containers = response;
           this.containersWithoutRoute = (response ?? []).map(container => [container.latitude, container.longitude]);
         })  
-  }
-
-  public getWasteCenter(): void {
-    this.wasteCenterService.getAll()
-      .subscribe(
-        (response) => {
-          this.wasteCenters = response;
-          this.wasteCentersCoords = (response ?? []).map(x => [x.latitude, x.longitude]);
-        }
-      )  
-  }
-
-  public getVehicleCenter(): void {
-    this.vehicleCenterService.getAll()
-      .subscribe(
-        (response) => {
-          this.vehicleCenters = response;
-          this.vehicleCentersCoords = (response ?? []).map(x => [x.latitude, x.longitude]);
-        }
-      )  
   }
 }

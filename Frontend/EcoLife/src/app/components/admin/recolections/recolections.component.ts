@@ -4,9 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { ModalConfirmationService, RecolectionService, SnackbarNotificationService } from '../../../services';
-import { ConfirmationModalData, RecolectionModel, RecolectionView, SnackbarType } from '../../../models';
+import { ConfirmationModalData, NewRecolectionModel, RecolectionModel, RecolectionView, SnackbarType } from '../../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewRecolectionComponent } from './view-recolection/view-recolection.component';
+import { PlanifyRecolectionComponent } from '../routes/planify-recolection/planify-recolection.component';
 
 @Component({
   selector: 'app-recolections',
@@ -64,10 +65,11 @@ export class RecolectionsComponent {
           this.recolectionService.delete(id)
             .subscribe({
               next: () => {
-                this.snackbarNotificationService.open({ text: 'Ruta eliminada con éxito.', type: SnackbarType.Success });
+                this.snackbarNotificationService.open({ text: 'Recolección eliminada con éxito.', type: SnackbarType.Success });
+                this.listRecolections();
               },
               error: () => {
-                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar la ruta.', type: SnackbarType.Error });
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar la recolección.', type: SnackbarType.Error });
               }
             })
           }
@@ -79,14 +81,16 @@ export class RecolectionsComponent {
     this.dialog.open(ViewRecolectionComponent, { data } );
   }
 
-  /* public editRoute(data: RecolectionModel): void {
-    const dialogRef = this.dialog.open(RoutesFormModalComponent, { data });
+  public editRoute(recolection: RecolectionModel): void {
+    const data: NewRecolectionModel = { routeId: recolection.routeId, recolection: recolection };
+    const dialogRef = this.dialog.open(PlanifyRecolectionComponent, { data });
 
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {
         if(res) {
-          this.snackbarNotificationService.open({ text: 'Ruta actualizada con éxito.', type: SnackbarType.Success });
+          this.listRecolections();
+          this.snackbarNotificationService.open({ text: 'Recolección actualizada con éxito.', type: SnackbarType.Success });
         }
       });
-  } */
+  }
 }

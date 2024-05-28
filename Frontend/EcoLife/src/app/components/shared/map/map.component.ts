@@ -115,10 +115,7 @@ export class MapComponent implements OnChanges {
     }).addTo(this.map);
 
     if(this.selectedLastItem?.itemCoords) {
-      this.marker = new L.Marker(this.selectedLastItem.itemCoords, { icon: this.icons[this.selectedLastItem.type] });
-      this.marker.addTo(this.map);
       if(this.selectedItem?.itemCoords) {
-        /* const coords: L.LatLng[] = []; */
         const coords: RouteItem[] = [];
         coords.push( { itemCoords: new L.LatLng(this.selectedItem.itemCoords[0], this.selectedItem.itemCoords[1]), type: SelectedItemType.VehicleCenter });
         this.containersRecolection.forEach((containerCoord: L.LatLngTuple) => {
@@ -126,9 +123,9 @@ export class MapComponent implements OnChanges {
         });
         coords.push( { itemCoords: new L.LatLng(this.selectedLastItem.itemCoords[0], this.selectedLastItem.itemCoords[1]), type: SelectedItemType.WasteCenter });
         this.drawViewRecolectionRoute(coords);
-      }
 
-      return;
+        return;
+      }
     }
 
     if(this.otherItems?.itemsCoords) {
@@ -166,12 +163,12 @@ export class MapComponent implements OnChanges {
       });
     }
 
-    /* if(this.containersRecolection) {
+    if(this.containersRecolection) {
       this.containersRecolection.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.containerIcon});
         marker.addTo(this.map);
       })
-    } */
+    }
 
     this.loadVehicleCenters();
 
