@@ -60,10 +60,6 @@ export class NavbarComponent {
           routerLink: '/recolections'
         }
       ]
-    },
-    {
-      label: 'Zonas',
-      routerLink: '/zones'
     }
   ];
   user: EmployeeModel;

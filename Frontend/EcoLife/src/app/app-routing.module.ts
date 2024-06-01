@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ZonesComponent } from './components/admin/zones/zones.component';
 import { VehiclesComponent } from './components/admin/vehicles/vehicles.component';
 import { MaintenanceComponent } from './components/admin/maintenance/maintenance.component';
 import { EmployeeComponent } from './components/admin/employee/employee.component';
@@ -19,7 +18,6 @@ import { RecolectionsComponent } from './components/admin/recolections/recolecti
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'zones', component: ZonesComponent, canActivate: [authGuard]},
   {path: 'vehicles', component: VehiclesComponent, canActivate: [authGuard]},
   {path: 'maintenances', component: MaintenanceComponent, canActivate: [authGuard]}, 
   {path: 'employees', component: EmployeeComponent, canActivate: [authGuard] },
