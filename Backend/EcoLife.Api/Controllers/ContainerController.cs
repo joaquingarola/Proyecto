@@ -51,7 +51,19 @@ namespace EcoLife.Api.Controllers
         [HttpDelete("{containerId}")]
         async public Task<IActionResult> DeleteContainerByIdAsync([FromRoute, Required] int containerId)
         {
+            var container = await _uow.ContainerRepository.GetByIdAsync(containerId);
+
+            if(container.RouteId != null)
+            {
+                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteId!.Value);
+
+                route.Quantity -= 1;
+
+                await _uow.RouteRepository.SaveChangesAsync();
+            }
+
             await _uow.ContainerRepository.Delete(containerId);
+
             return Ok();
         }
 
