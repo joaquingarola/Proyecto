@@ -91,7 +91,7 @@ export class ContainerComponent {
   }
 
   public addContainer(): void {
-    const data: ItemSelection<ContainerModel> = { othersItems: this.containers.data };
+    const data: ItemSelection<ContainerModel> = { othersItems: this.containers?.data };
     const dialogRef = this.dialog.open(ContainerFormModalComponent, { data });
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {

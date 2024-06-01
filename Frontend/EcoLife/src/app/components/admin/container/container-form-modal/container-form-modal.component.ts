@@ -1,11 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpErrorResponse } from '@angular/common/http';
-import * as L from 'leaflet';
 
-import { ContainerModel, ItemSelection, NominatimPlaceModel, OtherItems, SelectedItem, SelectedItemType, ZoneModel } from '../../../../models';
-import { ContainerService, ZoneService } from '../../../../services';
+import { ContainerModel, ItemSelection, NominatimAddressModel, NominatimPlaceModel, OtherItems, SelectedItem, SelectedItemType } from '../../../../models';
+import { ContainerService } from '../../../../services';
 import { ContainerStatus } from '../constants/container-status';
 import { ContainerType } from '../constants/container-type';
 
@@ -21,8 +19,6 @@ export class ContainerFormModalComponent {
   public selectedStatus: string;
   public containerTypes = ContainerType;
   public selectedType: string;
-  public zones: ZoneModel[];
-  public selectedZone: number;
   public containerCoords: SelectedItem = { type: SelectedItemType.Container };
   public othersContainersCoords: OtherItems = { type: SelectedItemType.ContainerDisabled };
   public isLoading = false;
@@ -30,19 +26,17 @@ export class ContainerFormModalComponent {
   constructor(
     private fb: FormBuilder,
     private containerService: ContainerService,
-    private zoneService: ZoneService,
     private _dialogRef: MatDialogRef<ContainerFormModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ItemSelection<ContainerModel>
   ) { }
 
   ngOnInit(): void {
-    this.getZones();
     this.containerForm = this.fb.group({
       address: ['', [Validators.required]],
       capacity: ['', [Validators.required]],
       wasteType: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      zoneId: ['', [Validators.required]],
+      zone: ['', [Validators.required]],
       latitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]]
     });
@@ -55,18 +49,6 @@ export class ContainerFormModalComponent {
     if(this.data.othersItems) {
       this.othersContainersCoords.itemsCoords = (this.data.othersItems ?? []).map(container => [container.latitude, container.longitude]);
     }
-  }
-
-  private getZones(): void{
-    this.zoneService.getAll()
-      .subscribe(
-        (response) => { 
-          this.zones = response;
-          if(this.data.selectedItem){
-            this.selectedZone = this.data?.selectedItem.zoneId;
-          } 
-        }
-      );
   }
 
   onFormSubmit(): void {
@@ -94,15 +76,34 @@ export class ContainerFormModalComponent {
 
   setNewCoords(location: NominatimPlaceModel | null): void {
     if(location) {
-      let address = `${location.address.road} ${location.address?.house_number}, ${location.address.city}`
+      const address = `${location.address.road} ${location.address?.house_number}`;
+      const zone = this.getZone(location.address);
       this.containerForm.controls['address'].setValue(address);
+      this.containerForm.controls['zone'].setValue(zone);
       this.containerForm.controls['latitude'].setValue(location.lat);
       this.containerForm.controls['longitude'].setValue(location.lon);
     } else {
       this.containerForm.controls['address'].setValue('');
+      this.containerForm.controls['zone'].setValue('');
       this.containerForm.controls['latitude'].setValue('');
       this.containerForm.controls['longitude'].setValue('');
     }
     this.containerForm.markAsDirty();
+  }
+
+  private getZone(address: NominatimAddressModel): string {
+    if(address.city) {
+      return address.city_district ? `${address.city_district}, ${address.city}` : address.city;
+    }
+
+    if(address.town) {
+      return address.town;
+    }
+
+    if(address.village) {
+      return address.village;
+    }
+
+    return '-';
   }
 }

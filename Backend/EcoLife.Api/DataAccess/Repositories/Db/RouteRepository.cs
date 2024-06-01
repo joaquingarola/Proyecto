@@ -28,7 +28,7 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                         WasteType = c.WasteType,
                         LastEmptying = c.LastEmptying,
                         Status = c.Status,
-                        ZoneId = c.ZoneId
+                        Zone = c.Zone
                     }).ToList()
                 })
             .ToListAsync();
@@ -51,7 +51,7 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                         WasteType = c.WasteType,
                         LastEmptying = c.LastEmptying,
                         Status = c.Status,
-                        ZoneId = c.ZoneId
+                        Zone = c.Zone
                     }).ToList()
                 }).FirstAsync();
 

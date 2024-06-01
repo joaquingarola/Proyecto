@@ -9,10 +9,9 @@
         public string Address { get; set; }
         public string WasteType { get; set; }
         public DateTime? LastEmptying { get; set; }
-        public string Status { get; set; }
-        public int ZoneId { get; set; }
+        public string? Status { get; set; }
+        public string Zone { get; set; }
         public int? RouteId { get; set; }
-        public virtual Zone? Zone { get; set; }
         public virtual RouteEntity? Route { get; set; }
     }
 }

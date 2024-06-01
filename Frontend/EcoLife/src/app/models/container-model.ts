@@ -1,5 +1,3 @@
-import { ZoneModel } from "./zone-model";
-
 export interface ContainerModel {
   id?: number,
   latitude: number,
@@ -9,6 +7,5 @@ export interface ContainerModel {
   wasteType: string,
   lastEmptying: Date,
   status: string,
-  zoneId: number,
-  zone?: ZoneModel
+  zone: string
 }

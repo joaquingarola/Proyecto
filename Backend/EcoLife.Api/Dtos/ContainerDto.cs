@@ -10,6 +10,6 @@
         public string WasteType { get; set; }
         public DateTime? LastEmptying { get; set; }
         public string Status { get; set; }
-        public int ZoneId { get; set; }
+        public string? Zone { get; set; }
     }
 }

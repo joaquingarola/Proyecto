@@ -12,7 +12,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
 
         public async Task<List<Container>> GetAllWithZoneAsync()
             => await context.Set<Container>()
-                .Include(m => m.Zone)
                 .ToListAsync();
 
         public async Task<List<Container>> GetAllWithRouteAsync()

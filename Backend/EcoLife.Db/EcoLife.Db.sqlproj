@@ -62,7 +62,6 @@
     <Folder Include="Scripts\PostDeployment" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Zones.sql" />
     <Build Include="Tables\Vehicles.sql" />
     <Build Include="Tables\Maintenances.sql" />
     <None Include="Scripts\PostDeployment\Roles.sql" />

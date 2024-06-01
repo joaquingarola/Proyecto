@@ -32,14 +32,10 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="row">
+          <div class="row disabled-input">
             <mat-form-field appearance="outline">
               <mat-label>Zona</mat-label>
-              <mat-select formControlName="zoneId" [(value)]="selectedZone">
-                <mat-option *ngFor="let zone of zones" [value]="zone.id">
-                  {{zone.description}}
-                </mat-option>
-              </mat-select>
+              <input matInput type="text" placeholder="Distrito centro" formControlName="zone" autocomplete="off" readonly> 
             </mat-form-field>
           </div>
           <div class="row disabled-input">

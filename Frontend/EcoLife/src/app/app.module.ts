@@ -27,11 +27,9 @@ import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ZonesComponent } from './components/admin/zones/zones.component';
 import { VehiclesComponent } from './components/admin/vehicles/vehicles.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
-import { ZonesFormModalComponent } from './components/admin/zones/zones-form-modal/zones-form-modal.component';
 import { VehiclesFormModalComponent } from './components/admin/vehicles/vehicles-form-modal/vehicles-form-modal.component';
 import { NotifyMaintenanceFormModalComponent } from './components/admin/vehicles/notify-maintenance-form-modal/notify-maintenance-form-modal.component';
 import { MaintenanceComponent } from './components/admin/maintenance/maintenance.component';
@@ -76,11 +74,9 @@ registerLocaleData(localeEs, 'es');
 @NgModule({
   declarations: [
     AppComponent,
-    ZonesComponent,
     VehiclesComponent,
     NavbarComponent,
     ConfirmationModalComponent,
-    ZonesFormModalComponent,
     VehiclesFormModalComponent,
     NotifyMaintenanceFormModalComponent,
     MaintenanceComponent,

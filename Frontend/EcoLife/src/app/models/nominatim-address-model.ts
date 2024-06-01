@@ -8,4 +8,7 @@ export interface NominatimAddressModel {
   postcode: string,
   country: string,
   country_code: string
+  town: string,
+  village: string,
+  city_district: string
 }
