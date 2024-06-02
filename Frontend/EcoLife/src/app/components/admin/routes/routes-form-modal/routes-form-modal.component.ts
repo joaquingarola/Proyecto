@@ -82,6 +82,6 @@ export class RoutesFormModalComponent {
   };
 
   quantitySelectedValid(): boolean {
-    return this.selectedContainers.length < 5;
+    return this.selectedContainers.length < 1;
   }
 }

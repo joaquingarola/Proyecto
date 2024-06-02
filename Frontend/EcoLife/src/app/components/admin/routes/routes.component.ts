@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PlanifyRecolectionComponent } from './planify-recolection/planify-recolection.component';
+import { RouteNotValidModalComponent } from './route-not-valid-modal/route-not-valid-modal.component';
 
 @Component({
   selector: 'app-routes',
@@ -105,17 +106,28 @@ export class RoutesComponent {
   }
 
   public planify(route: RouteModel): void {
-    const data: NewRecolectionModel = { routeId: route.id! };
-    const dialogRef = this.dialog.open(PlanifyRecolectionComponent, { data });
-
-    dialogRef.afterClosed()
-      .subscribe((res: boolean) => {
-        if(res) {
-          this.getContainers();
-          this.listRoutes();
-          this.snackbarNotificationService.open({ text: 'Recolección planificada con éxito.', type: SnackbarType.Success });
-        }
-      });
+    if(route.quantity > 0) {
+      const data: NewRecolectionModel = { routeId: route.id! };
+      const dialogRef = this.dialog.open(PlanifyRecolectionComponent, { data });
+  
+      dialogRef.afterClosed()
+        .subscribe((res: boolean) => {
+          if(res) {
+            this.getContainers();
+            this.listRoutes();
+            this.snackbarNotificationService.open({ text: 'Recolección planificada con éxito.', type: SnackbarType.Success });
+          }
+        });
+    } else {
+      const dialogRef = this.dialog.open(RouteNotValidModalComponent, { autoFocus: false });
+  
+      dialogRef.afterClosed()
+        .subscribe((res: boolean) => {
+          if(res) {
+            this.editRoute(route);
+          }
+        });
+    }
   }
 
   public addRoute(): void {

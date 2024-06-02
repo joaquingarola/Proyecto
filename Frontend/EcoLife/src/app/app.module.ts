@@ -67,6 +67,7 @@ import { PlanifyRecolectionComponent } from './components/admin/routes/planify-r
 import { MenubarModule } from 'primeng/menubar';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
+import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -109,7 +110,8 @@ registerLocaleData(localeEs, 'es');
     RoutesFormModalComponent,
     PlanifyRecolectionComponent,
     RecolectionsComponent,
-    ViewRecolectionComponent
+    ViewRecolectionComponent,
+    RouteNotValidModalComponent
   ],
   imports: [
     BrowserModule,
