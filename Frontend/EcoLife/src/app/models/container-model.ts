@@ -7,5 +7,6 @@ export interface ContainerModel {
   wasteType: string,
   lastEmptying: Date,
   status: string,
-  zone: string
+  zone: string,
+  routeId?: number
 }

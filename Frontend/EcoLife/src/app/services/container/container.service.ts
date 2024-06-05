@@ -29,7 +29,7 @@ export class ContainerService {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 
-  public updateContainer(id: number, container: ContainerModel): Observable<Object> {
-    return this.http.put(`${this.API_URL}`, { id: id, ...container });
+  public updateContainer(id: number, routeId: number | undefined, container: ContainerModel): Observable<Object> {
+    return this.http.put(`${this.API_URL}`, { id: id, routeId: routeId, ...container });
   }
 }

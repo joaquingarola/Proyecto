@@ -71,7 +71,18 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> UpdateContainerAsync([FromBody] ContainerDto containerDto)
         {
             var container = _mapper.Map<Container>(containerDto);
+
+            if (containerDto.RouteId != null && containerDto.Status == "Dañado")
+            {
+                var route = await _uow.RouteRepository.GetByIdAsync(containerDto.RouteId!.Value);
+
+                route.Quantity -= 1;
+
+                await _uow.RouteRepository.SaveChangesAsync();
+            }
+
             var result = await _uow.ContainerRepository.Update(container);
+
             return Ok(result);
         }
     }

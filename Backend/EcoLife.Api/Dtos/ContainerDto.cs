@@ -11,5 +11,6 @@
         public DateTime? LastEmptying { get; set; }
         public string Status { get; set; }
         public string? Zone { get; set; }
+        public int? RouteId { get; set; }
     }
 }

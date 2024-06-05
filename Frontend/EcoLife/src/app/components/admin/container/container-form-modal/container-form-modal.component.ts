@@ -56,7 +56,7 @@ export class ContainerFormModalComponent {
       this.isLoading = true;
       if (this.data.selectedItem) {
         this.containerService
-          .updateContainer(this.data.selectedItem!.id!, this.containerForm.value)
+          .updateContainer(this.data.selectedItem!.id!, this.data.selectedItem.routeId, this.containerForm.value)
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: () => {
