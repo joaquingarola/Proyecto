@@ -8,6 +8,7 @@ namespace EcoLife.Api.Dtos
         public int Periodicity { get; set; }
         public int Quantity { get; set; }
         public string Description { get; set; }
+        public string WasteType { get; set; }
         public ICollection<Container> Containers { get; set; }  
     }
 }

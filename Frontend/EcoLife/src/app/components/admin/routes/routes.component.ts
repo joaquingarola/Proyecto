@@ -90,9 +90,7 @@ export class RoutesComponent {
   }
 
  public editRoute(editRoute: RouteModel): void {
-    const containersTotal = [...this.containers, ...editRoute.containers];
-
-    const data: NewRouteModel = { route: editRoute, containers: containersTotal, containersWithoutRoute: this.containersWithoutRoute };
+    const data: RouteModel = editRoute;
     const dialogRef = this.dialog.open(RoutesFormModalComponent, { data });
 
     dialogRef.afterClosed()
@@ -131,8 +129,7 @@ export class RoutesComponent {
   }
 
   public addRoute(): void {
-    const data: NewRouteModel = { containers: this.containers, containersWithoutRoute: this.containersWithoutRoute };
-    const dialogRef = this.dialog.open(RoutesFormModalComponent, { data } );
+    const dialogRef = this.dialog.open(RoutesFormModalComponent);
     
     dialogRef.afterClosed()
       .subscribe((res: boolean) => {

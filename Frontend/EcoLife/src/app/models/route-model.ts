@@ -5,5 +5,6 @@ export interface RouteModel {
   description: string,
   periodicity: number,
   quantity: number,
+  wasteType: string,
   containers: ContainerModel[]
 }

@@ -27,7 +27,7 @@ namespace EcoLife.Api.Controllers
         [HttpPost]
         async public Task<IActionResult> AddNewRoute([FromBody] RouteDto routeDto)
         {
-            var route = new RouteEntity(routeDto.Description, routeDto.Periodicity, routeDto.Quantity);
+            var route = new RouteEntity(routeDto.Description, routeDto.Periodicity, routeDto.Quantity, routeDto.WasteType);
 
             foreach (var container in routeDto.Containers)
             {
@@ -74,6 +74,7 @@ namespace EcoLife.Api.Controllers
             route.Periodicity = editRoute.Periodicity;
             route.Description = editRoute.Description;
             route.Quantity = editRoute.Quantity;
+            route.WasteType = editRoute.WasteType;
 
             foreach (var container in editRoute.Containers)
             {

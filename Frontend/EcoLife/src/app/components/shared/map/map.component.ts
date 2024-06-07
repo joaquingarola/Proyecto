@@ -36,6 +36,7 @@ export class MapComponent implements OnChanges {
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
   private map: L.Map;
   private marker: L.Marker;
+  private otherItemsMarker: L.Marker[] = [];;
   public containerIcon = L.icon({
     iconUrl: '../../../../assets/container_icon.png',
     iconSize: [48, 48],
@@ -88,6 +89,10 @@ export class MapComponent implements OnChanges {
     if(changes?.['selectedWasteCenter']?.currentValue) {
       this.updateWasteCenter(changes?.['selectedWasteCenter']?.currentValue)
     }
+
+    if(changes?.['otherItems']?.currentValue) {
+      this.updateOtherItems(changes?.['otherItems']?.currentValue)
+    }
   }
 
   ngAfterViewInit(): void {
@@ -131,6 +136,7 @@ export class MapComponent implements OnChanges {
     if(this.otherItems?.itemsCoords) {
       this.otherItems.itemsCoords.forEach((coords: L.LatLngTuple) => {
         let marker = new L.Marker(coords, {icon: this.icons[this.otherItems.type]});
+        this.otherItemsMarker.push(marker);
         if(!this.createRoute) {
           marker.addTo(this.map);
         } else {
@@ -353,5 +359,29 @@ export class MapComponent implements OnChanges {
     }
 
     return this.defaultCoords;
+  }
+
+  private updateOtherItems(otherItems: OtherItems): void {
+    if(this.map) {
+      this.otherItemsMarker?.forEach(x => this.map.removeLayer(x));
+      this.otherItemsMarker = [];
+      otherItems?.itemsCoords?.forEach((coords: L.LatLngTuple) => {
+        let marker = new L.Marker(coords, {icon: this.icons[this.otherItems.type]});
+        this.otherItemsMarker.push(marker);
+        if(!this.createRoute) {
+          marker.addTo(this.map);
+        } else {
+          marker.addTo(this.map).on('click', 
+          (e: L.LeafletMouseEvent) => {
+            if(this.selelectedContainersRoute.includes(e.latlng)) {
+              e.target.setIcon(this.containerDisabledIcon);
+            } else {
+              e.target.setIcon(this.containerIcon);
+            }
+            this.selectedCoords.emit(e.latlng)
+          });
+        }
+      });
+    }
   }
 }

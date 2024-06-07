@@ -18,6 +18,7 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                     Periodicity = r.Periodicity,
                     Description = r.Description,
                     Quantity = r.Quantity,
+                    WasteType = r.WasteType,
                     Containers = r.Containers.Select(c => new Container
                     {
                         Id = c.Id,
@@ -41,6 +42,7 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                     Id = r.Id,
                     Periodicity = r.Periodicity,
                     Description = r.Description,
+                    WasteType = r.WasteType,
                     Containers = r.Containers.Select(c => new Container
                     {
                         Id = c.Id,
