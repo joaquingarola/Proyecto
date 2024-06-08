@@ -1,31 +1,148 @@
-.container{
-  margin-top: 150px;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.background {
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 
-  &__form {
-    background-color: aliceblue;
-    text-align: center;
-    width: 400px;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 1px solid grey;
-    border-radius: 30px;
-    box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);
-    -webkit-box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);
-    -moz-box-shadow: -1px 0px 13px 4px rgba(0,0,0,0.56);    
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px; /* Ajusta el tamaño de los círculos según tus preferencias */
+    height: 600px; /* Ajusta el tamaño de los círculos según tus preferencias */
+    border-radius: 50%;
+    background: rgba(81,196,144,0.2); /* Cambia el color aquí */
+  }
 
-    &__error{
-      color: red;
-      margin: 0 0 10px 0;
+  &::before {
+    top: -300px;
+    left: -300px;
+  }
+
+  &::after {
+    bottom: -300px;
+    right: -300px;
+  }
+}
+
+.welcome-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 36px;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-form {
+  width: 100%;
+  text-align: center;
+
+  .login-form__title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .login-form__field {
+    margin-bottom: 20px;
+    width: 100%;
+    mat-form-field {
+      width: 100%;
+      .mat-form-field-outline {
+        stroke: #000;
+      }
+      .mat-form-field-appearance-outline .mat-form-field-outline-thickness {
+        stroke-width: 2px;
+      }
+      .mat-form-field-label {
+        color: #000;
+      }
+      .mat-input-element {
+        color: #000;
+      }
+    }
+  }
+
+  .login-form__error {
+    color: #d9534f;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &.spinner {
+      position: relative;
     }
 
-    &__eye {
+    &.spinner::after {
+      content: '';
       position: absolute;
-      margin-left: -15px;
-      cursor: pointer;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #fff;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      transform: translate(-50%, -50%);
     }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+   // &:not(:disabled) {
+   //   background-color: #6ac045;
+    //  color: #fff;
+   //}
+
+   // &:not(:disabled):hover {
+   //   background-color: #57a039;
+   // }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
