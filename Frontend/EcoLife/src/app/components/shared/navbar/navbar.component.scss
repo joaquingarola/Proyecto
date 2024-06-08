@@ -44,9 +44,20 @@
     width: 80px;
 }
 
-.card {
+.user-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     &__actions {
         display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
         justify-content: center;
+    }
+
+    &__buttons {
+        width: 100%;
     }
 }

@@ -14,8 +14,9 @@
                       <mat-card-subtitle class="center">{{ user.surname }}, {{user.name}}</mat-card-subtitle>
                       <mat-card-subtitle class="center">{{ user.email }}</mat-card-subtitle>
                     </mat-card-header>
-                    <mat-card-actions class="card__actions">
-                      <button mat-button color="warn" (click)="logOut()">Cerrar sesión</button>
+                    <mat-card-actions class="user-card__actions">
+                      <button mat-raised-button color="primary" (click)="downloadUserGuide()" class="user-card__buttons" download>Manual de usuario</button>
+                      <button mat-raised-button color="warn" (click)="logOut()" class="user-card__buttons">Cerrar sesión</button>
                     </mat-card-actions>
                 </mat-card>
             </mat-menu>

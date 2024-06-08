@@ -63,6 +63,7 @@ export class NavbarComponent {
     }
   ];
   user: EmployeeModel;
+  adminFileUrl: string = 'assets/admin_guide.pdf';
 
   constructor(private storageService: StorageService) { }
 
@@ -72,5 +73,14 @@ export class NavbarComponent {
 
   logOut(): void{
     this.storageService.logOut();
+  }
+
+  downloadUserGuide(): void {
+    const link = document.createElement('a');
+    link.href = this.adminFileUrl;
+    link.download = 'Manual de usuario (Admin).pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
