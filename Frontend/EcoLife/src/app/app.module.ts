@@ -68,6 +68,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
+import { FrecuentQuestionsComponent } from './components/homepage/frecuent-questions/frecuent-questions.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -92,6 +93,7 @@ registerLocaleData(localeEs, 'es');
     HomepageComponent,
     ContactUsComponent,
     AboutUsComponent,
+    FrecuentQuestionsComponent,
     FooterComponent,
     HeaderComponent,
     NewsComponent,
