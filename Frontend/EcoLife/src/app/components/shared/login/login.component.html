@@ -1,23 +1,23 @@
 <div class="background">
   <h2 class="welcome-title">Bienvenido a Ecolife</h2>
   <div class="login-container">
-    <form [formGroup]="loginForm" class="login-form">
+    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
       <h1 class="login-form__title">Iniciar sesión</h1>
       <mat-form-field appearance="outline" class="login-form__field">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="username" required placeholder="Ej: test@test.com" autocomplete="off">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="login-form__field">
+      <mat-form-field appearance="outline" class="login-form__field" [ngClass]="{ 'marginb-0': error.length !== 0}">
         <mat-label>Contraseña</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required placeholder="Ingresa tu contraseña" autocomplete="off">
-        <button mat-icon-button matSuffix class="login-form__eye" (click)="changeVisibility()">
+        <button mat-icon-button matSuffix class="login-form__eye" type="button" (click)="changeVisibility()">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
       <div *ngIf="error.length !== 0" class="login-form__error">
         <span>{{error}}</span>
       </div>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loginForm.pristine || loginForm.invalid || isLoading" [class.spinner]="isLoading">Login</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.pristine || loginForm.invalid || isLoading" [class.spinner]="isLoading">Login</button>
     </form>
   </div>
 </div>

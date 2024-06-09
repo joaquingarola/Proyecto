@@ -95,7 +95,6 @@ body, html {
 
   .login-form__error {
     color: #d9534f;
-    margin-bottom: 10px;
   }
 
   button {
@@ -104,45 +103,13 @@ body, html {
     border: none;
     border-radius: 25px;
     font-size: 16px;
+    margin-top: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-
-    &.spinner {
-      position: relative;
-    }
-
-    &.spinner::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      border: 3px solid #fff;
-      border-top: 3px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      transform: translate(-50%, -50%);
-    }
 
     &:disabled {
       background-color: #ccc;
       cursor: not-allowed;
     }
-
-   // &:not(:disabled) {
-   //   background-color: #6ac045;
-    //  color: #fff;
-   //}
-
-   // &:not(:disabled):hover {
-   //   background-color: #57a039;
-   // }
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
   }
 }
