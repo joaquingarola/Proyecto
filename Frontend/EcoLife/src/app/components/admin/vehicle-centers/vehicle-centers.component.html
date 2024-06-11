@@ -26,7 +26,12 @@
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 			<tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell container__data__table__no-results" colspan="6">No se encontraron centros de vehículos que coincidan con "{{input.value}}"</td>
+        <td class="mat-cell container__data__table__no-results" colspan="8">
+					<div>
+						<img src="assets/no_results.png" alt="Logo">
+						<p>No se encontraron resultados</p>
+					</div>
+				</td>
       </tr>
 		</table>
 		<mat-paginator 
