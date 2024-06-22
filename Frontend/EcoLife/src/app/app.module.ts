@@ -65,6 +65,7 @@ import { WasteCenterFormModalComponent } from './components/admin/waste-centers/
 import { RoutesFormModalComponent } from './components/admin/routes/routes-form-modal/routes-form-modal.component';
 import { PlanifyRecolectionComponent } from './components/admin/routes/planify-recolection/planify-recolection.component';
 import { MenubarModule } from 'primeng/menubar';
+import { CarouselModule } from 'primeng/carousel';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
@@ -142,7 +143,8 @@ registerLocaleData(localeEs, 'es');
     MatCardModule,
     MenubarModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CarouselModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
