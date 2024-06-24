@@ -1,18 +1,20 @@
 <div id="news" class="container">
   <p class="container__title">Novedades</p>
-  <!-- <app-items-list [items]="newsList"></app-items-list> -->
   <p-carousel 
     [value]="newsList" 
     [numVisible]="2" 
     [numScroll]="2" 
-    [circular]="false">
+    [circular]="false"
+    class="custom-carousel">
       <ng-template let-item pTemplate="item">
           <div class="item">
-              <div class="item__title">
-                {{ item.title }}
-              </div>
-              <div class="item__description">
+              <div class="item__content">
+                <div class="item__title">
+                  {{ item.title }}
+                </div>
+                <div class="item__description">
                   {{ item.description }}
+                </div>
               </div>
           </div>
       </ng-template>

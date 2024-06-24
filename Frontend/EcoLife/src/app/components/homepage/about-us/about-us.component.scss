@@ -1,7 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+#about-us-background {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  padding: 2rem 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(81, 196, 144, 0.2);
+    z-index: -1;
+  }
+
+  &::before {
+    top: -300px;
+    left: -300px;
+  }
+
+  &::after {
+    bottom: -300px;
+    right: -300px;
+  }
+}
+
 .container {
   display: flex;
   justify-content: center;
-  
+
   &__image {
     width: 500px;
     height: 500px;
@@ -34,4 +74,3 @@
     }
   }
 }
-
