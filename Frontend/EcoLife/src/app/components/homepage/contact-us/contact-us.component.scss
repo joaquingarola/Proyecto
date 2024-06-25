@@ -38,6 +38,7 @@
     font-size: 38px;
     color: blue;
     margin-top: 25px;
+    margin-bottom: 20px;
   }
 
   &__body {
@@ -52,7 +53,7 @@
   
       &__description {
         width: 450px;
-        margin: 8px;
+        margin: 12px;
         font-size: 18px;
       }
 
@@ -94,6 +95,7 @@
         background-color: white;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); 
+        margin-bottom: 20px;
         
         &__content {
           width: 100%;
