@@ -2,7 +2,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
+  background: linear-gradient(215deg, #ffffff, #e0f7fa );
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(81, 196, 144, 0.2);
+    z-index: -1;
+  }
+
+  &::before {
+    bottom: -300px;
+    left: -300px;
+  }
+
+  &::after {
+    top: -300px;
+    right: -300px;
+  }
 
   &__title {
     font-weight: 500;
@@ -17,6 +42,6 @@
   }
 
   &__question {
-    margin: 10px 0;
+    margin: 25px 0;
   }
 }

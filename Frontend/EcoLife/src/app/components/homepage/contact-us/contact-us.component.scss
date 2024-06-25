@@ -7,7 +7,31 @@
 
 .container{
   text-align: center; 
-  margin: 20px;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px; /* Ajusta el tamaño de los círculos según tus preferencias */
+    height: 600px; /* Ajusta el tamaño de los círculos según tus preferencias */
+    border-radius: 50%;
+    background: rgba(81, 196, 144, 0.2);
+    z-index: -1; /* Asegura que los círculos estén detrás del contenedor */
+  }
+
+  &::before {
+    top: -300px; /* Asegura que el círculo comience bien arriba */
+    left: -300px; /* Asegura que el círculo comience bien a la izquierda */
+  }
+
+  &::after {
+    bottom: -300px;
+    right: -300px;
+  }
  
   &__title{
     font-weight: 500;

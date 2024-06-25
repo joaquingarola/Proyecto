@@ -9,12 +9,15 @@ body, html {
   font-family: 'Roboto', sans-serif;
 }
 
-#about-us-background {
+.container {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(215deg, #ffffff, #e0f7fa );
+  padding: 2rem 0;
+  font-family: 'Helvetica Neue', sans-serif;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
-  padding: 2rem 0;
 
   &::before,
   &::after {
@@ -28,19 +31,14 @@ body, html {
   }
 
   &::before {
-    top: -300px;
+    bottom: -300px;
     left: -300px;
   }
 
   &::after {
-    bottom: -300px;
+    top: -300px;
     right: -300px;
   }
-}
-
-.container {
-  display: flex;
-  justify-content: center;
 
   &__image {
     width: 500px;
