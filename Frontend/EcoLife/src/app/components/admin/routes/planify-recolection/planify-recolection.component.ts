@@ -104,7 +104,7 @@ export class PlanifyRecolectionComponent {
     .subscribe(
       (response) => {
         this.route = response;
-        this.containersRoute = (response.containers ?? []).map(container => [container.latitude, container.longitude]);
+        this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
         this.isLoadingRoute = false;
         this.getVehicleCenters();
       }

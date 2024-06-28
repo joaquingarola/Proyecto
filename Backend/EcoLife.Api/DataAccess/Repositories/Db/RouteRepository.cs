@@ -11,53 +11,23 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
         public RouteRepository(EcoLifeContext context) : base(context) { }
 
         public async Task<List<RouteEntity>> GetAllWithContainers()
-            => await context.Set<RouteEntity>()
-                .Select(r => new RouteEntity
-                {
-                    Id = r.Id,
-                    Periodicity = r.Periodicity,
-                    Description = r.Description,
-                    Quantity = r.Quantity,
-                    WasteType = r.WasteType,
-                    Containers = r.Containers.Select(c => new Container
-                    {
-                        Id = c.Id,
-                        Latitude = c.Latitude,
-                        Longitude = c.Longitude,
-                        Capacity = c.Capacity,
-                        Address = c.Address,
-                        WasteType = c.WasteType,
-                        LastEmptying = c.LastEmptying,
-                        Status = c.Status,
-                        Zone = c.Zone
-                    }).ToList()
-                })
-            .ToListAsync();
+            => await context.Routes
+                .Include(x => x.RouteContainers)
+                    .ThenInclude(x => x.Container)
+                .ToListAsync();
 
         public async Task<RouteEntity> GetByIdWithContainers(int routeId)
-            => await context.Set<RouteEntity>()
-                .Where(route => route.Id == routeId)
-                .Select(r => new RouteEntity
-                {
-                    Id = r.Id,
-                    Periodicity = r.Periodicity,
-                    Description = r.Description,
-                    WasteType = r.WasteType,
-                    Containers = r.Containers.Select(c => new Container
-                    {
-                        Id = c.Id,
-                        Latitude = c.Latitude,
-                        Longitude = c.Longitude,
-                        Capacity = c.Capacity,
-                        Address = c.Address,
-                        WasteType = c.WasteType,
-                        LastEmptying = c.LastEmptying,
-                        Status = c.Status,
-                        Zone = c.Zone
-                    }).ToList()
-                }).FirstAsync();
+            => await context.Routes
+                .Include(x => x.RouteContainers)
+                    .ThenInclude(x => x.Container)
+                .FirstOrDefaultAsync(x => x.Id == routeId);
+
+        public async Task<RouteEntity> GetByIdWithRouteContainers(int routeId)
+            => await context.Routes
+                .Include(x => x.RouteContainers)
+                .FirstOrDefaultAsync(x => x.Id == routeId);
 
         public void Remove(RouteEntity route)
-            => context.Set<RouteEntity>().Remove(route);
+            => context.Routes.Remove(route);
     }
 }

@@ -29,7 +29,7 @@ export class ViewRecolectionComponent {
       this.routeService.getById(this.data.routeId)
       .subscribe(
         (response) => {
-          this.containersRoute = (response.containers ?? []).map(container => [container.latitude, container.longitude]);
+          this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
           this.loading = false;
         });
     }

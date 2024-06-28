@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../enviroments/enviroment';
-import { ContainerModel } from '../../models';
+import { ContainerModel, RouteContainerModel } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class ContainerService {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 
-  public updateContainer(id: number, routeId: number | undefined, container: ContainerModel): Observable<Object> {
-    return this.http.put(`${this.API_URL}`, { id: id, routeId: routeId, ...container });
+  public updateContainer(container: ContainerModel): Observable<Object> {
+    return this.http.put(`${this.API_URL}`, container);
   }
 }

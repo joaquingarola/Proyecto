@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 using AutoMapper;
 using EcoLife.Api.DataAccess.UnitOfWork;
@@ -29,13 +30,9 @@ namespace EcoLife.Api.Controllers
         {
             var route = new RouteEntity(routeDto.Description, routeDto.Periodicity, routeDto.Quantity, routeDto.WasteType);
 
-            foreach (var container in routeDto.Containers)
+            foreach (var routeContainer in routeDto.RouteContainers)
             {
-                var data = await _uow.ContainerRepository.GetByIdAsync(container.Id);
-                if (data != null)
-                {
-                    route.Containers.Add(data);
-                }
+                route.RouteContainers.Add(new RouteContainers() { ContainerId = routeContainer.ContainerId!.Value });
             }
 
             await _uow.RouteRepository.AddAndSaveAsync(route);
@@ -53,34 +50,29 @@ namespace EcoLife.Api.Controllers
         [HttpGet("{routeId}")]
         async public Task<IActionResult> GetRouteByIdAsync([FromRoute, Required] int routeId)
         {
+            List<int> order = new List<int> { 2016, 2017, 2021, 2019, 2018, 2023, 2024, 2020, 2022 };
+
             var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
+
+            // route.RouteContainers = route.RouteContainers.OrderBy(item => item.Order).ToList();
+
             return Ok(route);
         }
 
         [HttpPost("update")]
         async public Task<IActionResult> UpdateRouteAsync([FromBody] RouteEntity editRoute)
         {
-            var containersRoute = await _uow.ContainerRepository.GetByRoute(editRoute.Id);
-
-            foreach (var container in containersRoute)
-            {
-                container.RouteId = null;
-            }
-
-            await _uow.ContainerRepository.SaveChangesAsync();
-
             var route = await _uow.RouteRepository.GetByIdWithContainers(editRoute.Id);
 
             route.Periodicity = editRoute.Periodicity;
             route.Description = editRoute.Description;
             route.Quantity = editRoute.Quantity;
             route.WasteType = editRoute.WasteType;
+            route.RouteContainers.Clear();
 
-            foreach (var container in editRoute.Containers)
+            foreach (var routeContainer in editRoute.RouteContainers)
             {
-                var data = await _uow.ContainerRepository.GetByIdAsync(container.Id);
-
-                route.Containers.Add(data);
+                route.RouteContainers.Add(new RouteContainers() { ContainerId = routeContainer.ContainerId });
             }
 
             await _uow.RouteRepository.Update(route);
@@ -92,11 +84,6 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> DeleteRouteByIdAsync([FromRoute, Required] int routeId)
         {
             var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
-
-            foreach (var container in route.Containers)
-            {
-                container.RouteId = null;
-            }
 
             _uow.RouteRepository.Remove(route);
 

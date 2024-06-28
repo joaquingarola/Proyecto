@@ -180,7 +180,7 @@ export class MapComponent implements OnChanges {
 
     this.loadWasteCenters();
 
-    this.addRoute(this.route, true);
+    // this.addRoute(this.route, true);
 
     /* if(this.route) {
       if(this.route.length >=2) {

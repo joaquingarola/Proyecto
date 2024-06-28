@@ -16,6 +16,9 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.VehicleCenter)
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Vehicle)
+                .Include(m => m.Route)
+                    .ThenInclude(x => x.RouteContainers)
+                        .ThenInclude(x => x.Container)
                 .ToListAsync();
     }
 }

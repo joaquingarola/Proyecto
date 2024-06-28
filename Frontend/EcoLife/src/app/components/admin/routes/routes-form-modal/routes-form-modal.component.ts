@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 
 import * as L from 'leaflet';
 
-import { ContainerModel, OtherItems, RouteModel, SelectedItemType } from '../../../../models';
+import { ContainerModel, OtherItems, RouteContainerModel, RouteModel, SelectedItemType } from '../../../../models';
 import { ContainerService, RouteService } from '../../../../services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -47,8 +47,8 @@ export class RoutesFormModalComponent {
 
     if(this.data) { 
       this.routeForm.patchValue(this.data!);
-      this.selectedContainers = this.data!.containers.map(container => L.latLng(container.latitude, container.longitude));
-      this.selectedType = ContainerType.find(x => x == this.data.wasteType)![0];
+      this.selectedContainers = this.data!.routeContainers.map(routeContainer => L.latLng(routeContainer.container!.latitude, routeContainer.container!.longitude));
+      this.selectedType = ContainerType.find(x => x == this.data.wasteType)!;
     }
 
     this.getContainers();
@@ -68,11 +68,13 @@ export class RoutesFormModalComponent {
   }
 
   onFormSubmit(): void {
+    const routeContainers: RouteContainerModel[] = [];
+    const filteredContainers = this.containers.filter(x => this.selectedContainers.some(y => y.lat == x.latitude && y.lng == x.longitude));
+    routeContainers.push(...filteredContainers.map(x => ({ containerId: x.id, container: x })));
     if (this.routeForm.valid) {
       this.isLoading = true;
       if (this.data) {
-        const filteredContainers = this.containers.filter(x => this.selectedContainers.some(y => y.lat == x.latitude && y.lng == x.longitude));
-        const route: RouteModel = { id: this.data.id, ...this.routeForm.value, containers: filteredContainers };
+        const route: RouteModel = { id: this.data.id, ...this.routeForm.value, routeContainers: routeContainers };
         this.routeService.update(route)
           .subscribe({
             next: () => this._dialogRef.close(true),
@@ -81,8 +83,7 @@ export class RoutesFormModalComponent {
             }
           }).add(() => this.isLoading = false);
       } else {
-        const filteredContainers = this.containers.filter(x => this.selectedContainers.some(y => y.lat == x.latitude && y.lng == x.longitude));
-        const route: RouteModel = { ...this.routeForm.value, containers: filteredContainers };
+        const route: RouteModel = { ...this.routeForm.value, routeContainers: routeContainers };
         this.routeService.add(route)
           .subscribe({
             next: () => this._dialogRef.close(true),
@@ -102,7 +103,7 @@ export class RoutesFormModalComponent {
     this.containerService.getAllWithoutRoute()
       .subscribe(
         (response) => {
-          const routeContainers = this.data?.containers ?? [];
+          const routeContainers = this.data?.routeContainers.map(routeContainer => routeContainer.container!) ?? [];
           this.containers = [...response, ...routeContainers];
           this.organicContainersWithoutRoute.itemsCoords = response.filter(x => x.wasteType == ContainerType[0]).map(x => [x.latitude, x.longitude]);
           this.inorganicContainersWithoutRoute.itemsCoords = response.filter(x => x.wasteType == ContainerType[1]).map(x => [x.latitude, x.longitude]);

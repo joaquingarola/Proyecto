@@ -55,8 +55,9 @@ export class ContainerFormModalComponent {
     if (this.containerForm.valid) {
       this.isLoading = true;
       if (this.data.selectedItem) {
+        const container: ContainerModel =  { ...this.data.selectedItem, ...this.containerForm.value };
         this.containerService
-          .updateContainer(this.data.selectedItem!.id!, this.data.selectedItem.routeId, this.containerForm.value)
+          .updateContainer(container)
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: () => {

@@ -1,4 +1,4 @@
-import { ContainerModel } from "./container-model";
+import { RouteContainerModel } from "./route-container-model";
 
 export interface RouteModel {
   id?: number,
@@ -6,5 +6,5 @@ export interface RouteModel {
   periodicity: number,
   quantity: number,
   wasteType: string,
-  containers: ContainerModel[]
+  routeContainers: RouteContainerModel[]
 }

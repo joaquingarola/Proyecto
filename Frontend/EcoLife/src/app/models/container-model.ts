@@ -1,3 +1,5 @@
+import { RouteContainerModel } from "./route-container-model";
+
 export interface ContainerModel {
   id?: number,
   latitude: number,
@@ -8,5 +10,5 @@ export interface ContainerModel {
   lastEmptying: Date,
   status: string,
   zone: string,
-  routeId?: number
+  routeContainer?: RouteContainerModel
 }

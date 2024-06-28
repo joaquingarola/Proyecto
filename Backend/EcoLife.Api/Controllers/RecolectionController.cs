@@ -43,7 +43,9 @@ namespace EcoLife.Api.Controllers
         async public Task<IActionResult> PostAsync([FromBody] RecolectionDto recolectionDto)
         {
             var recolection = _mapper.Map<Recolection>(recolectionDto);
+
             var result = await _uow.RecolectionRepository.AddAndSaveAsync(recolection);
+
             return Ok(result);
         }
 

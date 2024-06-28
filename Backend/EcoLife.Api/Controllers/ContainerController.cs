@@ -28,7 +28,7 @@ namespace EcoLife.Api.Controllers
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var containers = await _uow.ContainerRepository.GetAllWithZoneAsync();
+            var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
             return Ok(containers);
         }
 
@@ -37,14 +37,16 @@ namespace EcoLife.Api.Controllers
         {
             var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
 
-            return Ok(containers.Where(x => x.RouteId == null && x.Status == "Activo"));
+            return Ok(containers.Where(x => x.RouteContainer == null && x.Status == "Activo"));
         }
 
         [HttpPost]
         async public Task<IActionResult> PostContainerAsync([FromBody] ContainerDto containerDto)
         {
             var container = _mapper.Map<Container>(containerDto);
+
             var result = await _uow.ContainerRepository.AddAndSaveAsync(container);
+
             return Ok(result);
         }
 
@@ -53,9 +55,9 @@ namespace EcoLife.Api.Controllers
         {
             var container = await _uow.ContainerRepository.GetByIdAsync(containerId);
 
-            if(container.RouteId != null)
+            if(container.RouteContainer != null)
             {
-                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteId!.Value);
+                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteContainer.RouteId);
 
                 route.Quantity -= 1;
 
@@ -68,20 +70,22 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateContainerAsync([FromBody] ContainerDto containerDto)
+        async public Task<IActionResult> UpdateContainerAsync([FromBody] Container container)
         {
-            var container = _mapper.Map<Container>(containerDto);
+            var result = await _uow.ContainerRepository.Update(container);
 
-            if (containerDto.RouteId != null && containerDto.Status == "Dañado")
+            if (container.RouteContainer != null && container.Status == "Dañado")
             {
-                var route = await _uow.RouteRepository.GetByIdAsync(containerDto.RouteId!.Value);
+                var route = await _uow.RouteRepository.GetByIdWithRouteContainers(container.RouteContainer!.RouteId);
+
+                var routeContainer = route.RouteContainers.First(x => x.ContainerId == container.Id);
+
+                route.RouteContainers.Remove(routeContainer);
 
                 route.Quantity -= 1;
 
                 await _uow.RouteRepository.SaveChangesAsync();
             }
-
-            var result = await _uow.ContainerRepository.Update(container);
 
             return Ok(result);
         }
