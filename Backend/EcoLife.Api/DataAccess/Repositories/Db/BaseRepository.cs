@@ -42,5 +42,10 @@ namespace EcoLife.Api.DataAccess.Repositories.Base
 
         public async Task SaveChangesAsync()
             => await context.SaveChangesAsync();
+
+        public void Detach(TEntity entity)
+        {
+            context.Entry(entity).State = EntityState.Detached;
+        }
     }
 }

@@ -13,5 +13,7 @@
         Task<TEntity> Delete(int id);
 
         Task SaveChangesAsync();
+
+        void Detach(TEntity entity);
     }
 }

@@ -50,11 +50,9 @@ namespace EcoLife.Api.Controllers
         [HttpGet("{routeId}")]
         async public Task<IActionResult> GetRouteByIdAsync([FromRoute, Required] int routeId)
         {
-            List<int> order = new List<int> { 2016, 2017, 2021, 2019, 2018, 2023, 2024, 2020, 2022 };
-
             var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
 
-            // route.RouteContainers = route.RouteContainers.OrderBy(item => item.Order).ToList();
+            route.RouteContainers = route.RouteContainers.OrderBy(item => item.Order).ToList();
 
             return Ok(route);
         }

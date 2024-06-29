@@ -32,6 +32,7 @@ builder.Services.AddCors(options =>
         .AllowCredentials());
 });
 
+builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x =>
     {
