@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 
-using EcoLife.Api.Dtos;
+using EcoLife.Api.Application.Command.News;
 using EcoLife.Api.Entities;
-using EcoLife.Api.MapperProfiles.Resolvers;
 
 namespace EcoLife.Api.MapperProfiles
 {
@@ -10,8 +9,10 @@ namespace EcoLife.Api.MapperProfiles
     {
         public NewProfile() 
         {
-            CreateMap<NewDto, New>()
+            CreateMap<CreateNewCommand, New>()
                 .ForMember(x => x.Date, m => m.MapFrom(x => DateTime.Now));
+
+            CreateMap<EditNewCommand, New>();
         }
     }
 }

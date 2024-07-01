@@ -34,6 +34,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddSwaggerGen(x =>
     {
         x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()

@@ -39,33 +39,33 @@ export class MapComponent implements OnChanges {
   private otherItemsMarker: L.Marker[] = [];;
   public containerIcon = L.icon({
     iconUrl: '../../../../assets/container_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
   public containerDisabledIcon = L.icon({
     iconUrl: '../../../../assets/container_disabled_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
   public vehicleCenterIcon = L.icon({
     iconUrl: '../../../../assets/vehicle_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
   public vehicleCenterDisabledIcon = L.icon({
     iconUrl: '../../../../assets/vehicle_disabled_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
   public wasteCenterIcon = L.icon({
     iconUrl: '../../../../assets/waste_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
   public wasteCenterDisabledIcon = L.icon({
     iconUrl: '../../../../assets/waste_disabled_icon.png',
-    iconSize: [48, 48],
-    iconAnchor: [6, 42]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
   });
 
   public icons: { [key in SelectedItemType]: L.Icon } = {
@@ -309,7 +309,7 @@ export class MapComponent implements OnChanges {
           createMarker: function(i, waypoint, n){
             let icon = L.icon({
               iconUrl: firstSection ? '../../../../assets/container_icon.png' : '../../../../assets/container_disabled_icon.png',
-              iconSize: [48, 48],
+              iconSize: [32, 32],
               iconAnchor: [6, 42]
             });
             return L.marker(waypoint.latLng, { icon: icon });
