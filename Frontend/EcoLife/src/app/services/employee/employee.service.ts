@@ -25,7 +25,7 @@ export class EmployeeService {
     return this.http.get<EmployeeModel>(`${this.API_URL}/${id}`);
   }
 
-  public add(employee: EmployeeModel): Observable<Object> {
+  public add(employee: EmployeeModel): Observable<any> {
     return this.http.post(`${this.API_URL}`, employee);
   }
 
@@ -33,7 +33,7 @@ export class EmployeeService {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 
-  public updateEmployee(id: number, employee: EmployeeModel): Observable<Object> {
+  public updateEmployee(id: number, employee: EmployeeModel): Observable<any> {
     return this.http.put(`${this.API_URL}`, { id: id, ...employee });
   }
 }

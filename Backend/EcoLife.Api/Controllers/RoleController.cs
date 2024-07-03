@@ -1,4 +1,6 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Application.Query.Role;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,18 +12,17 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class RoleController : Controller
     {
-        private readonly IUnitOfWork _uow;
+        private readonly IMediator _mediator;
 
-        public RoleController(IUnitOfWork uow)
+        public RoleController(IMediator mediator)
         {
-            this._uow = uow;
+            _mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var roles = await _uow.RoleRepository.GetAllAsync();
-            return Ok(roles);
+            return Ok(await _mediator.Send(new GetAllRolesQuery()));
         }
     }
 }

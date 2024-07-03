@@ -28,7 +28,7 @@ export class MaintenanceService {
   }
 
   public finishMaintenance(id: number, maintenance: FinishMaintenanceModel): Observable<Object>{
-    return this.http.post(`${this.API_URL}/complete/${id}`, maintenance)
+    return this.http.post(`${this.API_URL}/complete`, { maintenanceId: id, ...maintenance })
   }
 
   public deleteMaintenance(id: number): Observable<Object> {

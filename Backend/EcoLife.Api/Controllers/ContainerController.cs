@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using AutoMapper;
+using EcoLife.Api.Application;
 
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,78 +14,43 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class ContainerController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public ContainerController(IUnitOfWork uow, IMapper mapper)
+        public ContainerController(IMediator mediator)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
-            return Ok(containers);
+            return Ok(await _mediator.Send(new GetAllContainersQuery()));
         }
 
         [HttpGet("without-route")]
         async public Task<IActionResult> GetAllWithoutRouteAsync()
         {
-            var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
-
-            return Ok(containers.Where(x => x.RouteContainer == null && x.Status == "Activo"));
+            return Ok(await _mediator.Send(new GetAllContainersWithoutRouteQuery()));
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostContainerAsync([FromBody] ContainerDto containerDto)
+        async public Task<IActionResult> PostContainerAsync([FromBody] CreateContainerCommand command)
         {
-            var container = _mapper.Map<Container>(containerDto);
-
-            var result = await _uow.ContainerRepository.AddAndSaveAsync(container);
-
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{containerId}")]
-        async public Task<IActionResult> DeleteContainerByIdAsync([FromRoute, Required] int containerId)
+        async public Task<IActionResult> DeleteContainerByIdAsync([FromRoute, Required] DeleteContainerCommand command)
         {
-            var container = await _uow.ContainerRepository.GetByIdAsync(containerId);
-
-            if(container.RouteContainer != null)
-            {
-                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteContainer.RouteId);
-
-                route.Quantity -= 1;
-
-                await _uow.RouteRepository.SaveChangesAsync();
-            }
-
-            await _uow.ContainerRepository.Delete(containerId);
+            await _mediator.Send(command);
 
             return Ok();
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateContainerAsync([FromBody] Container container)
+        async public Task<IActionResult> UpdateContainerAsync([FromBody] UpdateContainerCommand command)
         {
-            var result = await _uow.ContainerRepository.Update(container);
-
-            if (container.RouteContainer != null && container.Status == "Dañado")
-            {
-                var route = await _uow.RouteRepository.GetByIdWithRouteContainers(container.RouteContainer!.RouteId);
-
-                var routeContainer = route.RouteContainers.First(x => x.ContainerId == container.Id);
-
-                route.RouteContainers.Remove(routeContainer);
-
-                route.Quantity -= 1;
-
-                await _uow.RouteRepository.SaveChangesAsync();
-            }
-
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
     }
 }

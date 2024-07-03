@@ -6,18 +6,18 @@ using MediatR;
 
 namespace EcoLife.Api.Application.Command.News
 {
-    public class EditNewCommandHandler : IRequestHandler<EditNewCommand, int>
+    public class UpdateNewCommandHandler : IRequestHandler<UpdateNewCommand, int>
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public EditNewCommandHandler(IUnitOfWork uow, IMapper mapper)
+        public UpdateNewCommandHandler(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(EditNewCommand command, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdateNewCommand command, CancellationToken cancellationToken)
         {
             var editNew = _mapper.Map<New>(command);
             

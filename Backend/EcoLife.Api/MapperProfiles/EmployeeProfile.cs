@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using EcoLife.Api.Dtos;
+using EcoLife.Api.Application;
 using EcoLife.Api.Entities;
 
 namespace EcoLife.Api.MapperProfiles
@@ -9,7 +9,9 @@ namespace EcoLife.Api.MapperProfiles
     {
         public EmployeeProfile()
         {
-            CreateMap<EmployeeDto, Employee>();
+            CreateMap<CreateEmployeeCommand, Employee>();
+
+            CreateMap<UpdateEmployeeCommand, Employee>();
         }
     }
 }

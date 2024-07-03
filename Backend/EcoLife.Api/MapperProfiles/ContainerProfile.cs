@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using EcoLife.Api.Dtos;
+using EcoLife.Api.Application;
 using EcoLife.Api.Entities;
 
 namespace EcoLife.Api.MapperProfiles
@@ -9,8 +9,10 @@ namespace EcoLife.Api.MapperProfiles
     {
         public ContainerProfile()
         {
-            CreateMap<ContainerDto, Container>()
+            CreateMap<CreateContainerCommand, Container>()
                 .ForMember(x => x.LastEmptying, c => c.MapFrom(_ => DateTime.Now));
+
+            CreateMap<UpdateContainerCommand, Container>();
         }
     }
 }

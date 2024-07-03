@@ -1,11 +1,18 @@
 ﻿using AutoMapper;
+
+using EcoLife.Api.Application;
+using EcoLife.Api.Application.Command.Maintenance;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Dtos;
 using EcoLife.Api.Entities;
 
+using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EcoLife.Api.Controllers
 {
@@ -14,60 +21,48 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class MaintenanceController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public MaintenanceController(IUnitOfWork uow, IMapper mapper)
+        public MaintenanceController(IMediator mediator)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var maintenances = await _uow.MaintenanceRepository.GetAllWithVehicleAsync();
-            return Ok(_mapper.Map<List<MaintenanceResponseDto>>(maintenances));
+            return Ok(await _mediator.Send(new GetAllMaintenancesQuery()));
         }
 
         [HttpGet("{maintenanceId}")]
-        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] int maintenanceId)
+        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] GetEmployeeByIdQuery query)
         {
-            var maintenance = await _uow.MaintenanceRepository.GetByIdAsync(maintenanceId);
-            return Ok(maintenance);
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostMaintenanceAsync([FromBody] MaintenanceDto maintenanceDto)
+        async public Task<IActionResult> PostMaintenanceAsync([FromBody] CreateMaintenanceCommand command)
         {
-            var maintenance = _mapper.Map<Maintenance>(maintenanceDto);
-            var result = await _uow.MaintenanceRepository.AddAndSaveAsync(maintenance);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
-        [HttpPost("complete/{maintenanceId}")]
-        async public Task<IActionResult> PostCompleteMaintenanceAsync([FromBody] MaintenanceCompletedDto maintenanceCompletedDto, [FromRoute] int maintenanceId)
+        [HttpPost("complete")]
+        async public Task<IActionResult> PostCompleteMaintenanceAsync([FromBody] CompleteMaintenanceCommand command)
         {
-            var maintenance = await _uow.MaintenanceRepository.GetByIdAsync(maintenanceId);
-            maintenance.EndDate = maintenanceCompletedDto.EndDate;
-            var result = await _uow.MaintenanceRepository.Update(maintenance);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateMaintenanceAsync([FromBody] MaintenanceEditDto editMaintenance)
+        async public Task<IActionResult> UpdateMaintenanceAsync([FromBody] UpdateMaintenanceCommand command)
         {
-            var maintenance = await _uow.MaintenanceRepository.GetByIdAsync(editMaintenance.Id);
-            maintenance.Description = editMaintenance.Description;
-            maintenance.StartDate = editMaintenance.StartDate;
-            var result = await _uow.MaintenanceRepository.Update(maintenance);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{maintenanceId}")]
-        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int maintenanceId)
+        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] DeleteMaintenanceCommand command)
         {
-            await _uow.MaintenanceRepository.Delete(maintenanceId);
+            await _mediator.Send(command);
+
             return Ok();
         }
     }

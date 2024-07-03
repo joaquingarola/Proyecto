@@ -12,7 +12,7 @@ namespace EcoLife.Api.MapperProfiles
             CreateMap<CreateNewCommand, New>()
                 .ForMember(x => x.Date, m => m.MapFrom(x => DateTime.Now));
 
-            CreateMap<EditNewCommand, New>();
+            CreateMap<UpdateNewCommand, New>();
         }
     }
 }

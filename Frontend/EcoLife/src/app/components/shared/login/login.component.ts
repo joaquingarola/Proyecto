@@ -40,18 +40,18 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value)
         .subscribe({
           next: (data: UserResponseModel) => {
-            this.storageService.saveToken(data.token);
-            this.storageService.saveUser(data.employee);
-            data.isFirstEntry ?
-              this.router.navigate(['/first-entry']) :
-              this.router.navigate(['/zones']);
-          },
-          error: (response: HttpErrorResponse) => {
-            if(response.status) {
-              this.error = response.error;
+            if(data.success) {
+              this.storageService.saveToken(data.token);
+              this.storageService.saveUser(data.employee);
+              data.isFirstEntry ?
+                this.router.navigate(['/first-entry']) :
+                this.router.navigate(['/zones']);
             } else {
-              this.error = "Ocurrió un error. Inténtelo más tarde."
+              this.error = "Credenciales inválidas";
             }
+          },
+          error: () => {
+            this.error = "Ocurrió un error. Inténtelo más tarde."
           }
         }).add(() => this.isLoading = false);
     }

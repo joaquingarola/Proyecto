@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+
 using EcoLife.Api.Helpers.Email;
+using EcoLife.Api.Application;
+
+using MediatR;
 
 namespace EcoLife.Api.Controllers
 {
@@ -15,83 +15,49 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class EmployeeController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         private readonly IEmailSender _emailSender;
 
-        public EmployeeController(IUnitOfWork uow, IMapper mapper, IEmailSender emailSender)
+        public EmployeeController(IMediator mediator, IEmailSender emailSender)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            this._mediator = mediator;
             this._emailSender = emailSender;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var employees = await _uow.EmployeeRepository.GetAllWithRoleAsync();
-            return Ok(employees);
+            return Ok(await _mediator.Send(new GetAllEmployeeQuery()));
         }
 
         [HttpGet("recolectors")]
         async public Task<IActionResult> GetAllRecolectorsAsync()
         {
-            var employees = await _uow.EmployeeRepository.GetAllRecolectorsAsync();
-            return Ok(employees);
+            return Ok(await _mediator.Send(new GetAllRecolectorsQuery()));
         }
 
         [HttpGet("{employeeId}")]
-        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] int employeeId)
+        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] GetEmployeeByIdQuery query)
         {
-            var employee = await _uow.EmployeeRepository.GetByIdAsync(employeeId);
-            return Ok(employee);
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostEmployeeAsync([FromBody] EmployeeDto employeeDto)
+        async public Task<IActionResult> PostEmployeeAsync([FromBody] CreateEmployeeCommand command)
         {
-            var employeeByEmail = await _uow.EmployeeRepository.GetByEmailAsync(employeeDto.Email);
-            if (employeeByEmail != null)
-                return BadRequest("Ya existe un usuario con ese email");
-
-            var employeeByDni = await _uow.EmployeeRepository.GetByDniAsync(employeeDto.Dni);
-            if (employeeByDni != null)
-                return BadRequest("Ya existe un usuario con ese dni");
-
-            var user = _mapper.Map<User>(_mapper.Map<Employee>(employeeDto));
-
-            await _emailSender.SendEmailAsync(user.Username, user.Password);
-
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            var result = await _uow.UserRepository.AddAndSaveAsync(user);
-            
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateEmployeeAsync([FromBody] Employee editEmployee)
+        async public Task<IActionResult> UpdateEmployeeAsync([FromBody] UpdateEmployeeCommand command)
         {
-            var employeeByEmail = await _uow.EmployeeRepository.GetByEmailAsync(editEmployee.Email);
-            if (employeeByEmail != null && employeeByEmail.Id != editEmployee.Id)
-                return BadRequest("Ya existe un usuario con ese email");
-
-            var employeeByDni = await _uow.EmployeeRepository.GetByDniAsync(editEmployee.Dni);
-            if (employeeByDni != null && employeeByDni.Id != editEmployee.Id)
-                return BadRequest("Ya existe un usuario con ese dni");
-
-            var result = await _uow.EmployeeRepository.Update(editEmployee);
-
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{employeeId}")]
-        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int employeeId)
+        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] DeleteEmployeeCommand command)
         {
-            var employee = await _uow.EmployeeRepository.GetByIdAsync(employeeId);
-            var user = await _uow.UserRepository.GetByUser(employee.Email);
-
-            await _uow.UserRepository.Delete(user!.Id);
-            await _uow.EmployeeRepository.Delete(employeeId);
+            await _mediator.Send(command);
 
             return Ok();
         }

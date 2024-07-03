@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Entities;
+﻿using EcoLife.Api.DataAccess.UnitOfWork;
 
 using MediatR;
 

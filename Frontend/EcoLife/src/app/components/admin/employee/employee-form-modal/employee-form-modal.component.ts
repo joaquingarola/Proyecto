@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { EmployeeService, RoleService } from '../../../../services';
-import { EmployeeModel, RoleModel } from '../../../../models';
+import { EmployeeModel, EmployeeResponseModel, RoleModel } from '../../../../models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -58,14 +58,26 @@ export class EmployeeFormModalComponent implements OnInit {
         this.employeeService
           .updateEmployee(this.data.id!, this.employeeForm.value)
           .subscribe({
-            next: () => this._dialogRef.close(true),
+            next: (response: EmployeeResponseModel) => {
+              if (response.success) {
+                this._dialogRef.close(true);
+              } else {
+                this.error = response.message;
+              }
+            },
             error: () => {
               this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
             },
           }).add(() => this.isLoading = false);
       } else {
         this.employeeService.add(this.employeeForm.value).subscribe({
-          next: () => this._dialogRef.close(true),
+          next: (response: EmployeeResponseModel) => {
+            if (response.success) {
+              this._dialogRef.close(true);
+            } else {
+              this.error = response.message;
+            }
+          },
           error: () => {
             this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
