@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace EcoLife.Api.Application.Command.Maintenance
+namespace EcoLife.Api.Application
 {
     public class CompleteMaintenanceCommand : IRequest<int>
     {

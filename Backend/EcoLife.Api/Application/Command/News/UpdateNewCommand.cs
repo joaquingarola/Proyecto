@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace EcoLife.Api.Application.Command.News
+namespace EcoLife.Api.Application
 {
     public class UpdateNewCommand : IRequest<int>
     {

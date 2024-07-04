@@ -4,7 +4,7 @@ using EcoLife.Api.Entities;
 
 using MediatR;
 
-namespace EcoLife.Api.Application.Command.News
+namespace EcoLife.Api.Application
 {
     public class UpdateNewCommandHandler : IRequestHandler<UpdateNewCommand, int>
     {

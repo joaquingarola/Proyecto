@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { EmployeeModel } from '../../models';
 import { environment } from '../../enviroments/enviroment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ export class SettingsService {
 
   constructor(private http: HttpClient) { }
 
-  public firstEntry(password: string, employee: EmployeeModel){
+  public firstEntry(password: string, employee: EmployeeModel): Observable<any> {
     const changePasswordModel = { user: employee.email, newPassword: password };
+    
     return this.http.post(`${this.API_URL}/change-password`, changePasswordModel);
   }
 }

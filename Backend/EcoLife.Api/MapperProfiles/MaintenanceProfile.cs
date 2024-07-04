@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using EcoLife.Api.Application;
-using EcoLife.Api.Dtos;
+using EcoLife.Api.Dtos.Response;
 using EcoLife.Api.Entities;
 using EcoLife.Api.MapperProfiles.Resolvers;
 

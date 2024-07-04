@@ -7,7 +7,7 @@ using AutoMapper;
 using MediatR;
 
 
-namespace EcoLife.Api.Application.Command.Auth
+namespace EcoLife.Api.Application
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, UserResponseDto>
     {

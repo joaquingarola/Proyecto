@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using AutoMapper;
+using EcoLife.Api.Application;
 
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,43 +15,37 @@ namespace EcoLife.Api.Controllers
 
     public class WasteCenterController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public WasteCenterController(IUnitOfWork uow, IMapper mapper)
+        public WasteCenterController(IMediator mediator)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            this._mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var wasteCenters = await _uow.WasteCenterRepository.GetAllAsync();
-            return Ok(wasteCenters);
+            return Ok(await _mediator.Send(new GetAllWasteCenterQuery()));
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostWasteCenterAsync([FromBody] WasteCenterDto wasteCenterDto)
+        async public Task<IActionResult> PostWasteCenterAsync([FromBody] CreateWasteCenterCommand command)
         {
-            var wasteCenter = _mapper.Map<WasteCenter>(wasteCenterDto);
-            var result = await _uow.WasteCenterRepository.AddAndSaveAsync(wasteCenter);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{wasteCenterId}")]
-        async public Task<IActionResult> DeleteWasteCenterByIdAsync([FromRoute, Required] int wasteCenterId)
+        async public Task<IActionResult> DeleteWasteCenterByIdAsync([FromRoute, Required] DeleteWasteCenterCommand command)
         {
-            await _uow.WasteCenterRepository.Delete(wasteCenterId);
+            await _mediator.Send(command);
+
             return Ok();
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateWasteCenterAsync([FromBody] WasteCenterDto wasteCenterDto)
+        async public Task<IActionResult> UpdateWasteCenterAsync([FromBody] UpdateWasteCenterCommand command)
         {
-            var wasteCenter = _mapper.Map<WasteCenter>(wasteCenterDto);
-            var result = await _uow.WasteCenterRepository.Update(wasteCenter);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
     }
 }

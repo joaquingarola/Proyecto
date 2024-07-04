@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using EcoLife.Api.Dtos;
+
+using EcoLife.Api.Application;
 using EcoLife.Api.Entities;
 
 namespace EcoLife.Api.MapperProfiles
@@ -8,7 +9,9 @@ namespace EcoLife.Api.MapperProfiles
     {
         public VehicleProfile()
         {
-            CreateMap<VehicleDto, Vehicle>();
+            CreateMap<CreateVehicleCommand, Vehicle>();
+
+            CreateMap<UpdateVehicleCommand, Vehicle>();
         }
     }
 }

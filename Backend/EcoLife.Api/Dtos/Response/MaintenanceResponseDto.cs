@@ -1,6 +1,6 @@
 ﻿using EcoLife.Api.Entities;
 
-namespace EcoLife.Api.Dtos
+namespace EcoLife.Api.Dtos.Response
 {
     public class MaintenanceResponseDto
     {

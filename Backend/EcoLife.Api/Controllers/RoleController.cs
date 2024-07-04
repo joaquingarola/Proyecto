@@ -1,4 +1,4 @@
-﻿using EcoLife.Api.Application.Query.Role;
+﻿using EcoLife.Api.Application;
 
 using MediatR;
 

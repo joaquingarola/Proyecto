@@ -2,7 +2,7 @@
 
 using MediatR;
 
-namespace EcoLife.Api.Application.Command.Auth
+namespace EcoLife.Api.Application
 {
     public class LoginCommand : IRequest<UserResponseDto>
     {

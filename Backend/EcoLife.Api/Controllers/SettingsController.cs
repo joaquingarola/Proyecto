@@ -1,11 +1,9 @@
-﻿using AutoMapper;
+﻿using EcoLife.Api.Application;
 
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos.Response;
-using EcoLife.Api.Dtos;
+using MediatR;
 
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcoLife.Api.Controllers
 {
@@ -14,26 +12,17 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class SettingsController : Controller
     {
-        private IUnitOfWork _uow;
+        private readonly IMediator _mediator;
 
-        public SettingsController(IUnitOfWork uow)
+        public SettingsController(IMediator mediator)
         {
-            _uow = uow;
+            this._mediator = mediator;
         }
 
         [HttpPost("change-password")]
-        async public Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        async public Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
         {
-            var user = await _uow.UserRepository.GetByUser(changePasswordDto.User);
-            if (user == null)
-                return BadRequest("Hubo un problema al recuperar el usuario. Inicie sesión de nuevo");
-
-            user.Password = BCrypt.Net.BCrypt.HashPassword(changePasswordDto.NewPassword);
-            user.IsFirstEntry = false;
-            
-            await _uow.UserRepository.Update(user);
-
-            return Ok();
+            return Ok(await _mediator.Send(command));
         }
     }
 }

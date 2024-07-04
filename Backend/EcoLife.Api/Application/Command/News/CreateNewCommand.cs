@@ -1,8 +1,6 @@
-﻿using EcoLife.Api.Entities;
+﻿using MediatR;
 
-using MediatR;
-
-namespace EcoLife.Api.Application.Command.News
+namespace EcoLife.Api.Application
 {
     public class CreateNewCommand : IRequest<int>
     {

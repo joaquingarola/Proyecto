@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using EcoLife.Api.Application.Command.News;
+using EcoLife.Api.Application;
 
 using MediatR;
 

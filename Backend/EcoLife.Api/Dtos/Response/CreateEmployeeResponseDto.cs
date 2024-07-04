@@ -1,11 +1,11 @@
-﻿namespace EcoLife.Api.Dtos
+﻿namespace EcoLife.Api.Dtos.Response
 {
     public class CreateEmployeeResponseDto
     {
         public bool Success { get; set; }
 
         public string? Message { get; set; }
-        
+
         public int? Id { get; set; }
     }
 }

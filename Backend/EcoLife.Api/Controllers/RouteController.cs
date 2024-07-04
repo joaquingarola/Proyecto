@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-using AutoMapper;
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
+using EcoLife.Api.Application;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,76 +14,41 @@ namespace EcoLife.Api.Controllers
     [ApiController]
     public class RouteController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public RouteController(IUnitOfWork uow, IMapper mapper)
+        public RouteController(IMediator mediator)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            this._mediator = mediator;
         }
 
         [HttpPost]
-        async public Task<IActionResult> AddNewRoute([FromBody] RouteDto routeDto)
+        async public Task<IActionResult> AddNewRoute([FromBody] CreateRouteCommand command)
         {
-            var route = new RouteEntity(routeDto.Description, routeDto.Periodicity, routeDto.Quantity, routeDto.WasteType);
-
-            foreach (var routeContainer in routeDto.RouteContainers)
-            {
-                route.RouteContainers.Add(new RouteContainers() { ContainerId = routeContainer.ContainerId!.Value });
-            }
-
-            await _uow.RouteRepository.AddAndSaveAsync(route);
-
-            return Ok();
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var routes = await _uow.RouteRepository.GetAllWithContainers();
-            return Ok(routes);
+            return Ok(await _mediator.Send(new GetAllRouteQuery()));
         }
 
         [HttpGet("{routeId}")]
-        async public Task<IActionResult> GetRouteByIdAsync([FromRoute, Required] int routeId)
+        async public Task<IActionResult> GetRouteByIdAsync([FromRoute, Required] GetRouteByIdQuery query)
         {
-            var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
-
-            route.RouteContainers = route.RouteContainers.OrderBy(item => item.Order).ToList();
-
-            return Ok(route);
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpPost("update")]
-        async public Task<IActionResult> UpdateRouteAsync([FromBody] RouteEntity editRoute)
+        async public Task<IActionResult> UpdateRouteAsync([FromBody] UpdateRouteCommand command)
         {
-            var route = await _uow.RouteRepository.GetByIdWithContainers(editRoute.Id);
-
-            route.Periodicity = editRoute.Periodicity;
-            route.Description = editRoute.Description;
-            route.Quantity = editRoute.Quantity;
-            route.WasteType = editRoute.WasteType;
-            route.RouteContainers.Clear();
-
-            foreach (var routeContainer in editRoute.RouteContainers)
-            {
-                route.RouteContainers.Add(new RouteContainers() { ContainerId = routeContainer.ContainerId });
-            }
-
-            await _uow.RouteRepository.Update(route);
-
-            return Ok();
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{routeId}")]
-        async public Task<IActionResult> DeleteRouteByIdAsync([FromRoute, Required] int routeId)
+        async public Task<IActionResult> DeleteRouteByIdAsync([FromRoute, Required] DeleteRouteCommand command)
         {
-            var route = await _uow.RouteRepository.GetByIdWithContainers(routeId);
-
-            _uow.RouteRepository.Remove(route);
-
-            await _uow.RouteRepository.SaveChangesAsync();
+            await _mediator.Send(command);
 
             return Ok();
         }

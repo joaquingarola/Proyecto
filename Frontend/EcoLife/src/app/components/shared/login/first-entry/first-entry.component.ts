@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SettingsService, StorageService } from '../../../../services';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChangePasswordResponseModel } from '../../../../models/change-password-response-model';
 
 @Component({
   selector: 'app-first-entry',
@@ -40,11 +41,15 @@ export class FirstEntryComponent {
       this.isLoading = true;
       this.settingsService.firstEntry(this.firstEntryForm.value.password, user)
         .subscribe({
-          next: () => {
-              this.router.navigate(['/']);
+          next: (response: ChangePasswordResponseModel) => {
+              if (response.success) {
+                this.router.navigate(['/']);
+              } else {
+                this.error = response.message!;
+              }
           },
-          error: (response: HttpErrorResponse) => {
-            this.error = response.error;
+          error: () => {
+            this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           }
         }).add(() => this.isLoading = false);
     }

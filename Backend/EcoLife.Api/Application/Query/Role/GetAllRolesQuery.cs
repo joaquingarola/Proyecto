@@ -2,7 +2,7 @@
 
 using MediatR;
 
-namespace EcoLife.Api.Application.Query.Role
+namespace EcoLife.Api.Application
 {
     public class GetAllRolesQuery : IRequest<IEnumerable<RoleEntity>> { }
 }

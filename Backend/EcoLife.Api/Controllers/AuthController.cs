@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using EcoLife.Api.Application.Command.Auth;
+using EcoLife.Api.Application;
 
 using MediatR;
 

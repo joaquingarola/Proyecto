@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-
-using EcoLife.Api.Helpers.Email;
 using EcoLife.Api.Application;
 
 using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcoLife.Api.Controllers
 {
@@ -16,12 +15,10 @@ namespace EcoLife.Api.Controllers
     public class EmployeeController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly IEmailSender _emailSender;
 
-        public EmployeeController(IMediator mediator, IEmailSender emailSender)
+        public EmployeeController(IMediator mediator)
         {
             this._mediator = mediator;
-            this._emailSender = emailSender;
         }
 
         [HttpGet]

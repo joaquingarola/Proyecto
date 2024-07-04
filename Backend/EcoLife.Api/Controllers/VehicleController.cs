@@ -1,61 +1,56 @@
-﻿using AutoMapper;
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+using EcoLife.Api.Application;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace EcoLife.Api.Controllers
 {
     [Route("api/vehicles")]
+    [Authorize]
     [ApiController]
     public class VehicleController : Controller
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public VehicleController(IUnitOfWork uow, IMapper mapper)
+        public VehicleController(IMediator mediator)
         {
-            this._uow = uow;
-            this._mapper = mapper;
+            this._mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var vehicles = await _uow.VehicleRepository.GetAllWithCenter();
-            return Ok(vehicles);
+            return Ok(await _mediator.Send(new GetAllVehiclesQuery()));
         }
 
         [HttpGet("{vehicleId}")]
-        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] int vehicleId)
+        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] GetVehicleByIdQuery query)
         {
-            var vehicle = await _uow.VehicleRepository.GetByIdAsync(vehicleId);
-            return Ok(vehicle);
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpPost]
-        async public Task<IActionResult> PostVehicleAsync([FromBody] VehicleDto vehicleDto)
+        async public Task<IActionResult> PostVehicleAsync([FromBody] CreateVehicleCommand command)
         {
-            var vehicle = _mapper.Map<Vehicle>(vehicleDto);
-            var result = await _uow.VehicleRepository.AddAndSaveAsync(vehicle);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{vehicleId}")]
-        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int vehicleId)
+        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] DeleteVehicleCommand command)
         {
-            await _uow.VehicleRepository.Delete(vehicleId);
+            await _mediator.Send(command);
+
             return Ok();
         }
 
         [HttpPut]
-        async public Task<IActionResult> UpdateVehicleAsync([FromBody] Vehicle editVehicle)
+        async public Task<IActionResult> UpdateVehicleAsync([FromBody] UpdateVehicleCommand command)
         {
-            var result = await _uow.VehicleRepository.Update(editVehicle);
-            return Ok(result);
+            return Ok(await _mediator.Send(command));
         }
     }
 }

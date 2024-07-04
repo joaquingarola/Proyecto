@@ -1,10 +1,9 @@
-﻿using EcoLife.Api.Application.Command.News;
-using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Entities;
 
 using MediatR;
 
-namespace EcoLife.Api.Application.Query.News
+namespace EcoLife.Api.Application
 {
     public class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, IEnumerable<New>>
     {

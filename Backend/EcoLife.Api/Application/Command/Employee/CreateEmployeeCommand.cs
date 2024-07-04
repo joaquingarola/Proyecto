@@ -1,5 +1,4 @@
-﻿using EcoLife.Api.Dtos;
-
+﻿using EcoLife.Api.Dtos.Response;
 using MediatR;
 
 namespace EcoLife.Api.Application

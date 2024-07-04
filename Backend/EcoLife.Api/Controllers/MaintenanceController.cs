@@ -1,18 +1,11 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
 
 using EcoLife.Api.Application;
-using EcoLife.Api.Application.Command.Maintenance;
-using EcoLife.Api.DataAccess.UnitOfWork;
-using EcoLife.Api.Dtos;
-using EcoLife.Api.Entities;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EcoLife.Api.Controllers
 {

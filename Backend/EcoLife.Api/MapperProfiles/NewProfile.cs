@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using EcoLife.Api.Application.Command.News;
+using EcoLife.Api.Application;
 using EcoLife.Api.Entities;
 
 namespace EcoLife.Api.MapperProfiles
