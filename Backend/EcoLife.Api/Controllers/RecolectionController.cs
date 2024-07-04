@@ -3,17 +3,21 @@ using System.Text;
 
 using AutoMapper;
 
+using EcoLife.Api.Application;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Dtos;
 using EcoLife.Api.Entities;
 using EcoLife.Api.Entities.ORS.Request;
 using EcoLife.Api.Entities.ORS.Response;
 
+using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
+
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 using VehicleORS = EcoLife.Api.Entities.ORS.Request.Vehicle;
 
@@ -27,26 +31,26 @@ namespace EcoLife.Api.Controllers
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly HttpClient _client;
+        private readonly IMediator _mediator;
 
-        public RecolectionController(IUnitOfWork uow, IMapper mapper, HttpClient client)
+        public RecolectionController(IUnitOfWork uow, IMapper mapper, HttpClient client, IMediator mediator)
         {
             this._uow = uow;
             this._mapper = mapper;
             this._client = client;
+            _mediator = mediator;
         }
 
         [HttpGet]
         async public Task<IActionResult> GetAllAsync()
         {
-            var recolections = await _uow.RecolectionRepository.GetAllWithEntities();
-            return Ok(recolections);
+            return Ok(await _mediator.Send(new GetAllRecolectionQuery()));
         }
 
         [HttpGet("{recolectionId}")]
-        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] int recolectionId)
+        async public Task<IActionResult> GetByIdAsync([FromRoute, Required] GetRecolectionByIdQuery query)
         {
-            var recolection = await _uow.RecolectionRepository.GetByIdAsync(recolectionId);
-            return Ok(recolection);
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpPost]
@@ -62,9 +66,10 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpDelete("{recolectionId}")]
-        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] int recolectionId)
+        async public Task<IActionResult> DeleteByIdAsync([FromRoute, Required] DeleteRecolectionCommand command)
         {
-            await _uow.RecolectionRepository.Delete(recolectionId);
+            await _mediator.Send(command);
+
             return Ok();
         }
 
