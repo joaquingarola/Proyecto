@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 using EcoLife.Api.DataAccess;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Helpers.Email;
+using EcoLife.Api.Services;
+using EcoLife.Api.Services.Interfaces;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +67,7 @@ builder.Services.AddDbContext<EcoLifeContext>(options =>
 });
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IOptimizationService, OptimizationService>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services

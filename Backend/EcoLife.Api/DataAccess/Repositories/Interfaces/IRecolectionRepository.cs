@@ -6,5 +6,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Interfaces
     {
         Task<List<Recolection>> GetAllWithEntities();
         Task<Recolection> GetByIdWithEntities(int recolectionId);
+        Task<Recolection?> GetByRouteId(int routeId);
     }
 }

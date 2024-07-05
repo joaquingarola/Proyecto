@@ -29,5 +29,9 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                     .ThenInclude(x => x.RouteContainers)
                         .ThenInclude(x => x.Container)
                 .FirstAsync(x => x.Id == recolectionId);
+
+        public async Task<Recolection?> GetByRouteId(int routeId)
+            => await context.Recolections
+                .FirstOrDefaultAsync(x => x.RouteId == routeId);
     }
 }

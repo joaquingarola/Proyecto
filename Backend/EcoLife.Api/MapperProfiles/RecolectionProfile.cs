@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using EcoLife.Api.Dtos;
+using EcoLife.Api.Application;
 using EcoLife.Api.Entities;
 
 namespace EcoLife.Api.MapperProfiles
@@ -9,8 +9,10 @@ namespace EcoLife.Api.MapperProfiles
     {
         public RecolectionProfile()
         {
-            CreateMap<RecolectionDto, Recolection>()
+            CreateMap<CreateRecolectionCommand, Recolection>()
                 .ForMember(x => x.Status, s => s.MapFrom(_ => "Planificada"));
+
+            CreateMap<UpdateRecolectionCommand, Recolection>();
         }
     }
 }
