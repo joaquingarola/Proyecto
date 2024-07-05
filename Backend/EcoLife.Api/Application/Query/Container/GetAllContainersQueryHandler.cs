@@ -16,9 +16,7 @@ namespace EcoLife.Api.Application
 
         public async Task<IEnumerable<Container>> Handle(GetAllContainersQuery query, CancellationToken cancellationToken)
         {
-            var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
-
-            return containers.Where(x => x.RouteContainer == null && x.Status == "Activo");
+            return await _uow.ContainerRepository.GetAllWithRouteAsync();
         }
     }
 }
