@@ -1,8 +1,9 @@
 .container {
     display: flex;
     justify-content: space-around;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 5px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+    background-color:#3a3030;
+    margin-bottom: 1px;
   
     &__logo {
       width: 100px;
@@ -18,7 +19,7 @@
       
       &__option{
         font-weight: 520;
-        color: blue;
+        color: rgb(187, 195, 222);
         font-size: 20px;
         position: relative;
 
@@ -27,7 +28,7 @@
           content: "";
           width: 0;
           height: 2px;
-          background-color: blue;
+          background-color: rgb(187, 195, 222);
           left: 50%;
           bottom: -10px;
           transition: all 0.3s ease-in-out;
