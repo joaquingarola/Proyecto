@@ -232,4 +232,12 @@ export class PlanifyRecolectionComponent {
       return true;
     }
   }
+
+  getMinDate(): Date {
+    if(this.data.recolection) {
+      return new Date(this.data.recolection.startDate) 
+    }
+
+    return this.actualDate;
+  }
 }
