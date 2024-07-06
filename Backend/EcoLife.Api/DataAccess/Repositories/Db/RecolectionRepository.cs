@@ -33,5 +33,13 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
         public async Task<Recolection?> GetByRouteId(int routeId)
             => await context.Recolections
                 .FirstOrDefaultAsync(x => x.RouteId == routeId);
+
+        public async Task<Recolection?> GetByVehicleCenterId(int vehicleCenterId)
+            => await context.Recolections
+                .FirstOrDefaultAsync(x => x.VehicleCenterId == vehicleCenterId);
+
+        public async Task<Recolection?> GetByWasteCenterId(int wasteCenterId)
+            => await context.Recolections
+                .FirstOrDefaultAsync(x => x.WasteCenterId == wasteCenterId);
     }
 }

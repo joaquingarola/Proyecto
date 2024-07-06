@@ -54,7 +54,7 @@ namespace EcoLife.Api.Application.Command.Route
             return result.Id;
         }
 
-        private bool ValidateContainersChange(ICollection<RouteContainers> previousContainers, ICollection<RouteContainers> newContainers)
+        private static bool ValidateContainersChange(ICollection<RouteContainers> previousContainers, ICollection<RouteContainers> newContainers)
         {
             if(previousContainers.Count != newContainers.Count) 
                 return true; 
