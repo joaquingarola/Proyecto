@@ -61,7 +61,7 @@
           <div class="row">
             <mat-form-field appearance="outline">
               <mat-label>Fecha de la recolección</mat-label>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="getMinDate()"> 
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="actualDate"> 
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>

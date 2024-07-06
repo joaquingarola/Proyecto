@@ -48,7 +48,7 @@ namespace EcoLife.Api.Application
                 await _uow.RouteRepository.SaveChangesAsync();
             }
 
-            if (command.RouteContainer != null && command.Status != "Dañado" && updateOrderRoute)
+            if (removeFromRoute || (command.RouteContainer != null && updateOrderRoute))
             {
                 var recolection = await _uow.RecolectionRepository.GetByRouteId(command.RouteContainer!.RouteId);
 
