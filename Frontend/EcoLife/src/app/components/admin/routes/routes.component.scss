@@ -1,38 +1,67 @@
+@import 'src/app/styles/variables';
+
 .container{
   width: 100%;
-  margin-top: 25px;
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height});
+  padding: 25px 0;
   display: flex;
   justify-content: center;
+  align-items: start;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(81, 196, 144, 0.2);
+    z-index: -1;
+  }
+
+  &::before {
+    top: -300px;
+    left: -300px;
+  }
+
+  &::after {
+    bottom: -300px;
+    right: -300px;
+  }
   
   &__data {
-      width: 70%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-      &__filter {
-        width: 100%;
+    &__filter {
+      width: 100%;
+    }
+
+    &__table {
+      margin-bottom: 10px;
+
+      &__no-results {
+        padding: 1rem;
+        font-weight: 500;
+        font-size: 1.25rem;
+        text-align: center;
       }
+    }
 
-      &__table {
-        margin-bottom: 10px;
+    &__paginator {
+      width: 100%;
+    }
 
-        &__no-results {
-          padding: 1rem;
-          font-weight: 500;
-          font-size: 1.25rem;
-          text-align: center;
-        }
-      }
-
-      &__paginator {
-        width: 100%;
-      }
-
-      &__add-button{
-          margin: 1rem;
-      }
+    &__add-button{
+        margin: 1rem;
+    }
   }
 }
 

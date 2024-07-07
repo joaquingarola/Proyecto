@@ -1,7 +1,10 @@
+@import 'src/app/styles/variables';
+
 .container{
     padding: 10px 0;
     background-color: #3a3030;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.9);
+    height: $footer-height;
     
     &__info{
         display: flex;

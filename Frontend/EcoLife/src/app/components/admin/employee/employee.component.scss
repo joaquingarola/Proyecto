@@ -1,9 +1,12 @@
+@import 'src/app/styles/variables';
+
 .container{
   width: 100%;
-  min-height: 700px;
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height});
   padding: 25px 0;
   display: flex;
   justify-content: center;
+  align-items: start;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
   position: relative;
   overflow: hidden;
