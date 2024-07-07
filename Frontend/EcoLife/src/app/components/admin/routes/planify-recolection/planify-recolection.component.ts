@@ -55,7 +55,9 @@ export class PlanifyRecolectionComponent {
       vehicleId: ['', [Validators.required]],
       description: ['', [Validators.required]],
       employeeId: ['', [Validators.required]],
-      startDate: ['', [Validators.required]]
+      startDate: ['', [Validators.required]],
+      estimatedStartTime: ['', [Validators.required]],
+      estimatedEndTime: ['', [Validators.required]]
     });
 
     this.getRoute();
@@ -70,10 +72,20 @@ export class PlanifyRecolectionComponent {
 
   private updateForm(): void {
     this.recolectionForm.get('description')?.setValue(this.data.recolection?.description);
-    this.recolectionForm.get('startDate')?.setValue(this.data.recolection?.startDate);
+    this.recolectionForm.get('startDate')?.setValue(this.data.recolection?.estimatedStartDate);
     this.recolectionForm.get('wasteCenterId')?.setValue(this.data.recolection?.wasteCenter.id);
     this.recolectionForm.get('vehicleCenterId')?.setValue(this.data.recolection?.vehicleCenter.id);
     this.recolectionForm.get('vehicleId')?.setValue(this.data.recolection?.vehicle.id);
+    this.recolectionForm.get('estimatedStartTime')?.setValue(this.getTime(this.data.recolection?.estimatedStartDate!));
+    this.recolectionForm.get('estimatedEndTime')?.setValue(this.getTime(this.data.recolection?.estimatedEndDate!));
+  }
+
+  private getTime(date: Date): string {
+    const newDate = new Date(date);
+    const hours = newDate.getHours().toString().padStart(2, '0');
+    const minutes = newDate.getMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`
   }
 
   private updateVehicleSelects(): void {
@@ -227,7 +239,9 @@ export class PlanifyRecolectionComponent {
         newRec.vehicleId != oldRec.vehicle.id ||
         newRec.wasteCenterId != oldRec.wasteCenter.id ||
         newRec.employeeId != oldRec.employee.id ||
-        new Date(newRec.startDate).getDate() != new Date(oldRec.startDate).getDate() 
+        newRec.estimatedStartTime != this.getTime(oldRec.estimatedStartDate!) ||        
+        newRec.estimatedEndTime != this.getTime(oldRec.estimatedEndDate!) ||
+        new Date(newRec.startDate).getDate() != new Date(oldRec.estimatedStartDate!).getDate() 
     } else {
       return true;
     }

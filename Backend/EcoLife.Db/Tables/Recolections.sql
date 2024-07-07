@@ -2,7 +2,10 @@
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
     [Description] NVARCHAR(200) NOT NULL,
-    [StartDate] DATETIME NOT NULL, 
+    [EstimatedStartDate] DATETIME NOT NULL, 
+    [RealStartDate] DATETIME NULL, 
+    [EstimatedEndDate] DATETIME NOT NULL, 
+    [RealEndDate] DATETIME NULL, 
     [Status] NVARCHAR(50) NOT NULL, 
     [VehicleCenterId] INT NOT NULL, 
     [VehicleId] INT NOT NULL, 

@@ -1,6 +1,7 @@
 .modal{
   width: 1200px;
-  min-height: 600px;
+  min-height: 700px;
+  max-height: 95vh;
   
   &__title {
     text-align: center;
@@ -34,7 +35,7 @@
     &__map {
       padding: 10px 0;
       width: 800px;
-      height: 450px;
+      height: 695px;
     }
   } 
 }
@@ -53,4 +54,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.mat-mdc-dialog-content {
+  max-height: 85vh !important;
+}
+
+.mdc-dialog__title {
+  margin: 0;
+  padding: 10px 24px;
+}
+
+.mdc-dialog__title::before {
+  width: 0;
+  height: 0 !important;
+  display: inline;
+}
+
+h1 {
+  margin: 0;
 }

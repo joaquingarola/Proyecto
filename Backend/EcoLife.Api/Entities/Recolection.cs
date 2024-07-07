@@ -4,7 +4,10 @@
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public DateTime StartDate { get; set; }   
+        public DateTime EstimatedStartDate { get; set; }
+        public DateTime EstimatedEndDate { get; set; }
+        public DateTime? RealStartDate { get; set; }
+        public DateTime? RealEndDate { get; set; }
         public string Status { get; set; }
         public int VehicleId { get; set; }
         public int VehicleCenterId { get; set; }

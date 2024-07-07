@@ -14,5 +14,11 @@ export interface RecolectionModel {
   employee: EmployeeModel,
   wasteCenter: WasteCenterModel,
   route: RouteModel,
-  routeId: number
+  routeId: number,
+  estimatedStartTime: string,
+  estimatedEndTime: string,
+  estimatedStartDate?: Date,
+  estimatedEndDate?: Date,
+  realStartDate?: Date,
+  realEndDate?: Date,
 }

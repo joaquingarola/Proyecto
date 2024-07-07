@@ -10,7 +10,7 @@
   </div>
   <div class="modal__content">
     <div class="modal__content__form">
-      <form [formGroup]="recolectionForm" (ngSubmit)="onFormSubmit()">
+      <form [formGroup]="recolectionForm" (ngSubmit)="onFormSubmit()" class="modal__content__form">
         <div mat-dialog-content class="modal__content__form__content">
           <div class="row">
             <mat-form-field appearance="outline">
@@ -56,6 +56,18 @@
                   {{employee.surname}}, {{employee.name}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Hora inicio</mat-label>
+              <input matInput type="time" placeholder="08:00" formControlName="estimatedStartTime" autocomplete="off"> 
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <mat-label>Hora fin estimada</mat-label>
+              <input matInput type="time" placeholder="08:00" formControlName="estimatedEndTime" autocomplete="off"> 
             </mat-form-field>
           </div>
           <div class="row">
