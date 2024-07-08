@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 
 using EcoLife.Api.DataAccess.UnitOfWork;
+using EcoLife.Api.Dtos.Response;
+using EcoLife.Api.Entities;
 using EcoLife.Api.Services.Interfaces;
 
 using MediatR;
 
 namespace EcoLife.Api.Application
 {
-    public class UpdateRecolectionCommandHandler : IRequestHandler<UpdateRecolectionCommand, int>
+    public class UpdateRecolectionCommandHandler : IRequestHandler<UpdateRecolectionCommand, CreateRecolectionResponseDto>
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -20,7 +22,7 @@ namespace EcoLife.Api.Application
             _optimizationService = optimizationService;
         }
 
-        public async Task<int> Handle(UpdateRecolectionCommand command, CancellationToken cancellationToken)
+        public async Task<CreateRecolectionResponseDto> Handle(UpdateRecolectionCommand command, CancellationToken cancellationToken)
         {
             var updateOrderRoute = false;
 
@@ -31,14 +33,56 @@ namespace EcoLife.Api.Application
                 updateOrderRoute = true;
             }
 
-            var result = await _uow.RecolectionRepository.Update(_mapper.Map(command, existingRecolection));
+            _mapper.Map(command, existingRecolection);
+
+            if (await ValidateEmployee(existingRecolection))
+                return new CreateRecolectionResponseDto() { Success = false, Message = "El recolector tiene otra recolección en ese horario." };
+
+            if (await ValidateVehicle(existingRecolection))
+                return new CreateRecolectionResponseDto() { Success = false, Message = "El vehículo esta asignado a otra recolección en ese horario." };
+
+            var result = await _uow.RecolectionRepository.Update(existingRecolection);
 
             if (updateOrderRoute)
             {
                 await _optimizationService.OrderContainersRoute(result.Id);
             }
 
-            return result.Id;
+            return new CreateRecolectionResponseDto() { Success = true, Id = result.Id };
+        }
+
+        public async Task<bool> ValidateEmployee(Recolection newRecolection)
+        {
+            var oldRecolections = await _uow.RecolectionRepository.GetByEmployeeId(newRecolection.EmployeeId);
+
+            var busyEmployee =
+                oldRecolections.Any(x =>
+                    (((x.EstimatedStartDate <= newRecolection.EstimatedStartDate || x?.RealStartDate <= newRecolection.EstimatedStartDate) &&
+                    (x.EstimatedEndDate >= newRecolection.EstimatedStartDate || x?.RealEndDate >= newRecolection.EstimatedStartDate)) ||
+                    ((x.EstimatedStartDate <= newRecolection.EstimatedEndDate || x?.RealStartDate <= newRecolection.EstimatedEndDate) &&
+                    (x.EstimatedEndDate >= newRecolection.EstimatedEndDate || x?.RealEndDate >= newRecolection.EstimatedEndDate)) ||
+                    ((x.EstimatedStartDate > newRecolection.EstimatedStartDate || x?.RealStartDate > newRecolection.EstimatedStartDate) &&
+                    (x.EstimatedEndDate < newRecolection.EstimatedEndDate || x?.RealEndDate < newRecolection.EstimatedEndDate))) &&
+                    x.Id != newRecolection.Id);
+
+            return busyEmployee;
+        }
+
+        public async Task<bool> ValidateVehicle(Recolection newRecolection)
+        {
+            var oldRecolections = await _uow.RecolectionRepository.GetByVehicleId(newRecolection.VehicleId);
+
+            var busyVehicle =
+                oldRecolections.Any(x =>
+                    (((x.EstimatedStartDate <= newRecolection.EstimatedStartDate || x?.RealStartDate <= newRecolection.EstimatedStartDate) &&
+                    (x.EstimatedEndDate >= newRecolection.EstimatedStartDate || x?.RealEndDate >= newRecolection.EstimatedStartDate)) ||
+                    ((x.EstimatedStartDate <= newRecolection.EstimatedEndDate || x?.RealStartDate <= newRecolection.EstimatedEndDate) &&
+                    (x.EstimatedEndDate >= newRecolection.EstimatedEndDate || x?.RealEndDate >= newRecolection.EstimatedEndDate)) ||
+                    ((x.EstimatedStartDate > newRecolection.EstimatedStartDate || x?.RealStartDate > newRecolection.EstimatedStartDate) &&
+                    (x.EstimatedEndDate < newRecolection.EstimatedEndDate || x?.RealEndDate < newRecolection.EstimatedEndDate))) &&
+                    x.Id != newRecolection.Id);
+
+            return busyVehicle;
         }
     }
 }

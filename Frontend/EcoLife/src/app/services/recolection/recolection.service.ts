@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../enviroments/enviroment';
-import { RecolectionModel } from '../../models';
+import { RecolectionModel, RecolectionResponseModel } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,12 @@ export class RecolectionService {
 
   constructor(private http: HttpClient) { }
 
-  public add(recolection: RecolectionModel): Observable<Object> {
-    return this.http.post(`${this.API_URL}`, recolection);
+  public add(recolection: RecolectionModel): Observable<RecolectionResponseModel> {
+    return this.http.post<RecolectionResponseModel>(`${this.API_URL}`, recolection);
   }
 
-  public update(recolection: RecolectionModel): Observable<Object> {
-    return this.http.post(`${this.API_URL}/update`, recolection);
+  public update(recolection: RecolectionModel): Observable<RecolectionResponseModel> {
+    return this.http.post<RecolectionResponseModel>(`${this.API_URL}/update`, recolection);
   }
 
   public getAll(): Observable<RecolectionModel[]> {

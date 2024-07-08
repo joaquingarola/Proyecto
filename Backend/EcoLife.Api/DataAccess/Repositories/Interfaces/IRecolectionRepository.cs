@@ -9,5 +9,7 @@ namespace EcoLife.Api.DataAccess.Repositories.Interfaces
         Task<Recolection?> GetByRouteId(int routeId);
         Task<Recolection?> GetByVehicleCenterId(int vehicleCenterId);
         Task<Recolection?> GetByWasteCenterId(int wasteCenterId);
+        Task<List<Recolection>> GetByEmployeeId(int employeeId);
+        Task<List<Recolection>> GetByVehicleId(int vehicleId);
     }
 }

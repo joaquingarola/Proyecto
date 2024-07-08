@@ -23,3 +23,4 @@ export * from './selected-item-model';
 export * from './recolection-view-model';
 export * from './route-container-model';
 export * from './employee-response-model';
+export * from './recolection-response-model';

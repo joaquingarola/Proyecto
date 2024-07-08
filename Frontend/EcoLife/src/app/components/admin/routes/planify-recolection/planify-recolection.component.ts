@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 import { EmployeeService, RecolectionService, RouteService, VehicleCenterService, VehicleService, WasteCenterService } from '../../../../services';
-import { EmployeeModel, VehicleCenterModel, VehicleModel, WasteCenterModel, NewRecolectionModel, RouteModel, RecolectionModel } from '../../../../models';
+import { EmployeeModel, VehicleCenterModel, VehicleModel, WasteCenterModel, NewRecolectionModel, RouteModel, RecolectionModel, RecolectionResponseModel } from '../../../../models';
 @Component({
   selector: 'app-planify-recolection',
   templateUrl: './planify-recolection.component.html',
@@ -209,14 +209,26 @@ export class PlanifyRecolectionComponent {
       if(this.data.recolection) {
         const recolection: RecolectionModel = { id: this.data.recolection.id, ...this.recolectionForm.value, status: this.data.recolection.status };
         this.recolectionService.update(recolection).subscribe({
-          next: () => this._dialogRef.close(true),
+          next: (response: RecolectionResponseModel) => {
+            if (response.success) {
+              this._dialogRef.close(true);
+            } else {
+              this.error = response.message;
+            }
+          },
           error: () => {
             this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },
         }).add(() => this.isLoadingButton = false);
       } else {
         this.recolectionService.add(this.recolectionForm.value).subscribe({
-          next: () => this._dialogRef.close(true),
+          next: (response: RecolectionResponseModel) => {
+            if (response.success) {
+              this._dialogRef.close(true);
+            } else {
+              this.error = response.message;
+            }
+          },
           error: () => {
             this.error = 'Ocurrió un error. Por favor intentelo más tarde.';
           },

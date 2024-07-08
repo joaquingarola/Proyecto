@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { EmployeeModel } from '../../models';
+import { EmployeeModel, EmployeeResponseModel } from '../../models';
 import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
@@ -25,15 +25,15 @@ export class EmployeeService {
     return this.http.get<EmployeeModel>(`${this.API_URL}/${id}`);
   }
 
-  public add(employee: EmployeeModel): Observable<any> {
-    return this.http.post(`${this.API_URL}`, employee);
+  public add(employee: EmployeeModel): Observable<EmployeeResponseModel> {
+    return this.http.post<EmployeeResponseModel>(`${this.API_URL}`, employee);
   }
 
   public deleteEmployee(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 
-  public updateEmployee(id: number, employee: EmployeeModel): Observable<any> {
-    return this.http.put(`${this.API_URL}`, { id: id, ...employee });
+  public updateEmployee(id: number, employee: EmployeeModel): Observable<EmployeeResponseModel> {
+    return this.http.put<EmployeeResponseModel>(`${this.API_URL}`, { id: id, ...employee });
   }
 }
