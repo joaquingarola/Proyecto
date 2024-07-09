@@ -43,9 +43,15 @@ export class LoginComponent {
             if(data.success) {
               this.storageService.saveToken(data.token);
               this.storageService.saveUser(data.employee);
-              data.isFirstEntry ?
-                this.router.navigate(['/first-entry']) :
-                this.router.navigate(['/zones']);
+
+              if(data.isFirstEntry) {
+                this.router.navigate(['/first-entry'])
+              }
+
+              data.employee.roleId == 1 ?
+                this.router.navigate(['/news']) :
+                this.router.navigate(['/collector']);
+
             } else {
               this.error = "Credenciales inválidas";
             }

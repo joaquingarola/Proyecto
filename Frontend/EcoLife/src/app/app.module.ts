@@ -41,7 +41,6 @@ import { EmployeeComponent } from './components/admin/employee/employee.componen
 import { EmployeeFormModalComponent } from './components/admin/employee/employee-form-modal/employee-form-modal.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { httpInterceptorProviders } from './interceptors/auth.interceptor';
-import { StartingPageComponent } from './components/collector/starting-page/starting-page.component';
 import { FirstEntryComponent } from './components/shared/login/first-entry/first-entry.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactUsComponent } from './components/homepage/contact-us/contact-us.component';
@@ -70,6 +69,7 @@ import { RecolectionsComponent } from './components/admin/recolections/recolecti
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
 import { FrecuentQuestionsComponent } from './components/homepage/frecuent-questions/frecuent-questions.component';
+import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -89,7 +89,6 @@ registerLocaleData(localeEs, 'es');
     EmployeeComponent,
     EmployeeFormModalComponent,
     LoginComponent,
-    StartingPageComponent,
     FirstEntryComponent,
     HomepageComponent,
     ContactUsComponent,
@@ -114,7 +113,8 @@ registerLocaleData(localeEs, 'es');
     PlanifyRecolectionComponent,
     RecolectionsComponent,
     ViewRecolectionComponent,
-    RouteNotValidModalComponent
+    RouteNotValidModalComponent,
+    AssignmentListComponent
   ],
   imports: [
     BrowserModule,

@@ -55,10 +55,10 @@ namespace EcoLife.Api.Helpers
             private List<Claim> GenerateJWTClaims(User user)
             {
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, "User")
-            };
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Role, user.Employee.Role.Description)
+                };
 
                 return claims;
             }

@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^17.3.6",
     "@angular/platform-browser-dynamic": "^17.3.6",
     "@angular/router": "^17.3.6",
+    "@auth0/angular-jwt": "^5.2.0",
     "@types/google.maps": "^3.54.10",
     "@types/leaflet-routing-machine": "^3.2.8",
     "leaflet": "^1.9.4",
