@@ -23,6 +23,8 @@ const routes: Routes = [
   {path: 'employees', component: EmployeeComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'first-entry', component: FirstEntryComponent, canActivate: [authGuard], data: { roles: ['Recolector', 'Administrador'] } },
   {path: 'collector', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
+  {path: 'collector/finalizadas', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
+  {path: 'collector/planificadas', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
   {path: 'reports', component: ReportsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'homepage', component: HomepageComponent},
   {path: 'news', component: NewsPanelComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},

@@ -52,5 +52,11 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpGet("employee/{employeeId}/{type}")]
+        async public Task<IActionResult> GetByEmployeeId([FromRoute] GetRecolectionsByEmployeeIdQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
     }
 }

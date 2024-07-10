@@ -51,5 +51,15 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
             => await context.Recolections
                 .Where(x => x.VehicleId == vehicleId)
                 .ToListAsync();
+
+        public async Task<List<Recolection>> GetByEmployeeIdWithEntities(int employeeId)
+            => await context.Set<Recolection>()
+                .Include(m => m.Employee)
+                .Include(m => m.VehicleCenter)
+                .Include(m => m.WasteCenter)
+                .Include(m => m.Vehicle)
+                .Include(m => m.Route)
+                .Where(x => x.EmployeeId == employeeId)
+                .ToListAsync();
     }
 }

@@ -71,6 +71,14 @@ export class NavbarComponent {
       label: 'Recolecciones hoy',
       routerLink: '/collector'
     },
+    {
+      label: 'Recolecciones finalizadas',
+      routerLink: '/collector/finalizadas'
+    },
+    {
+      label: 'Recolecciones planificadas',
+      routerLink: '/collector/planificadas'
+    },
   ];
   jwtHelper = new JwtHelperService();
   user: EmployeeModel;
