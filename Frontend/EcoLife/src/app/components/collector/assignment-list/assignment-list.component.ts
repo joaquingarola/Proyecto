@@ -29,12 +29,12 @@ export class AssignmentListComponent {
     this.route.url.subscribe(url => {
       if(url.length > 1 && url[1].path === 'finalizadas') {
         this.type = 'Finalizadas';
+        this.displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter"];
       }
 
       if(url.length > 1 && url[1].path === 'planificadas') {
         this.type = 'Planificadas';
       }
-
       
       this.listRecolections();
     });
@@ -64,5 +64,17 @@ export class AssignmentListComponent {
           console.log(this.recolections);
           this.initialize();
         });
+  }
+
+  public view(recolection: RecolectionModel): void {
+    console.log(recolection)
+  }
+
+  isInitDisabled(recolection: RecolectionModel): boolean {
+    if(new Date(recolection.estimatedStartDate!).getDate() <= new Date().getDate()) {
+      return false;
+    }
+
+    return true;
   }
 }

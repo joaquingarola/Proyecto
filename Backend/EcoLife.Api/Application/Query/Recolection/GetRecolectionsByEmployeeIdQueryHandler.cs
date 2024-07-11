@@ -18,12 +18,12 @@ namespace EcoLife.Api.Application
             var recolections = await _uow.RecolectionRepository.GetByEmployeeIdWithEntities(query.EmployeeId);
 
             if (query.Type == "Finalizadas")
-                return recolections.Where(x => x.Status == "Finalizada");
+                return recolections.Where(x => x.Status == "Finalizada").OrderByDescending(x => x.RealStartDate);
 
             if (query.Type == "Planificadas")
-                return recolections.Where(x => x.Status == "Planificada");
+                return recolections.Where(x => x.Status == "Planificada").OrderBy(x => x.EstimatedStartDate);
 
-            return recolections.Where(x => x.EstimatedStartDate.Date == DateTime.Now.Date);
+            return recolections.Where(x => x.EstimatedStartDate.Date == DateTime.Now.Date).OrderBy(x => x.EstimatedStartDate);
         }
     }
 }

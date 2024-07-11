@@ -12,6 +12,9 @@ namespace EcoLife.Api.MapperProfiles
             CreateMap<CreateEmployeeCommand, Employee>();
 
             CreateMap<UpdateEmployeeCommand, Employee>();
+
+            CreateMap<Employee, Employee>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore()); 
         }
     }
 }

@@ -14,5 +14,11 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.Employee)
                     .ThenInclude(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Username == user);
+
+        public async Task<User> GetByEmployeeId(int employeeId)
+            => await context.Set<User>()
+                .Include(m => m.Employee)
+                    .ThenInclude(x => x.Role)
+                .FirstAsync(x => x.EmployeeId == employeeId);
     }
 }

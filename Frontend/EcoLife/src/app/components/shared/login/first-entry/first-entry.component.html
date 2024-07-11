@@ -23,14 +23,14 @@
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
       <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required placeholder="Ingresá tu contraseña" autocomplete="off" minlength="8" maxlength="30">
-      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hidePassword">
+      <button mat-icon-button matSuffix class="login-form__eye" type="button" (click)="changeVisibility()">
         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Repetir contraseña</mat-label>
       <input matInput [type]="hideRepeatedPassword ? 'password' : 'text'" formControlName="repeatedPassword" required placeholder="Repetí tu contraseña" autocomplete="off" minlength="8" maxlength="30">
-      <button mat-icon-button matSuffix (click)="hideRepeatedPassword = !hideRepeatedPassword" [attr.aria-label]="'Mostrar contraseña'" [attr.aria-pressed]="hideRepeatedPassword">
+      <button mat-icon-button matSuffix class="login-form__eye" type="button" (click)="changeVisibility()">
         <mat-icon>{{hideRepeatedPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>

@@ -31,6 +31,14 @@ export class FirstEntryComponent {
     })
   }
 
+  changeVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  changeRepeatedVisibility(): void {
+    this.hideRepeatedPassword = !this.hideRepeatedPassword;
+  }
+
   onSubmit(): void {
     if(!this.validatePassword()){
       this.error = "Las contraseñas no coinciden";

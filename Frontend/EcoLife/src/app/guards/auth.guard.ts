@@ -25,6 +25,9 @@ export const authGuard: CanActivateFn = (
     }
 
     if(roles.includes(data)) {
+      console.log(roles);
+      console.log(data)
+      console.log(route)
       return true;
     }
 
