@@ -15,6 +15,7 @@ import { VehicleCentersComponent } from './components/admin/vehicle-centers/vehi
 import { WasteCentersComponent } from './components/admin/waste-centers/waste-centers.component';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
+import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'collector', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
   {path: 'collector/finalizadas', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
   {path: 'collector/planificadas', component: AssignmentListComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
+  {path: 'collector/en-curso', component: CurrentCollectionComponent, canActivate: [authGuard], data: { roles: ['Recolector'] }},
   {path: 'reports', component: ReportsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'homepage', component: HomepageComponent},
   {path: 'news', component: NewsPanelComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},

@@ -44,8 +44,6 @@ export class LoginComponent {
               this.storageService.saveToken(data.token);
               this.storageService.saveUser(data.employee);
 
-              debugger
-
               if(data.isFirstEntry) {
                 this.router.navigate(['/first-entry'])
                 return;

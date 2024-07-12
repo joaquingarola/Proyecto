@@ -70,6 +70,7 @@ import { ViewRecolectionComponent } from './components/admin/recolections/view-r
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
 import { FrecuentQuestionsComponent } from './components/homepage/frecuent-questions/frecuent-questions.component';
 import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
+import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -114,7 +115,8 @@ registerLocaleData(localeEs, 'es');
     RecolectionsComponent,
     ViewRecolectionComponent,
     RouteNotValidModalComponent,
-    AssignmentListComponent
+    AssignmentListComponent,
+    CurrentCollectionComponent
   ],
   imports: [
     BrowserModule,

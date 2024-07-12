@@ -36,6 +36,8 @@ namespace EcoLife.Api.Application
 
             var response = _mapper.Map<UserResponseDto>(user);
 
+            response.Employee.Id = user.Employee.Id;
+
             response.Success = true;
 
             response.Token = jwt;

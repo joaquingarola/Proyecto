@@ -33,4 +33,16 @@ export class RecolectionService {
   public getByEmployeeId(id: number, type: string): Observable<RecolectionModel[]> {
     return this.http.get<RecolectionModel[]>(`${this.API_URL}/employee/${id}/${type}`);
   }
+
+  public getInProgressByEmployeeId(id: number): Observable<RecolectionModel> {
+    return this.http.get<RecolectionModel>(`${this.API_URL}/employee/${id}/in-progress`);
+  }
+
+  public startRecolection(id: number): Observable<Object> {
+    return this.http.post(`${this.API_URL}/start/${id}`, null);
+  }
+
+  public validateInProgressRecolection(id: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.API_URL}/validate/${id}`);
+  }
 }

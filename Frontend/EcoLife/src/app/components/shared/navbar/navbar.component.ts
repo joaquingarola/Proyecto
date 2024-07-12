@@ -79,6 +79,10 @@ export class NavbarComponent {
       label: 'Recolecciones planificadas',
       routerLink: '/collector/planificadas'
     },
+    {
+      label: 'En curso',
+      routerLink: '/collector/en-curso'
+    },
   ];
   jwtHelper = new JwtHelperService();
   user: EmployeeModel;

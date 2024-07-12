@@ -58,5 +58,25 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(query));
         }
+
+        [HttpGet("employee/{employeeId}/in-progress")]
+        async public Task<IActionResult> GetInProgressRecolectionByEmployeeId([FromRoute] GetInProgressByEmployeeIdQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpPost("start/{recolectionId}")]
+        async public Task<IActionResult> GetInProgressRecolectionByEmployeeId([FromRoute] StartRecolectionCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpGet("validate/{employeeId}")]
+        async public Task<IActionResult> ValidateInProgressRecolectionByEmployee([FromRoute] ValidateEmployeeRecolectionQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
     }
 }
