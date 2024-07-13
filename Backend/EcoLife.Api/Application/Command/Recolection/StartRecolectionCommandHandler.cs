@@ -18,6 +18,8 @@ namespace EcoLife.Api.Application
 
             recolection.Status = "Iniciada";
 
+            recolection.RealStartDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time"));
+
             await _uow.RecolectionRepository.Update(recolection);
         }
     }

@@ -30,18 +30,25 @@ export class CurrentCollectionComponent {
     this.recolectionService.getInProgressByEmployeeId(this.user.id!)
       .subscribe((res: RecolectionModel) => {
         this.recolection = res;
-        this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude]
-        this.wasteCenter.itemCoords =  [this.recolection.wasteCenter.latitude, this.recolection.wasteCenter.longitude]
+        
+        if(this.recolection) {
+          this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude]
+          this.wasteCenter.itemCoords =  [this.recolection.wasteCenter.latitude, this.recolection.wasteCenter.longitude]
+        }
+
         this.getContainers();
       });
   }
 
   getContainers(): void { 
-    this.routeService.getById(this.recolection.routeId)
-    .subscribe(
-      (response) => {
-        this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
-        this.loading = false;
-      });
+    if(this.recolection) {
+      this.routeService.getById(this.recolection.routeId)
+        .subscribe((response) => {
+          this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
+          this.loading = false;
+        });
+    } else {
+      this.loading = false;
+    }
   }
 }
