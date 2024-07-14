@@ -16,6 +16,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IVehicleCenterRepository VehicleCenterRepository { get; private set; }
         public IRouteRepository RouteRepository { get; private set; }
         public IRecolectionRepository RecolectionRepository { get; private set; }
+        public IRouteContainersRepository RouteContainersRepository { get; private set; }
 
         public UnitOfWork(EcoLifeContext context)
         {
@@ -30,6 +31,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
             VehicleCenterRepository = new VehicleCenterRepository(context);
             RouteRepository = new RouteRepository(context);
             RecolectionRepository = new RecolectionRepository(context);
+            RouteContainersRepository = new RouteContainersRepository(context);
         }
     }
 }

@@ -5,6 +5,8 @@ export interface RouteContainerModel {
   id?: number,
   routeId?: number,
   containerId?: number,
+  order?: number;
+  empty?: boolean,
   container?: ContainerModel,
   route?: RouteModel
 }

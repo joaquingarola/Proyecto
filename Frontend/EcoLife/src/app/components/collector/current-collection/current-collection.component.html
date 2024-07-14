@@ -18,7 +18,7 @@
     <div class="data__content">
       <div class="data__map">
         <app-map 
-          [containersRecolection] = "containersRoute"
+          [containersRecolection] = "containersRouteCoords"
           [selectedItem] = "vehicleCenter"
           [selectedLastItem] = "wasteCenter"
           [disabledClick] = "true"
@@ -26,8 +26,22 @@
         </app-map>
       </div>
     </div>
-    <div class="data__info">
-      <p> Recolección: {{recolection.description }}</p>
+    <div class="data__info" *ngIf="!recolectionCompleted">
+      <p> <b>Recolección:</b> {{recolection.description }}</p>
+      <p> <b>Próximo destino:</b> {{ isContainer ? nextDestination.address : finalDestination.address }}</p>
+      <p> <b>Tipo:</b> {{ isContainer ? 'Contenedor' : 'Centro de Residuos' }}</p>
+      <button 
+        (click)="updateRoute()" 
+        mat-raised-button color="primary" 
+        class="container__add-button" 
+        [class.spinner]="updateContainerLoading" 
+        [disabled]="updateContainerLoading"> 
+          {{ isContainer ? 'Marcar contenedor recolectado' : 'Camión descargado' }}
+      </button>
+    </div>
+    <div class="data__info" *ngIf="recolectionCompleted">
+      <p> <b>La recolección se ha completado exitosamente.</b></p>
+      <p> Podés ver tus otras asignaciones <a href="./collector">acá.</a></p>
     </div>
   </div>
 </ng-template>

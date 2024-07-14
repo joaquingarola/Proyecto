@@ -25,6 +25,9 @@ namespace EcoLife.Api.Services
         {
             var recolection = await _uow.RecolectionRepository.GetByIdWithEntities(recolectionId);
 
+            if (recolection.Status != "Planificada")
+                return;
+
             var jobs = new List<Job>();
 
             foreach (var item in recolection.Route!.RouteContainers)
@@ -84,6 +87,7 @@ namespace EcoLife.Api.Services
                 if (container != null)
                 {
                     container.Order = order++;
+                    container.Empty = false;
                 }
             }
 

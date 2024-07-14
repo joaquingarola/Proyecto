@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EmployeeModel, RecolectionModel, SelectedItem, SelectedItemType } from '../../../models';
+import { ContainerModel, EmployeeModel, RecolectionModel, RouteContainerModel, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
 import { RecolectionService, RouteService, StorageService } from '../../../services';
 
 @Component({
@@ -13,7 +13,13 @@ export class CurrentCollectionComponent {
   recolection: RecolectionModel;
   vehicleCenter: SelectedItem = { type: SelectedItemType.VehicleCenter };
   wasteCenter: SelectedItem = { type: SelectedItemType.WasteCenter };
-  containersRoute: Array<L.LatLngTuple>; 
+  containersRouteCoords: Array<L.LatLngTuple>; 
+  containersRoute: RouteContainerModel[];
+  nextDestination: ContainerModel;
+  finalDestination: WasteCenterModel;
+  isContainer: boolean = true;
+  updateContainerLoading: boolean = false;
+  recolectionCompleted: boolean = false;
 
   constructor(
     private storageServie: StorageService,
@@ -34,6 +40,7 @@ export class CurrentCollectionComponent {
         if(this.recolection) {
           this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude]
           this.wasteCenter.itemCoords =  [this.recolection.wasteCenter.latitude, this.recolection.wasteCenter.longitude]
+          this.finalDestination  = this.recolection.wasteCenter;
         }
 
         this.getContainers();
@@ -44,11 +51,42 @@ export class CurrentCollectionComponent {
     if(this.recolection) {
       this.routeService.getById(this.recolection.routeId)
         .subscribe((response) => {
-          this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
+          this.containersRouteCoords = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
+          this.manageContainers(response.routeContainers!);
           this.loading = false;
         });
     } else {
       this.loading = false;
+    }
+  }
+
+  manageContainers(containers: RouteContainerModel[]): void {
+    this.containersRoute = containers.filter(x => !x.empty!).sort(x => x.order!);
+
+    const nextContainer = containers.find(x => !x.empty);
+
+    if(nextContainer) {
+      this.nextDestination = nextContainer.container!;
+    } else {
+      this.isContainer = false;
+    }
+  }
+
+  updateRoute(): void {
+    this.updateContainerLoading = true;
+    if(this.isContainer) {
+      this.routeService.UpdateContainerRoute(this.recolection.routeId, this.nextDestination.id!)
+        .subscribe(() => {
+          this.containersRoute.find(x => x.containerId! == this.nextDestination.id!)!.empty = true;
+          this.manageContainers(this.containersRoute);
+        })
+        .add(() => this.updateContainerLoading = false);
+    } else {
+      this.recolectionService.completeRecolection(this.recolection.id!)
+        .subscribe(() => this.recolectionCompleted = true)
+        .add(() => {
+          this.updateContainerLoading = false;
+        });
     }
   }
 }

@@ -42,6 +42,10 @@ export class RecolectionService {
     return this.http.post(`${this.API_URL}/start/${id}`, null);
   }
 
+  public completeRecolection(id: number): Observable<Object> {
+    return this.http.post(`${this.API_URL}/complete/${id}`, null);
+  }
+
   public validateInProgressRecolection(id: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.API_URL}/validate/${id}`);
   }

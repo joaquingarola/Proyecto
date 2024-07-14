@@ -52,5 +52,13 @@ namespace EcoLife.Api.Controllers
 
             return Ok();
         }
+
+        [HttpPost("{routeId}/{containerId}")]
+        async public Task<IActionResult> UpdateRouteContainerStatus([FromRoute, Required] UpdateRouteContainerStatusCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
     }
 }

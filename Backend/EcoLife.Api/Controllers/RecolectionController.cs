@@ -66,7 +66,15 @@ namespace EcoLife.Api.Controllers
         }
 
         [HttpPost("start/{recolectionId}")]
-        async public Task<IActionResult> GetInProgressRecolectionByEmployeeId([FromRoute] StartRecolectionCommand command)
+        async public Task<IActionResult> StartRecolection([FromRoute] StartRecolectionCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPost("complete/{recolectionId}")]
+        async public Task<IActionResult> CompleteRecolection([FromRoute] CompleteRecolectionCommand command)
         {
             await _mediator.Send(command);
 

@@ -32,4 +32,8 @@ export class RouteService {
   public deleteRoute(id: number): Observable<Object> {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
+
+  public UpdateContainerRoute(routeId: number, containerId: number): Observable<Object> {
+    return this.http.post(`${this.API_URL}/${routeId}/${containerId}`, null);
+  }
 }
