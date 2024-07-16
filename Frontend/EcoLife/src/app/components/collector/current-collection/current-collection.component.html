@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
-  <div class="container" [ngClass]="{ 'loading': loading }">
-    <div *ngIf="loading; else notLoading">
-      <mat-spinner></mat-spinner>
-    </div>
+<div class="container" [ngClass]="{ 'loading': loading }">
+  <div *ngIf="loading; else notLoading">
+    <mat-spinner></mat-spinner>
   </div>
+</div>
 <app-footer></app-footer>
 
 <ng-template #notLoading>
@@ -11,7 +11,7 @@
     <img src="assets/no-recolection-found.png" alt="No se encontraron recolecciones">
     <div class="no-data__content">
       <p class="no-data__title">No se encontraron recolecciones</p>
-      <p class="no-data__text">No tenes recolecciones en curso.<br> Podés iniciar una nueva recolección haciendo click <a href="./collector">acá</a>.</p>
+      <p class="no-data__text">No tienes recolecciones en curso.<br> Puedes iniciar una nueva recolección haciendo click <a href="./collector">aquí</a>.</p>
     </div>
   </div>
   <div class="data" *ngIf="recolection != null">
@@ -28,16 +28,29 @@
       </div>
     </div>
     <div class="data__info" *ngIf="!recolectionCompleted">
-      <p> <b>Recolección:</b> {{recolection.description }}</p>
-      <p> <b>Próximo destino:</b> {{ isContainer ? nextDestination.address : finalDestination.address }}</p>
-      <p> <b>Tipo:</b> {{ isContainer ? 'Contenedor' : 'Centro de Residuos' }}</p>
-      <button 
-        (click)="updateRoute()" 
-        mat-raised-button color="primary" 
-        class="container__add-button" 
-        [class.spinner]="updateContainerLoading" 
-        [disabled]="updateContainerLoading"> 
-          {{ isContainer ? 'Marcar contenedor recolectado' : 'Camión descargado' }}
+      <p class="info-title">
+        <b>Detalle de la recolección</b>
+      </p>
+      <div class="info-item">
+        <p class="info-item__label">Recolección:</p>
+        <p class="info-item__value">{{ recolection.description }}</p>
+      </div>
+      <div class="info-item">
+        <p class="info-item__label">Próximo destino:</p>
+        <p class="info-item__value">{{ isContainer ? nextDestination.address : finalDestination.address }}</p>
+      </div>
+      <div class="info-item">
+        <p class="info-item__label">Tipo:</p>
+        <p class="info-item__value">{{ isContainer ? 'Contenedor' : 'Centro de Residuos' }}</p>
+      </div>
+      <button
+        (click)="updateRoute()"
+        mat-raised-button
+        color="primary"
+        class="container__add-button"
+        [class.spinner]="updateContainerLoading"
+        [disabled]="updateContainerLoading">
+        {{ isContainer ? 'Marcar contenedor recolectado' : 'Camión descargado' }}
       </button>
     </div>
     <div class="data__info" *ngIf="recolectionCompleted">
