@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContainerModel, EmployeeModel, RecolectionModel, RouteContainerModel, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
+import { ContainerModel, EmployeeModel, RecolectionModel, RouteContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
 import { RecolectionService, RouteService, StorageService } from '../../../services';
 
 @Component({
@@ -20,6 +20,7 @@ export class CurrentCollectionComponent {
   isContainer: boolean = true;
   updateContainerLoading: boolean = false;
   recolectionCompleted: boolean = false;
+  section: SectionRecolection;
 
   constructor(
     private storageServie: StorageService,
@@ -61,7 +62,7 @@ export class CurrentCollectionComponent {
   }
 
   manageContainers(containers: RouteContainerModel[]): void {
-    this.containersRoute = containers.filter(x => !x.empty!).sort(x => x.order!);
+    this.containersRoute = containers.sort(x => x.order!);
 
     const nextContainer = containers.find(x => !x.empty);
 
@@ -70,6 +71,8 @@ export class CurrentCollectionComponent {
     } else {
       this.isContainer = false;
     }
+
+    this.updateRouteDraw();
   }
 
   updateRoute(): void {
@@ -87,6 +90,29 @@ export class CurrentCollectionComponent {
         .add(() => {
           this.updateContainerLoading = false;
         });
+    }
+  }
+
+  updateRouteDraw(): void {
+    let lastRecolected: RouteContainerModel | null = null;
+
+    for (const container of this.containersRoute) {
+      if (container.empty) {
+        lastRecolected = container;
+      }
+    }
+
+    if (!lastRecolected) {
+      this.section = { includeStart: true, includeEnd: false };
+    } else {
+      const index = this.containersRoute.indexOf(lastRecolected);
+      const siguienteContenedor = this.containersRoute[index + 1];
+
+      if (!siguienteContenedor) {
+        this.section = { includeStart: false, includeEnd: true };
+      } else {
+        this.section = { includeStart: false, includeEnd: false, lastRecolected: index };
+      }
     }
   }
 }

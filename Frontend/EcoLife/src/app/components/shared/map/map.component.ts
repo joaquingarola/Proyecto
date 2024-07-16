@@ -3,7 +3,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import "leaflet-routing-machine";
 
-import { NominatimPlaceModel, OtherItems, RouteItem, SelectedItem, SelectedItemType } from '../../../models';
+import { NominatimPlaceModel, OtherItems, RouteItem, SectionRecolection, SelectedItem, SelectedItemType } from '../../../models';
 import { GeocodeService } from '../../../services';
 
 @Component({
@@ -24,15 +24,16 @@ export class MapComponent implements OnChanges {
   @Input() selectedVehicleCenter: L.LatLngTuple | null; 
   @Input() disabledClick: boolean = false;
   @Input() createRoute: boolean = false;
+  @Input() sections: SectionRecolection;
   @Output() coords = new EventEmitter<NominatimPlaceModel | null>();
   @Output() selectedCoords = new EventEmitter<L.LatLng>();
   @Output() selectedWasteCenterUpdate = new EventEmitter<L.LatLng | null>();
   @Output() selectedVehicleCenterUpdate = new EventEmitter<L.LatLng | null>();
 
+  private controlDraw: L.Routing.Control[] = [];
   private markers: L.Marker[] = [];
   private actualWasteCenter : L.Marker;
   private actualVehicleCenter : L.Marker;
-  private routeFirstSection: L.LatLng[];
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
   private map: L.Map;
   private marker: L.Marker;
@@ -93,6 +94,10 @@ export class MapComponent implements OnChanges {
     if(changes?.['otherItems']?.currentValue) {
       this.updateOtherItems(changes?.['otherItems']?.currentValue)
     }
+    
+    if(changes?.['sections']?.currentValue && this.map != undefined) {
+      this.manageSections();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -121,13 +126,7 @@ export class MapComponent implements OnChanges {
 
     if(this.selectedLastItem?.itemCoords) {
       if(this.selectedItem?.itemCoords) {
-        const coords: RouteItem[] = [];
-        coords.push( { itemCoords: new L.LatLng(this.selectedItem.itemCoords[0], this.selectedItem.itemCoords[1]), type: SelectedItemType.VehicleCenter });
-        this.containersRecolection.forEach((containerCoord: L.LatLngTuple) => {
-          coords.push({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container })
-        });
-        coords.push( { itemCoords: new L.LatLng(this.selectedLastItem.itemCoords[0], this.selectedLastItem.itemCoords[1]), type: SelectedItemType.WasteCenter });
-        this.drawViewRecolectionRoute(coords);
+        this.manageSections();
 
         return;
       }
@@ -179,17 +178,6 @@ export class MapComponent implements OnChanges {
     this.loadVehicleCenters();
 
     this.loadWasteCenters();
-
-    // this.addRoute(this.route, true);
-
-    /* if(this.route) {
-      if(this.route.length >=2) {
-        this.routeFirstSection = this.route.slice(0,2);
-        this.route.splice(0,2);
-        this.addRoute(this.routeFirstSection, true);
-      }
-      this.addRoute(this.route);
-    } */
 
     if(this.selectedItem?.itemCoords) {
       this.marker = new L.Marker(this.selectedItem.itemCoords, { icon: this.icons[this.selectedItem.type] });
@@ -326,11 +314,52 @@ export class MapComponent implements OnChanges {
     }).addTo(this.map);
   }
 
-  private drawViewRecolectionRoute(items: RouteItem[]): void {
+  private manageSections(): void {
+    if (this.controlDraw.length > 0) {
+      this.controlDraw.forEach(control => {
+        this.map.removeControl(control);
+      });
+      this.controlDraw = [];
+    }
+
+    const vehicleCenter = { itemCoords: new L.LatLng(this.selectedItem.itemCoords![0], this.selectedItem.itemCoords![1]), type: SelectedItemType.VehicleCenter };
+    const wasteCenter = { itemCoords: new L.LatLng(this.selectedLastItem.itemCoords![0], this.selectedLastItem.itemCoords![1]), type: SelectedItemType.WasteCenter };
+
+    if (this.sections.includeStart) {
+      const firstContainer = this.containersRecolection[0];
+      this.drawViewRecolectionRoute([vehicleCenter, { itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }]);
+
+      const remainingContainers = this.containersRecolection.slice(1).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([{ itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }, ...remainingContainers, wasteCenter], 'green', 0.4);
+    }
+
+    if (this.sections.includeEnd) {
+      const allButLastContainer = this.containersRecolection.map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([vehicleCenter, ...allButLastContainer], 'grey', 0.75);
+
+      const lastContainer = this.containersRecolection.slice(-1)[0];
+      this.drawViewRecolectionRoute([{ itemCoords: new L.LatLng(lastContainer[0], lastContainer[1]), type: SelectedItemType.Container }, wasteCenter]);
+    }
+
+    if (this.sections.lastRecolected != undefined) {
+      const previousContainers = this.containersRecolection.slice(0, this.sections.lastRecolected + 1).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([vehicleCenter, ...previousContainers], 'grey', 0.75);
+
+      const nextContainers = this.containersRecolection.slice(this.sections.lastRecolected, this.sections.lastRecolected + 2).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([...previousContainers.slice(-1), ...nextContainers]);
+
+      const remainingContainers = this.containersRecolection.slice(this.sections.lastRecolected + 1).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      if (remainingContainers.length) {
+        this.drawViewRecolectionRoute([nextContainers.slice(-1)[0], ...remainingContainers, wasteCenter], 'green', 0.4);
+      }
+    }
+  }
+
+  private drawViewRecolectionRoute(items: RouteItem[], color: string = 'green', opacity: number = 1): void {
     const coords: L.LatLng[] = items.map(x => x.itemCoords!);
     const iconsArray: L.Icon[] = items.map(x => this.icons[x.type]);
     
-    L.Routing.control({
+    const newDraw = L.Routing.control({
       plan: new L.Routing.Plan(coords,
         {
           createMarker: function(i, waypoint, n){
@@ -338,14 +367,17 @@ export class MapComponent implements OnChanges {
           }
         }
       ),
+      fitSelectedRoutes: false,
       routeWhileDragging: true,
       lineOptions: {
-        styles: [{ color: 'green', opacity: 1, weight: 5 }],
+        styles: [{ color: color, opacity: opacity, weight: 5 }],
         extendToWaypoints: false,
         addWaypoints: false,
         missingRouteTolerance: 5
       }
     }).addTo(this.map);
+
+    this.controlDraw.push(newDraw);
   }
 
   private getViewCoords(): L.LatLngTuple {
