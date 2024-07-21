@@ -8,8 +8,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Interfaces
 
         Task<RouteEntity> GetByIdWithContainers(int routeId);
 
-        Task<RouteEntity> GetByIdWithRouteContainers(int routeId);
-
         void Remove(RouteEntity route);
     }
 }

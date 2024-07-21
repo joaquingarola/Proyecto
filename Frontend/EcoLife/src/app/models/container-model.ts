@@ -1,4 +1,4 @@
-import { RouteContainerModel } from "./route-container-model";
+import { RecolectionContainerModel } from "./recolection-container-model";
 
 export interface ContainerModel {
   id?: number,
@@ -10,5 +10,5 @@ export interface ContainerModel {
   lastEmptying: Date,
   status: string,
   zone: string,
-  routeContainer?: RouteContainerModel
+  routeContainer?: RecolectionContainerModel
 }

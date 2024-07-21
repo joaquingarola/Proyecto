@@ -64,6 +64,7 @@ builder.Services.AddSwaggerGen(x =>
 builder.Services.AddDbContext<EcoLifeContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EcoLifeContextConnection"));
+    options.UseLazyLoadingProxies(false);
 });
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<JwtService>();

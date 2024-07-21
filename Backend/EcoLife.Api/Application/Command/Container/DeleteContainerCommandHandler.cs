@@ -16,9 +16,9 @@ namespace EcoLife.Api.Application
         {
             var container = await _uow.ContainerRepository.GetByIdAsync(command.ContainerId);
 
-            if (container.RouteContainer != null)
+            if (container.RouteId != null)
             {
-                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteContainer.RouteId);
+                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteId.Value);
 
                 route.Quantity -= 1;
 

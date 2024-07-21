@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../enviroments/enviroment';
-import { ContainerModel, RouteContainerModel } from '../../models';
+import { ContainerModel } from '../../models';
 
 @Injectable({
   providedIn: 'root'

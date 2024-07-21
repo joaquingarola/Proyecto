@@ -40,7 +40,7 @@
 			<ng-container matColumnDef="options">
 					<th mat-header-cell *matHeaderCellDef> Opciones </th>
 					<td mat-cell *matCellDef="let recolection">
-						<mat-icon (click)="editRoute(recolection)" class="icon" [ngClass]="{'disabled-icon': recolection.status == 'Iniciada'}">edit</mat-icon>
+						<mat-icon (click)="editRoute(recolection)" class="icon" [ngClass]="{'disabled-icon': recolection.status != 'Planificada'}">edit</mat-icon>
 						<mat-icon (click)="deleteRecolection(recolection.id)" class="icon" color="warn">delete</mat-icon>
 						<mat-icon (click)="view(recolection)" class="icon success-icon">visibility</mat-icon>
 					</td>

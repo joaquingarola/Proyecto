@@ -1,5 +1,6 @@
 export interface SectionRecolection {
-  includeStart: boolean;
-  includeEnd: boolean;
+  includeStart?: boolean;
+  includeEnd?: boolean;
   lastRecolected?: number;
+  inProgress: boolean;
 }

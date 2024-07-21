@@ -7,10 +7,11 @@
 <ng-template #notLoading>
   <div class="modal__map">
     <app-map 
-      [containersRecolection] = "containersRoute"
+      [containersRecolection] = "containersRouteCoords"
       [selectedItem] = "vehicleCenter"
       [selectedLastItem] = "wasteCenter"
       [disabledClick] = "true"
+      [sections] = "section"
     >
     </app-map>
   </div>

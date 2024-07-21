@@ -17,8 +17,6 @@ namespace EcoLife.Api.Application
         {
             var route = await _uow.RouteRepository.GetByIdWithContainers(query.RouteId);
 
-            route.RouteContainers = route.RouteContainers.OrderBy(item => item.Order).ToList();
-
             return route;
         }
     }

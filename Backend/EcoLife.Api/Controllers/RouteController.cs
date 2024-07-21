@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using EcoLife.Api.Application;
+using EcoLife.Api.Application.Command.Recolection;
 
 using MediatR;
 
@@ -53,8 +54,8 @@ namespace EcoLife.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("{routeId}/{containerId}")]
-        async public Task<IActionResult> UpdateRouteContainerStatus([FromRoute, Required] UpdateRouteContainerStatusCommand command)
+        [HttpPost("{recolectionId}/{containerId}")]
+        async public Task<IActionResult> UpdateRecolectionContainerStatus([FromRoute, Required] UpdateRecolectionContainerStatusCommand command)
         {
             await _mediator.Send(command);
 

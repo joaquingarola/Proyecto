@@ -9,7 +9,8 @@ namespace EcoLife.Api.MapperProfiles
     {
         public RouteProfile()
         {
-            CreateMap<UpdateRouteCommand, RouteEntity>();
+            CreateMap<UpdateRouteCommand, RouteEntity>()
+                .ForMember(dest => dest.Containers, opt => opt.Ignore());
         }
     }
 }

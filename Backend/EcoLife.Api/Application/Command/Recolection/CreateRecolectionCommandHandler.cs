@@ -32,6 +32,15 @@ namespace EcoLife.Api.Application
             if (await ValidateVehicle(recolection))
                 return new CreateRecolectionResponseDto() { Success = false, Message = "El vehículo esta asignado a otra recolección en ese horario." };
 
+            var route = await _uow.RouteRepository.GetByIdWithContainers(command.RouteId);
+
+            recolection.RecolectionContainers = new List<RecolectionContainers>();
+
+            foreach(var container in route.Containers)
+            {
+                recolection.RecolectionContainers.Add(new RecolectionContainers(container));
+            }
+
             var result = await _uow.RecolectionRepository.AddAndSaveAsync(recolection);
 
             await _optimizationService.OrderContainersRoute(result.Id);

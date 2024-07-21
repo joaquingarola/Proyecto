@@ -1,12 +1,12 @@
 import { ContainerModel } from "./container-model";
-import { RouteModel } from "./route-model";
+import { RecolectionModel } from "./recolection-model";
 
-export interface RouteContainerModel {
+export interface RecolectionContainerModel {
   id?: number,
   routeId?: number,
   containerId?: number,
   order?: number;
   empty?: boolean,
   container?: ContainerModel,
-  route?: RouteModel
+  recolection?: RecolectionModel
 }

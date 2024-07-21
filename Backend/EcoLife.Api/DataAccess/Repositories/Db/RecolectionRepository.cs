@@ -17,8 +17,8 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Vehicle)
                 .Include(m => m.Route)
-                    .ThenInclude(x => x.RouteContainers)
-                        .ThenInclude(x => x.Container)
+                .Include(x => x.RecolectionContainers)
+                    .ThenInclude(x => x.Container)
                 .ToListAsync();
 
         public async Task<Recolection> GetByIdWithEntities(int recolectionId)
@@ -26,8 +26,8 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.VehicleCenter)
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Route)
-                    .ThenInclude(x => x.RouteContainers)
-                        .ThenInclude(x => x.Container)
+                .Include(x => x.RecolectionContainers)
+                    .ThenInclude(x => x.Container)
                 .FirstAsync(x => x.Id == recolectionId);
 
         public async Task<Recolection?> GetByRouteId(int routeId)
@@ -59,6 +59,8 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Vehicle)
                 .Include(m => m.Route)
+                .Include(m => m.RecolectionContainers)
+                    .ThenInclude(m => m.Container)
                 .Where(x => x.EmployeeId == employeeId)
                 .ToListAsync();
     }

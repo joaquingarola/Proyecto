@@ -11,6 +11,6 @@ namespace EcoLife.Api.Application
         public string Description { get; set; }
         public int Quantity { get; set; }
         public string WasteType { get; set; }
-        public virtual ICollection<RouteContainers> RouteContainers { get; set; }
+        public virtual ICollection<Container> Containers { get; set; }
     }
 }

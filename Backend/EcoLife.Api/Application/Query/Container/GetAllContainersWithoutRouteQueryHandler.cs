@@ -18,7 +18,7 @@ namespace EcoLife.Api.Application
         {
             var containers = await _uow.ContainerRepository.GetAllWithRouteAsync();
 
-            return containers.Where(x => x.RouteContainer == null && x.Status == "Activo");
+            return containers.Where(x => x.RouteId == null && x.Status == "Activo");
         }
     }
 }

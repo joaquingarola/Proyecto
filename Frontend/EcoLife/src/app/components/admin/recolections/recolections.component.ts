@@ -77,7 +77,7 @@ export class RecolectionsComponent {
   }
 
   public view(recolection: RecolectionModel): void {
-    const data: RecolectionView = { vehicleCenter: recolection.vehicleCenter, wasteCenter: recolection.wasteCenter, routeId: recolection.routeId };
+    const data: RecolectionView = { vehicleCenter: recolection.vehicleCenter, wasteCenter: recolection.wasteCenter, containers: recolection.recolectionContainers!, status: recolection.status };
     this.dialog.open(ViewRecolectionComponent, { data } );
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContainerModel, EmployeeModel, RecolectionModel, RouteContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
+import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
 import { RecolectionService, RouteService, StorageService } from '../../../services';
 
 @Component({
@@ -14,7 +14,7 @@ export class CurrentCollectionComponent {
   vehicleCenter: SelectedItem = { type: SelectedItemType.VehicleCenter };
   wasteCenter: SelectedItem = { type: SelectedItemType.WasteCenter };
   containersRouteCoords: Array<L.LatLngTuple>; 
-  containersRoute: RouteContainerModel[];
+  containersRoute: RecolectionContainerModel[];
   nextDestination: ContainerModel;
   finalDestination: WasteCenterModel;
   isContainer: boolean = true;
@@ -38,31 +38,22 @@ export class CurrentCollectionComponent {
       .subscribe((res: RecolectionModel) => {
         this.recolection = res;
         
+        debugger
+
         if(this.recolection) {
-          this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude]
-          this.wasteCenter.itemCoords =  [this.recolection.wasteCenter.latitude, this.recolection.wasteCenter.longitude]
+          this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude];
+          this.wasteCenter.itemCoords =  [this.recolection.wasteCenter.latitude, this.recolection.wasteCenter.longitude];
+          this.manageContainers(this.recolection.recolectionContainers!);
+          this.containersRouteCoords = (this.containersRoute ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
           this.finalDestination  = this.recolection.wasteCenter;
         }
 
-        this.getContainers();
+        this.loading = false;
       });
   }
 
-  getContainers(): void { 
-    if(this.recolection) {
-      this.routeService.getById(this.recolection.routeId)
-        .subscribe((response) => {
-          this.containersRouteCoords = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
-          this.manageContainers(response.routeContainers!);
-          this.loading = false;
-        });
-    } else {
-      this.loading = false;
-    }
-  }
-
-  manageContainers(containers: RouteContainerModel[]): void {
-    this.containersRoute = containers.sort(x => x.order!);
+  manageContainers(containers: RecolectionContainerModel[]): void {
+    this.containersRoute = containers.sort((a, b) => a.order! - b.order!);
 
     const nextContainer = containers.find(x => !x.empty);
 
@@ -78,7 +69,7 @@ export class CurrentCollectionComponent {
   updateRoute(): void {
     this.updateContainerLoading = true;
     if(this.isContainer) {
-      this.routeService.UpdateContainerRoute(this.recolection.routeId, this.nextDestination.id!)
+      this.routeService.UpdateContainerRoute(this.recolection.id!, this.nextDestination.id!)
         .subscribe(() => {
           this.containersRoute.find(x => x.containerId! == this.nextDestination.id!)!.empty = true;
           this.manageContainers(this.containersRoute);
@@ -94,7 +85,7 @@ export class CurrentCollectionComponent {
   }
 
   updateRouteDraw(): void {
-    let lastRecolected: RouteContainerModel | null = null;
+    let lastRecolected: RecolectionContainerModel | null = null;
 
     for (const container of this.containersRoute) {
       if (container.empty) {
@@ -103,15 +94,15 @@ export class CurrentCollectionComponent {
     }
 
     if (!lastRecolected) {
-      this.section = { includeStart: true, includeEnd: false };
+      this.section = { includeStart: true, includeEnd: false, inProgress: true };
     } else {
       const index = this.containersRoute.indexOf(lastRecolected);
       const siguienteContenedor = this.containersRoute[index + 1];
 
       if (!siguienteContenedor) {
-        this.section = { includeStart: false, includeEnd: true };
+        this.section = { includeStart: false, includeEnd: true, inProgress: true };
       } else {
-        this.section = { includeStart: false, includeEnd: false, lastRecolected: index };
+        this.section = { includeStart: false, includeEnd: false, lastRecolected: index, inProgress: true };
       }
     }
   }

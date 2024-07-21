@@ -11,6 +11,8 @@
         public DateTime? LastEmptying { get; set; }
         public string? Status { get; set; }
         public string Zone { get; set; }
-        public virtual RouteContainers? RouteContainer { get; set; }
+        public int? RouteId { get; set; }
+        public virtual RouteEntity? Route { get; set; }
+        public virtual ICollection<RecolectionContainers>? RecolectionContainers { get; set; }
     }
 }

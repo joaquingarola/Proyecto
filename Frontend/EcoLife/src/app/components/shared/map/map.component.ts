@@ -325,6 +325,11 @@ export class MapComponent implements OnChanges {
     const vehicleCenter = { itemCoords: new L.LatLng(this.selectedItem.itemCoords![0], this.selectedItem.itemCoords![1]), type: SelectedItemType.VehicleCenter };
     const wasteCenter = { itemCoords: new L.LatLng(this.selectedLastItem.itemCoords![0], this.selectedLastItem.itemCoords![1]), type: SelectedItemType.WasteCenter };
 
+    if(!this.sections.inProgress) {
+      const containers = this.containersRecolection.map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([vehicleCenter, ...containers, wasteCenter]);
+    }
+
     if (this.sections.includeStart) {
       const firstContainer = this.containersRecolection[0];
       this.drawViewRecolectionRoute([vehicleCenter, { itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }]);

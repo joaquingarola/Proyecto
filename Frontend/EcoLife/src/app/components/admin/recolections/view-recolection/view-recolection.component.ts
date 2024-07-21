@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RouteService } from '../../../../services';
-import { RecolectionView, SelectedItem, SelectedItemType } from '../../../../models';
+import { RecolectionContainerModel, RecolectionView, SectionRecolection, SelectedItem, SelectedItemType } from '../../../../models';
 
 @Component({
   selector: 'app-view-recolection',
@@ -9,28 +9,51 @@ import { RecolectionView, SelectedItem, SelectedItemType } from '../../../../mod
   styleUrl: './view-recolection.component.scss'
 })
 export class ViewRecolectionComponent {
-  public vehicleCenter: SelectedItem = { type: SelectedItemType.VehicleCenter };
-  public wasteCenter: SelectedItem = { type: SelectedItemType.WasteCenter };
-  public containersRoute: Array<L.LatLngTuple>; 
-  public loading: boolean;
+  vehicleCenter: SelectedItem = { type: SelectedItemType.VehicleCenter };
+  wasteCenter: SelectedItem = { type: SelectedItemType.WasteCenter };
+  containersRouteCoords: Array<L.LatLngTuple>; 
+  containersRoute: RecolectionContainerModel[];
+  loading: boolean;
+  section: SectionRecolection;
 
   constructor( 
-    private routeService: RouteService,
     @Inject(MAT_DIALOG_DATA) public data: RecolectionView) {}
 
     ngOnInit(): void {  
       this.loading = true;
-      this.vehicleCenter.itemCoords =  [this.data.vehicleCenter.latitude, this.data.vehicleCenter.longitude]
-      this.wasteCenter.itemCoords =  [this.data.wasteCenter.latitude, this.data.wasteCenter.longitude]
-      this.getContainers();
+      this.vehicleCenter.itemCoords =  [this.data.vehicleCenter.latitude, this.data.vehicleCenter.longitude];
+      this.wasteCenter.itemCoords =  [this.data.wasteCenter.latitude, this.data.wasteCenter.longitude];
+      this.containersRoute = this.data.containers.sort((a, b) => a.order! - b.order!);
+      this.containersRouteCoords = (this.containersRoute ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
+      this.updateRouteDraw();
+      this.loading = false;
     }
 
-    private getContainers(): void { 
-      this.routeService.getById(this.data.routeId)
-      .subscribe(
-        (response) => {
-          this.containersRoute = (response.routeContainers ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
-          this.loading = false;
-        });
+    updateRouteDraw(): void {
+      if(this.data.status != 'Iniciada') {
+        this.section = { inProgress: false };
+        return;
+      }
+
+      let lastRecolected: RecolectionContainerModel | null = null;
+
+      for (const container of this.containersRoute) {
+        if (container.empty) {
+          lastRecolected = container;
+        }
+      }
+  
+      if (!lastRecolected) {
+        this.section = { includeStart: true, includeEnd: false, inProgress: true };
+      } else {
+        const index = this.containersRoute.indexOf(lastRecolected);
+        const siguienteContenedor = this.containersRoute[index + 1];
+  
+        if (!siguienteContenedor) {
+          this.section = { includeStart: false, includeEnd: true, inProgress: true };
+        } else {
+          this.section = { includeStart: false, includeEnd: false, lastRecolected: index, inProgress: true };
+        }
+      }
     }
 }

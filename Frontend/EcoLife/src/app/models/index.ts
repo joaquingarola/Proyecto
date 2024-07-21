@@ -21,7 +21,7 @@ export * from './new-recolection.model';
 export * from './snackbar-model';
 export * from './selected-item-model';
 export * from './recolection-view-model';
-export * from './route-container-model';
+export * from './recolection-container-model';
 export * from './employee-response-model';
 export * from './recolection-response-model';
 export * from './section-recolection-model';

@@ -57,12 +57,12 @@ namespace EcoLife.Api.Application
 
             var busyEmployee =
                 oldRecolections.Any(x =>
-                    (((x.EstimatedStartDate <= newRecolection.EstimatedStartDate || x?.RealStartDate <= newRecolection.EstimatedStartDate) &&
-                    (x.EstimatedEndDate >= newRecolection.EstimatedStartDate || x?.RealEndDate >= newRecolection.EstimatedStartDate)) ||
-                    ((x.EstimatedStartDate <= newRecolection.EstimatedEndDate || x?.RealStartDate <= newRecolection.EstimatedEndDate) &&
-                    (x.EstimatedEndDate >= newRecolection.EstimatedEndDate || x?.RealEndDate >= newRecolection.EstimatedEndDate)) ||
-                    ((x.EstimatedStartDate > newRecolection.EstimatedStartDate || x?.RealStartDate > newRecolection.EstimatedStartDate) &&
-                    (x.EstimatedEndDate < newRecolection.EstimatedEndDate || x?.RealEndDate < newRecolection.EstimatedEndDate))) &&
+                    ((((x.RealStartDate ?? x.EstimatedStartDate) <= newRecolection.EstimatedStartDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) >= newRecolection.EstimatedStartDate)) ||
+                    (((x.RealStartDate ?? x.EstimatedStartDate) <= newRecolection.EstimatedEndDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) >= newRecolection.EstimatedEndDate)) ||
+                    (((x.RealStartDate ?? x.EstimatedStartDate) > newRecolection.EstimatedStartDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) < newRecolection.EstimatedEndDate))) &&
                     x.Id != newRecolection.Id);
 
             return busyEmployee;
@@ -74,12 +74,12 @@ namespace EcoLife.Api.Application
 
             var busyVehicle =
                 oldRecolections.Any(x =>
-                    (((x.EstimatedStartDate <= newRecolection.EstimatedStartDate || x?.RealStartDate <= newRecolection.EstimatedStartDate) &&
-                    (x.EstimatedEndDate >= newRecolection.EstimatedStartDate || x?.RealEndDate >= newRecolection.EstimatedStartDate)) ||
-                    ((x.EstimatedStartDate <= newRecolection.EstimatedEndDate || x?.RealStartDate <= newRecolection.EstimatedEndDate) &&
-                    (x.EstimatedEndDate >= newRecolection.EstimatedEndDate || x?.RealEndDate >= newRecolection.EstimatedEndDate)) ||
-                    ((x.EstimatedStartDate > newRecolection.EstimatedStartDate || x?.RealStartDate > newRecolection.EstimatedStartDate) &&
-                    (x.EstimatedEndDate < newRecolection.EstimatedEndDate || x?.RealEndDate < newRecolection.EstimatedEndDate))) &&
+                    ((((x.RealStartDate ?? x.EstimatedStartDate) <= newRecolection.EstimatedStartDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) >= newRecolection.EstimatedStartDate)) ||
+                    (((x.RealStartDate ?? x.EstimatedStartDate) <= newRecolection.EstimatedEndDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) >= newRecolection.EstimatedEndDate || x?.RealEndDate >= newRecolection.EstimatedEndDate)) ||
+                    (((x.RealStartDate ?? x.EstimatedStartDate) > newRecolection.EstimatedStartDate) &&
+                    ((x.RealEndDate ?? x.EstimatedEndDate) < newRecolection.EstimatedEndDate))) &&
                     x.Id != newRecolection.Id);
 
             return busyVehicle;

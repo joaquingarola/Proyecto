@@ -1,4 +1,5 @@
 import { EmployeeModel } from "./employee-model";
+import { RecolectionContainerModel } from "./recolection-container-model";
 import { RouteModel } from "./route-model";
 import { VehicleCenterModel } from "./vehicle-center-model";
 import { VehicleModel } from "./vehicle-model";
@@ -21,4 +22,5 @@ export interface RecolectionModel {
   estimatedEndDate?: Date,
   realStartDate?: Date,
   realEndDate?: Date,
+  recolectionContainers?: RecolectionContainerModel[]
 }

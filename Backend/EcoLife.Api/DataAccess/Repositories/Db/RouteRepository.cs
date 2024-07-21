@@ -12,19 +12,12 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
 
         public async Task<List<RouteEntity>> GetAllWithContainers()
             => await context.Routes
-                .Include(x => x.RouteContainers)
-                    .ThenInclude(x => x.Container)
+                .Include(x => x.Containers)
                 .ToListAsync();
 
         public async Task<RouteEntity> GetByIdWithContainers(int routeId)
             => await context.Routes
-                .Include(x => x.RouteContainers)
-                    .ThenInclude(x => x.Container)
-                .FirstOrDefaultAsync(x => x.Id == routeId);
-
-        public async Task<RouteEntity> GetByIdWithRouteContainers(int routeId)
-            => await context.Routes
-                .Include(x => x.RouteContainers)
+                .Include(x => x.Containers)
                 .FirstOrDefaultAsync(x => x.Id == routeId);
 
         public void Remove(RouteEntity route)

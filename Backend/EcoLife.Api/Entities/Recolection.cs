@@ -19,5 +19,6 @@
         public virtual Employee? Employee { get; set; }
         public virtual WasteCenter? WasteCenter { get; set; }
         public virtual RouteEntity? Route { get; set; }
+        public virtual ICollection<RecolectionContainers> RecolectionContainers { get; set; }
     }
 }

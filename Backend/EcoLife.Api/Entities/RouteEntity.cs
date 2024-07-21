@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public int Quantity { get; set; }
         public string WasteType { get; set; }
-        public virtual ICollection<RouteContainers> RouteContainers { get; set; }
+        public virtual ICollection<Container> Containers { get; set; }
 
         public RouteEntity() { }
         public RouteEntity(string description, int periodicity, int quantity, string wasteType) 
@@ -16,7 +16,7 @@
             Periodicity = periodicity;
             Quantity = quantity;
             WasteType = wasteType;
-            RouteContainers = new List<RouteContainers>();
+            Containers = new List<Container>();
         }
     }
 }

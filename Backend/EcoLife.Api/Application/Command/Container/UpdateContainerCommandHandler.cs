@@ -12,50 +12,50 @@ namespace EcoLife.Api.Application
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IOptimizationService _optimizationService;
+        private readonly IMediator _mediator;
 
-        public UpdateContainerCommandHandler(IUnitOfWork uow, IMapper mapper, IOptimizationService optimizationService)
+        public UpdateContainerCommandHandler(IUnitOfWork uow, IMapper mapper, IOptimizationService optimizationService, IMediator mediator)
         {
             _uow = uow;
             _mapper = mapper;
             _optimizationService = optimizationService;
+            _mediator = mediator;
         }
 
         public async Task<int> Handle(UpdateContainerCommand command, CancellationToken cancellationToken)
         {
-            var updateOrderRoute = false;
+            var containerLocationChange = false;
 
             var editContainer = await _uow.ContainerRepository.GetByIdAsync(command.Id);
 
             if (ValidateLocationChange(editContainer, command))
-                updateOrderRoute = true;
+                containerLocationChange = true;
 
             _mapper.Map(command, editContainer);
 
-            var result = await _uow.ContainerRepository.Update(editContainer);
-
-            var removeFromRoute = command.RouteContainer != null && command.Status == "Dañado";
+            var removeFromRoute = command.RouteId != null && command.Status == "Dañado";
 
             if (removeFromRoute)
             {
-                var route = await _uow.RouteRepository.GetByIdWithRouteContainers(command.RouteContainer!.RouteId);
+                editContainer.RouteId = null;
 
-                var routeContainer = route.RouteContainers.First(x => x.ContainerId == command.Id);
-
-                route.RouteContainers.Remove(routeContainer);
+                var route = await _uow.RouteRepository.GetByIdAsync(command.RouteId.Value);
 
                 route.Quantity -= 1;
 
                 await _uow.RouteRepository.SaveChangesAsync();
             }
 
-            if (removeFromRoute || (command.RouteContainer != null && updateOrderRoute))
-            {
-                var recolection = await _uow.RecolectionRepository.GetByRouteId(command.RouteContainer!.RouteId);
+            var result = await _uow.ContainerRepository.Update(editContainer);
 
-                if (recolection != null)
-                {
-                    await _optimizationService.OrderContainersRoute(recolection.Id);
-                }
+            if(removeFromRoute)
+            {
+                await _mediator.Send(new UpdateRecolectionDamagedContainerCommand() { ContainerId = editContainer.Id });
+            }
+
+            if (containerLocationChange)
+            {
+                await _mediator.Send(new UpdateRecolectionContainerLocationChangeCommand() { ContainerId = editContainer.Id });
             }
 
             return result.Id;

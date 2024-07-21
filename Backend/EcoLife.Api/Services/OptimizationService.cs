@@ -19,6 +19,12 @@ namespace EcoLife.Api.Services
         {
             this._uow = uow;
             this._client = client;
+
+            _client.DefaultRequestHeaders.Add("Authorization", "5b3ce3597851110001cf62484198a445736d42b69739f9f425f8d074");
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/geo+json"));
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/gpx+xml"));
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("img/png"));
         }
 
         public async Task OrderContainersRoute(int recolectionId)
@@ -30,7 +36,7 @@ namespace EcoLife.Api.Services
 
             var jobs = new List<Job>();
 
-            foreach (var item in recolection.Route!.RouteContainers)
+            foreach (var item in recolection.RecolectionContainers)
             {
                 var job = new Job { id = item.Container!.Id, delivery = new[] { 1 }, location = new[] { item.Container!.Longitude, item.Container!.Latitude } };
                 jobs.Add(job);
@@ -57,12 +63,6 @@ namespace EcoLife.Api.Services
             var json = JsonConvert.SerializeObject(optimizationRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            _client.DefaultRequestHeaders.Add("Authorization", "5b3ce3597851110001cf62484198a445736d42b69739f9f425f8d074");
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/geo+json"));
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/gpx+xml"));
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("img/png"));
-
             var response = await _client.PostAsync("https://api.openrouteservice.org/optimization", content);
 
             var responseString = await response.Content.ReadAsStringAsync();
@@ -83,7 +83,7 @@ namespace EcoLife.Api.Services
 
             foreach (var jobId in jobOrder)
             {
-                var container = recolection.Route.RouteContainers.FirstOrDefault(c => c.ContainerId == jobId);
+                var container = recolection.RecolectionContainers.FirstOrDefault(c => c.ContainerId == jobId);
                 if (container != null)
                 {
                     container.Order = order++;

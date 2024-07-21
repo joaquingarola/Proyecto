@@ -12,13 +12,18 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
 
         public async Task<List<Container>> GetAllWithRouteAsync()
             => await context.Set<Container>()
-                .Include(x => x.RouteContainer)
+                .Include(x => x.Route)
                 .ToListAsync();
 
-        public async Task<List<Container>> GetByRoute(int routeId)
-            => await context.Set<Container>()
-                .Include(x => x.RouteContainer)
-                .Where(x => x.RouteContainer.RouteId == routeId)
+        public async Task<List<Container>> GetByRouteId(int routeId)
+            => await context.Containers
+                .Where(x => x.RouteId == routeId)
                 .ToListAsync();
+
+        public async Task<Container> GetContainerWithRecolectionsAsync(int containerId)
+            => await context.Containers
+                .Include(x => x.RecolectionContainers)
+                    .ThenInclude(s => s.Recolection)
+                .FirstAsync(x => x.Id == containerId);
     }
 }
