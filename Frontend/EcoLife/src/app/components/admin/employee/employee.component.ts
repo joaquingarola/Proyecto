@@ -16,8 +16,9 @@ import { EmployeeFormModalComponent } from './employee-form-modal/employee-form-
 export class EmployeeComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["dni", "name", "surName", "email", "phoneNumber", "birthdate", "admissionDate", "role", "options"];
-  public employees: MatTableDataSource<EmployeeModel>;
+  displayedColumns = ["dni", "name", "surName", "email", "phoneNumber", "birthdate", "admissionDate", "role", "options"];
+  employees: MatTableDataSource<EmployeeModel> = new MatTableDataSource();
+  isLoading: boolean;
 
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar a este empleado?',
@@ -50,11 +51,13 @@ export class EmployeeComponent {
   }
 
   private listEmployee(): void { 
+    this.isLoading = true;
     this.employeeService.getAll()
     .subscribe(
       (response) => {
         this.employees = new MatTableDataSource(response);
         this.initialize();
+        this.isLoading = false;
       });
   }
 

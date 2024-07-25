@@ -15,10 +15,11 @@ import { PlanifyRecolectionComponent } from '../routes/planify-recolection/plani
   styleUrl: './recolections.component.scss'
 })
 export class RecolectionsComponent {
-  public recolections: MatTableDataSource<RecolectionModel>
+  recolections: MatTableDataSource<RecolectionModel> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter","employee","options"];
+  displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter","employee","options"];
+  isLoading: boolean;
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta recolección?',
     confirmCaption: 'Eliminar',
@@ -50,11 +51,13 @@ export class RecolectionsComponent {
   }
 
   private listRecolections(): void { 
+    this.isLoading = true;
     this.recolectionService.getAll()
       .subscribe(
         (response) => {
           this.recolections = new MatTableDataSource(response);
           this.initialize();
+          this.isLoading = false;
         });
   }
 

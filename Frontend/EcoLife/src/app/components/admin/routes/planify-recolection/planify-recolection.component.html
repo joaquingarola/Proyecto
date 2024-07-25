@@ -58,25 +58,25 @@
               </mat-select>
             </mat-form-field>
           </div>
+          <div class="row mb-datepicker">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de la recolección</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="actualDate" (dateChange)="onStartDateChange()"> 
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
           <div class="row">
             <mat-form-field appearance="outline">
               <mat-label>Hora inicio</mat-label>
-              <input matInput type="time" placeholder="08:00" formControlName="estimatedStartTime" autocomplete="off"> 
+              <input matInput type="time" formControlName="estimatedStartTime" autocomplete="off" max="10:00:00"> 
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline">
               <mat-label>Hora fin estimada</mat-label>
               <input matInput type="time" placeholder="08:00" formControlName="estimatedEndTime" autocomplete="off"> 
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha de la recolección</mat-label>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="actualDate"> 
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-              <mat-datepicker #startPicker></mat-datepicker>
             </mat-form-field>
           </div>
           <div *ngIf="error.length !==0" class="modal__content__form__error">

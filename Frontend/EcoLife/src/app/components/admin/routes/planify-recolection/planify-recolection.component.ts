@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 
 import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
@@ -35,6 +35,7 @@ export class PlanifyRecolectionComponent {
   public isLoadingVehicleCenters = true;
   public isLoadingRoute = true;
   public actualDate = new Date();
+  selectedDate = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -56,8 +57,8 @@ export class PlanifyRecolectionComponent {
       description: ['', [Validators.required]],
       employeeId: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
-      estimatedStartTime: ['', [Validators.required]],
-      estimatedEndTime: ['', [Validators.required]]
+      estimatedStartTime: [{ value: '', disabled: true }, [Validators.required, this.minTimeValidator()]],
+      estimatedEndTime: [{ value: '', disabled: true }, [Validators.required]]
     });
 
     this.getRoute();
@@ -78,6 +79,7 @@ export class PlanifyRecolectionComponent {
     this.recolectionForm.get('vehicleId')?.setValue(this.data.recolection?.vehicle.id);
     this.recolectionForm.get('estimatedStartTime')?.setValue(this.getTime(this.data.recolection?.estimatedStartDate!));
     this.recolectionForm.get('estimatedEndTime')?.setValue(this.getTime(this.data.recolection?.estimatedEndDate!));
+    this.onStartDateChange();
   }
 
   private getTime(date: Date): string {
@@ -257,5 +259,43 @@ export class PlanifyRecolectionComponent {
     } else {
       return true;
     }
+  }
+
+  onStartDateChange(): void {
+    if(this.recolectionForm.get('startDate')?.value != '') {
+      this.recolectionForm.get('estimatedStartTime')?.enable();
+      this.recolectionForm.get('estimatedEndTime')?.enable();
+      this.selectedDate = new Date(this.recolectionForm.get('startDate')?.value);
+      this.recolectionForm.get('estimatedStartTime')?.markAsTouched();
+      this.recolectionForm.get('estimatedStartTime')?.updateValueAndValidity();
+    }
+  }
+
+  private minTimeValidator(): ValidatorFn {
+    let actualDate = new Date();
+    const minToAdd = 60 - actualDate.getMinutes();
+    actualDate = new Date(actualDate.getTime() + (minToAdd*60*1000));
+    const minTime = `${this.padZero(actualDate.getHours())}:${this.padZero(actualDate.getMinutes())}:00`;
+
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(`${this.selectedDate.getDay()}/${this.selectedDate.getMonth()}/${this.selectedDate.getFullYear()}` != `${actualDate.getDay()}/${actualDate.getMonth()}/${actualDate.getFullYear()}`) {
+        return null;
+      }
+
+      const inputTime = control.value as string
+
+      if (!inputTime) {
+        return null
+      };
+
+      const minTimeObj = new Date(`1970-01-01T${minTime}`)
+      const inputTimeObj = new Date(`1970-01-01T${inputTime}`)
+
+      return inputTimeObj >= minTimeObj ? null : { minTime: true }
+    }
+  }
+
+  private padZero(value: number): string {
+    return value < 10 ? '0' + value : value.toString();
   }
 }

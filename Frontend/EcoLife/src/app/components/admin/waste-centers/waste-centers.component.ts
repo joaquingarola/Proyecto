@@ -16,8 +16,9 @@ import { WasteCenterFormModalComponent } from './waste-center-form-modal/waste-c
 export class WasteCentersComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["description", "wasteType", "address", "options"];
-  public wasteCenters: MatTableDataSource<WasteCenterModel>;
+  displayedColumns = ["description", "wasteType", "address", "options"];
+  wasteCenters: MatTableDataSource<WasteCenterModel> = new MatTableDataSource();
+  isLoading: boolean;
 
   private confirmationData: ConfirmationModalData = {
     message: '¿Estás seguro de eliminar a este centro de residuos?',
@@ -50,11 +51,13 @@ export class WasteCentersComponent {
   }
 
   private listWasteCenters(): void { 
+    this.isLoading = true;
     this.wasteCenterService.getAll()
     .subscribe(
       (response) => {
         this.wasteCenters = new MatTableDataSource(response);
         this.initialize();
+        this.isLoading = false;
       });
   }
 

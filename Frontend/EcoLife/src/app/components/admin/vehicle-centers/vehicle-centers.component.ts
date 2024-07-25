@@ -16,8 +16,9 @@ import { VehicleCenterFormModalComponent } from './vehicle-center-form-modal/veh
 export class VehicleCentersComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["description", "address", "options"];
-  public vehicleCenters: MatTableDataSource<VehicleCenterModel>;
+  displayedColumns = ["description", "address", "options"];
+  vehicleCenters: MatTableDataSource<VehicleCenterModel> = new MatTableDataSource();
+  isLoading: boolean;
 
   private confirmationData: ConfirmationModalData = {
     message: '¿Estás seguro de eliminar a este centro de vehículos?',
@@ -50,11 +51,13 @@ export class VehicleCentersComponent {
   }
 
   private listVehicleCenters(): void { 
+    this.isLoading = true;
     this.vehicleCenterService.getAll()
     .subscribe(
       (response) => {
         this.vehicleCenters = new MatTableDataSource(response);
         this.initialize();
+        this.isLoading = false;
       });
   }
 

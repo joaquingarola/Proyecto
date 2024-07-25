@@ -16,8 +16,9 @@ import { ContainerFormModalComponent } from './container-form-modal/container-fo
 export class ContainerComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["capacity", "wasteType", "status", "zone", "lastEmptying", "address", "options"];
-  public containers: MatTableDataSource<ContainerModel>;
+  displayedColumns = ["capacity", "wasteType", "status", "zone", "lastEmptying", "address", "options"];
+  containers: MatTableDataSource<ContainerModel> = new MatTableDataSource();
+  isLoading: boolean;
 
   private confirmationData: ConfirmationModalData = {
     message: '¿Estás seguro de eliminar a este contenedor?',
@@ -50,11 +51,14 @@ export class ContainerComponent {
   }
 
   private listContainers(): void { 
+    this.isLoading = true;
+
     this.containerService.getAll()
     .subscribe(
       (response) => {
         this.containers = new MatTableDataSource(response);
         this.initialize();
+        this.isLoading = false;
       });
   }
 

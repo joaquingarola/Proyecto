@@ -37,8 +37,6 @@ export class CurrentCollectionComponent {
     this.recolectionService.getInProgressByEmployeeId(this.user.id!)
       .subscribe((res: RecolectionModel) => {
         this.recolection = res;
-        
-        debugger
 
         if(this.recolection) {
           this.vehicleCenter.itemCoords =  [this.recolection.vehicleCenter.latitude, this.recolection.vehicleCenter.longitude];

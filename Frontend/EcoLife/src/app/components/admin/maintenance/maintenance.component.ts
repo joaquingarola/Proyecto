@@ -18,9 +18,10 @@ import { EditMaintenanceFormModalComponent } from './edit-maintenance-form-modal
 export class MaintenanceComponent  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["vehicle", "description", "startDate", "endDate", "status", "options"];
-  public maintenance: MatTableDataSource<MaintenanceModel>;
-  public statusEnum = StatusEnum;
+  displayedColumns = ["vehicle", "description", "startDate", "endDate", "status", "options"];
+  maintenance: MatTableDataSource<MaintenanceModel> = new MatTableDataSource();
+  isLoading = false;
+  statusEnum = StatusEnum;
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de cancelar este mantenimiento?',
     confirmCaption: 'Si',
@@ -52,11 +53,13 @@ export class MaintenanceComponent  {
   }
     
   private listMaintenances(): void { 
+    this.isLoading = true;
     this.maintenanceService.getAll()
     .subscribe(
       (response) => {
         this.maintenance = new MatTableDataSource(response);
         this.initialize();
+        this.isLoading = false;
       });
   }
 

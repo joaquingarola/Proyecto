@@ -13,13 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './assignment-list.component.scss'
 })
 export class AssignmentListComponent {
-  public recolections: MatTableDataSource<RecolectionModel>
-  public type: string = 'Hoy';
+  recolections: MatTableDataSource<RecolectionModel> = new MatTableDataSource();
+  type: string = 'Hoy';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter","options"];
-  public inProgressRecolection: boolean;
-  public user: EmployeeModel;
+  displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter","options"];
+  inProgressRecolection: boolean;
+  user: EmployeeModel;
+  isLoading: boolean;
 
   constructor(
     private recolectionService: RecolectionService,
@@ -63,13 +64,14 @@ export class AssignmentListComponent {
   }
 
   private listRecolections(): void { 
+    this.isLoading = true;
     const user = this.storageService.getUser();
-
     this.recolectionService.getByEmployeeId(user.id!, this.type)
       .subscribe(
         (response) => {
           this.recolections = new MatTableDataSource(response);
           this.initialize();
+          this.isLoading = false;
         });
   }
 
