@@ -327,7 +327,7 @@ export class MapComponent implements OnChanges {
 
     if(!this.sections.inProgress) {
       const containers = this.containersRecolection.map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
-      this.drawViewRecolectionRoute([vehicleCenter, ...containers, wasteCenter]);
+      this.drawViewRecolectionRoute([vehicleCenter, ...containers, wasteCenter, vehicleCenter]);
     }
 
     if (this.sections.includeStart) {
@@ -335,7 +335,7 @@ export class MapComponent implements OnChanges {
       this.drawViewRecolectionRoute([vehicleCenter, { itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }]);
 
       const remainingContainers = this.containersRecolection.slice(1).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
-      this.drawViewRecolectionRoute([{ itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }, ...remainingContainers, wasteCenter], 'green', 0.4);
+      this.drawViewRecolectionRoute([{ itemCoords: new L.LatLng(firstContainer[0], firstContainer[1]), type: SelectedItemType.Container }, ...remainingContainers, wasteCenter, vehicleCenter], 'green', 0.4);
     }
 
     if (this.sections.includeEnd) {
@@ -344,6 +344,8 @@ export class MapComponent implements OnChanges {
 
       const lastContainer = this.containersRecolection.slice(-1)[0];
       this.drawViewRecolectionRoute([{ itemCoords: new L.LatLng(lastContainer[0], lastContainer[1]), type: SelectedItemType.Container }, wasteCenter]);
+
+      this.drawViewRecolectionRoute([wasteCenter, vehicleCenter], 'green', 0.4);
     }
 
     if (this.sections.lastRecolected != undefined) {
@@ -355,8 +357,15 @@ export class MapComponent implements OnChanges {
 
       const remainingContainers = this.containersRecolection.slice(this.sections.lastRecolected + 1).map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
       if (remainingContainers.length) {
-        this.drawViewRecolectionRoute([nextContainers.slice(-1)[0], ...remainingContainers, wasteCenter], 'green', 0.4);
+        this.drawViewRecolectionRoute([nextContainers.slice(-1)[0], ...remainingContainers, wasteCenter, vehicleCenter], 'green', 0.4);
       }
+    }
+
+    if(this.sections.includeComeBack) {
+      const containers = this.containersRecolection.map(containerCoord => ({ itemCoords: new L.LatLng(containerCoord[0], containerCoord[1]), type: SelectedItemType.Container }));
+      this.drawViewRecolectionRoute([vehicleCenter, ...containers, wasteCenter], 'grey', 0.75);
+
+      this.drawViewRecolectionRoute([wasteCenter, vehicleCenter]);
     }
   }
 

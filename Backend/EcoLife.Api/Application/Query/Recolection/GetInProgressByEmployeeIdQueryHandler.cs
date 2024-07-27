@@ -18,7 +18,7 @@ namespace EcoLife.Api.Application
         {
             var employeeRecolections = await _uow.RecolectionRepository.GetByEmployeeIdWithEntities(query.EmployeeId);
 
-            return employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada");
+            return employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos");
         }
     }
 }

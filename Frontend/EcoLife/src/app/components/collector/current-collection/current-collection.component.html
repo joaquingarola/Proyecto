@@ -37,11 +37,11 @@
       </div>
       <div class="info-item">
         <p class="info-item__label">Próximo destino:</p>
-        <p class="info-item__value">{{ isContainer ? nextDestination.address : finalDestination.address }}</p>
+        <p class="info-item__value">{{ getNextDestination() }}</p>
       </div>
       <div class="info-item">
         <p class="info-item__label">Tipo:</p>
-        <p class="info-item__value">{{ isContainer ? 'Contenedor' : 'Centro de Residuos' }}</p>
+        <p class="info-item__value">{{ getType() }}</p>
       </div>
       <button
         (click)="updateRoute()"
@@ -50,7 +50,7 @@
         class="container__add-button"
         [class.spinner]="updateContainerLoading"
         [disabled]="updateContainerLoading">
-        {{ isContainer ? 'Marcar contenedor recolectado' : 'Camión descargado' }}
+        {{ getButtonText() }}
       </button>
     </div>
     <div class="data__info" *ngIf="recolectionCompleted">

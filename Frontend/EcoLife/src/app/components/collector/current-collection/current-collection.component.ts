@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
 import { RecolectionService, RouteService, StorageService } from '../../../services';
+import { TypeEnum } from './type.enum';
 
 @Component({
   selector: 'app-current-collection',
@@ -17,7 +18,7 @@ export class CurrentCollectionComponent {
   containersRoute: RecolectionContainerModel[];
   nextDestination: ContainerModel;
   finalDestination: WasteCenterModel;
-  isContainer: boolean = true;
+  entityType = TypeEnum.Container;
   updateContainerLoading: boolean = false;
   recolectionCompleted: boolean = false;
   section: SectionRecolection;
@@ -58,7 +59,11 @@ export class CurrentCollectionComponent {
     if(nextContainer) {
       this.nextDestination = nextContainer.container!;
     } else {
-      this.isContainer = false;
+      if(this.recolection.status == 'Iniciada'){
+        this.entityType = TypeEnum.WasteCenter;
+      } else {
+        this.entityType = TypeEnum.VehicleCenter;
+      }
     }
 
     this.updateRouteDraw();
@@ -66,7 +71,7 @@ export class CurrentCollectionComponent {
 
   updateRoute(): void {
     this.updateContainerLoading = true;
-    if(this.isContainer) {
+    if(this.entityType == TypeEnum.Container) {
       this.routeService.UpdateContainerRoute(this.recolection.id!, this.nextDestination.id!)
         .subscribe(() => {
           this.containersRoute.find(x => x.containerId! == this.nextDestination.id!)!.empty = true;
@@ -74,11 +79,24 @@ export class CurrentCollectionComponent {
         })
         .add(() => this.updateContainerLoading = false);
     } else {
-      this.recolectionService.completeRecolection(this.recolection.id!)
-        .subscribe(() => this.recolectionCompleted = true)
+      if(this.entityType == TypeEnum.WasteCenter) {
+        this.recolectionService.wasteCenterReached(this.recolection.id!)
+        .subscribe()
+        .add(() => {
+          this.updateContainerLoading = false;
+          this.recolection.status = 'Volviendo al centro de vehículos';
+          this.manageContainers(this.containersRoute);
+        });
+      } else {
+        this.recolectionService.completeRecolection(this.recolection.id!)
+        .subscribe(() => { 
+          this.recolectionCompleted = true;
+          this.section = { inProgress: false };
+        })
         .add(() => {
           this.updateContainerLoading = false;
         });
+      }
     }
   }
 
@@ -95,13 +113,53 @@ export class CurrentCollectionComponent {
       this.section = { includeStart: true, includeEnd: false, inProgress: true };
     } else {
       const index = this.containersRoute.indexOf(lastRecolected);
-      const siguienteContenedor = this.containersRoute[index + 1];
+      const nextContainer = this.containersRoute[index + 1];
 
-      if (!siguienteContenedor) {
-        this.section = { includeStart: false, includeEnd: true, inProgress: true };
+      if (!nextContainer) {
+        if(this.entityType == TypeEnum.WasteCenter) {
+          this.section = { includeStart: false, includeEnd: true, inProgress: true };
+        } else {
+          this.section = { includeStart: false, includeEnd: false, includeComeBack: true, inProgress: true };
+        }
       } else {
         this.section = { includeStart: false, includeEnd: false, lastRecolected: index, inProgress: true };
       }
     }
+  }
+
+  getNextDestination(): string {
+    if(this.entityType == TypeEnum.Container) {
+      return this.nextDestination.address;
+    }
+
+    let centerAddress: string = '';
+
+    if(this.entityType == TypeEnum.WasteCenter) {
+      centerAddress = this.recolection.wasteCenter.address;
+    }
+
+    if(this.entityType == TypeEnum.VehicleCenter) {
+      centerAddress = this.recolection.vehicleCenter.address;
+    }
+
+    const index = centerAddress.indexOf(',');
+
+    return index !== -1 ? centerAddress.substring(0, index) : centerAddress;
+  }
+
+  getType(): string {
+    return this.entityType;
+  }
+
+  getButtonText(): string {
+    if(this.entityType == TypeEnum.Container) {
+      return 'Contenedor recolectado';
+    }
+
+    if(this.entityType == TypeEnum.WasteCenter) {
+      return 'Camión descargado';
+    }
+
+    return 'Finalizar recoleccion';
   }
 }

@@ -16,7 +16,7 @@ namespace EcoLife.Api.Application
         {
             var employeeRecolections = await _uow.RecolectionRepository.GetByEmployeeId(query.EmployeeId);
                 
-            var inProgress = employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada");
+            var inProgress = employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos");
 
             return inProgress != null;
         }

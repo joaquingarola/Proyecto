@@ -81,6 +81,14 @@ namespace EcoLife.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("waste-center/{recolectionId}")]
+        async public Task<IActionResult> WasteCenterReached([FromRoute] UpdateWasteCenterReachedCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpGet("validate/{employeeId}")]
         async public Task<IActionResult> ValidateInProgressRecolectionByEmployee([FromRoute] ValidateEmployeeRecolectionQuery query)
         {

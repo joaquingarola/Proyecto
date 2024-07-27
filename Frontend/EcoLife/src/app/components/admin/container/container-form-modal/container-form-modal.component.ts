@@ -34,7 +34,7 @@ export class ContainerFormModalComponent {
     this.containerForm = this.fb.group({
       address: ['', [Validators.required]],
       capacity: ['', [Validators.required]],
-      wasteType: ['', [Validators.required]],
+      wasteType: [{value: '', disabled: this.data.selectedItem ? true : false }, [Validators.required]],
       status: ['', [Validators.required]],
       zone: ['', [Validators.required]],
       latitude: ['', [Validators.required]],
