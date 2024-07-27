@@ -15,7 +15,7 @@ namespace EcoLife.Api.Application
 
         public async Task<Recolection> Handle(GetRecolectionByIdQuery query, CancellationToken cancellationToken)
         {
-            return await _uow.RecolectionRepository.GetByIdAsync(query.RecolectionId); ;
+            return await _uow.RecolectionRepository.GetByIdWithEntities(query.RecolectionId);
         }
     }
 }

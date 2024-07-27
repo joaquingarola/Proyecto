@@ -80,7 +80,7 @@ export class RecolectionsComponent {
   }
 
   public view(recolection: RecolectionModel): void {
-    const data: RecolectionView = { vehicleCenter: recolection.vehicleCenter, wasteCenter: recolection.wasteCenter, containers: recolection.recolectionContainers!, status: recolection.status };
+    const data: RecolectionView = { idRecolection: recolection.id! };
     this.dialog.open(ViewRecolectionComponent, { data } );
   }
 

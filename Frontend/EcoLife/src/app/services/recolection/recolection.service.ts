@@ -30,6 +30,10 @@ export class RecolectionService {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
 
+  public getById(id: number): Observable<RecolectionModel> {
+    return this.http.get<RecolectionModel>(`${this.API_URL}/${id}`);
+  }
+
   public getByEmployeeId(id: number, type: string): Observable<RecolectionModel[]> {
     return this.http.get<RecolectionModel[]>(`${this.API_URL}/employee/${id}/${type}`);
   }

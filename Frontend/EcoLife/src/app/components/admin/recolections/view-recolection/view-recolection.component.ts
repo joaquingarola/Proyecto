@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RouteService } from '../../../../services';
-import { RecolectionContainerModel, RecolectionView, SectionRecolection, SelectedItem, SelectedItemType } from '../../../../models';
+import { RecolectionService } from '../../../../services';
+import { RecolectionContainerModel, RecolectionModel, RecolectionView, SectionRecolection, SelectedItem, SelectedItemType } from '../../../../models';
 
 @Component({
   selector: 'app-view-recolection',
@@ -15,22 +15,33 @@ export class ViewRecolectionComponent {
   containersRoute: RecolectionContainerModel[];
   loading: boolean;
   section: SectionRecolection;
+  recolection: RecolectionModel;
 
   constructor( 
-    @Inject(MAT_DIALOG_DATA) public data: RecolectionView) {}
+    @Inject(MAT_DIALOG_DATA) public data: RecolectionView,
+    private recolectionService: RecolectionService) {}
 
     ngOnInit(): void {  
       this.loading = true;
-      this.vehicleCenter.itemCoords =  [this.data.vehicleCenter.latitude, this.data.vehicleCenter.longitude];
-      this.wasteCenter.itemCoords =  [this.data.wasteCenter.latitude, this.data.wasteCenter.longitude];
-      this.containersRoute = this.data.containers.sort((a, b) => a.order! - b.order!);
-      this.containersRouteCoords = (this.containersRoute ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
-      this.updateRouteDraw();
-      this.loading = false;
+      this.getRecolection();
+    }
+
+    getRecolection(): void {
+      this.loading = true;
+      this.recolectionService.getById(this.data.idRecolection)
+        .subscribe((res: RecolectionModel) => {
+          this.recolection = res;
+          this.vehicleCenter.itemCoords =  [res.vehicleCenter.latitude, res.vehicleCenter.longitude];
+          this.wasteCenter.itemCoords =  [res.wasteCenter.latitude, res.wasteCenter.longitude];
+          this.containersRoute = res.recolectionContainers!.sort((a, b) => a.order! - b.order!);
+          this.containersRouteCoords = (this.containersRoute ?? []).map(routeContainer => [routeContainer.container!.latitude, routeContainer.container!.longitude]);
+          this.updateRouteDraw();
+          this.loading = false;
+        });
     }
 
     updateRouteDraw(): void {
-      if(this.data.status != 'Iniciada') {
+      if(this.recolection.status == 'Planificada' || this.recolection.status == 'Finalizada') {
         this.section = { inProgress: false };
         return;
       }
@@ -50,7 +61,11 @@ export class ViewRecolectionComponent {
         const siguienteContenedor = this.containersRoute[index + 1];
   
         if (!siguienteContenedor) {
-          this.section = { includeStart: false, includeEnd: true, inProgress: true };
+          if(this.recolection.status == 'Iniciada') {
+            this.section = { includeStart: false, includeEnd: true, inProgress: true };
+          } else {
+            this.section = { includeStart: false, includeEnd: false, includeComeBack: true, inProgress: true };
+          }
         } else {
           this.section = { includeStart: false, includeEnd: false, lastRecolected: index, inProgress: true };
         }

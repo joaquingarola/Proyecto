@@ -15,6 +15,12 @@ namespace EcoLife.Api.Application
 
         public async Task Handle(DeleteRecolectionCommand command, CancellationToken cancellationToken)
         {
+            var recolection = await _uow.RecolectionRepository.GetByIdWithEntities(command.RecolectionId);
+
+            recolection.RecolectionContainers.Clear();
+
+            await _uow.RecolectionRepository.SaveChangesAsync();
+
             await _uow.RecolectionRepository.Delete(command.RecolectionId);
         }
     }

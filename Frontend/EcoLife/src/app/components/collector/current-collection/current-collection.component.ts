@@ -22,6 +22,7 @@ export class CurrentCollectionComponent {
   updateContainerLoading: boolean = false;
   recolectionCompleted: boolean = false;
   section: SectionRecolection;
+  totalTime: string;
 
   constructor(
     private storageServie: StorageService,
@@ -89,15 +90,30 @@ export class CurrentCollectionComponent {
         });
       } else {
         this.recolectionService.completeRecolection(this.recolection.id!)
-        .subscribe(() => { 
-          this.recolectionCompleted = true;
-          this.section = { inProgress: false };
-        })
-        .add(() => {
-          this.updateContainerLoading = false;
-        });
+          .subscribe(() => { 
+            this.calculateTime();
+          });
       }
     }
+  }
+
+  private calculateTime(): void {
+    this.recolectionService.getById(this.recolection.id!)
+      .subscribe((res: RecolectionModel) => {
+        const endDate = new Date(res.realEndDate!);
+        const startDate = new Date(res.realStartDate!);
+        const diffInMilliseconds = endDate.getTime() - startDate.getTime();
+        const hours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+        const minutes = Math.floor((diffInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diffInMilliseconds % (1000 * 60)) / 1000);
+        
+        this.recolectionCompleted = true;
+        this.totalTime = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
+        this.section = { inProgress: false };
+      })
+      .add(() => {
+        this.updateContainerLoading = false;
+      });
   }
 
   updateRouteDraw(): void {
@@ -161,5 +177,9 @@ export class CurrentCollectionComponent {
     }
 
     return 'Finalizar recoleccion';
+  }
+
+  private padZero(value: number): string {
+    return value < 10 ? '0' + value : value.toString();
   }
 }

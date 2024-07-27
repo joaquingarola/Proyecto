@@ -3,8 +3,9 @@ import { VehicleCenterModel } from "./vehicle-center-model";
 import { WasteCenterModel } from "./waste-center-model";
 
 export interface RecolectionView {
-  vehicleCenter: VehicleCenterModel,
+  /* vehicleCenter: VehicleCenterModel,
   wasteCenter: WasteCenterModel,
   status: string,
-  containers: RecolectionContainerModel[]
+  containers: RecolectionContainerModel[] */
+  idRecolection: number
 }
