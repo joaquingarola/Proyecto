@@ -37,12 +37,12 @@ export class AssignmentListComponent {
     })
     this.route.url.subscribe(url => {
       if(url.length > 1 && url[1].path === 'finalizadas') {
-        this.type = 'Finalizadas';
+        this.type = 'Finalizada';
         this.displayedColumns = ["description","date","status","vehicle","vehicleCenter","wasteCenter"];
       }
 
       if(url.length > 1 && url[1].path === 'planificadas') {
-        this.type = 'Planificadas';
+        this.type = 'Planificada';
       }
       
       this.listRecolections();

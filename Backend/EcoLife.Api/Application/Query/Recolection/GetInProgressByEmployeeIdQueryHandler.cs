@@ -16,9 +16,9 @@ namespace EcoLife.Api.Application
 
         public async Task<Recolection?> Handle(GetInProgressByEmployeeIdQuery query, CancellationToken cancellationToken)
         {
-            var employeeRecolections = await _uow.RecolectionRepository.GetByEmployeeIdWithEntities(query.EmployeeId);
+            var employeeRecolection = await _uow.RecolectionRepository.GetInProgressWithEntities(query.EmployeeId);
 
-            return employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos");
+            return employeeRecolection;
         }
     }
 }

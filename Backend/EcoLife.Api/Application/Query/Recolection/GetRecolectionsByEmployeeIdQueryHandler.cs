@@ -15,15 +15,22 @@ namespace EcoLife.Api.Application
 
         public async Task<IEnumerable<Recolection>> Handle(GetRecolectionsByEmployeeIdQuery query, CancellationToken cancellationToken)
         {
-            var recolections = await _uow.RecolectionRepository.GetByEmployeeIdWithEntities(query.EmployeeId);
+            var recolections = new List<Recolection>();
+
+            if(query.Type == "Hoy")
+            {
+                recolections = await _uow.RecolectionRepository.GetByEmployeeIdAndDateWithEntities(query.EmployeeId);
+
+                return recolections.OrderBy(x => x.EstimatedStartDate);
+            }
+
+            recolections = await _uow.RecolectionRepository.GetByEmployeeIdAndTypeWithEntities(query.EmployeeId, query.Type);
 
             if (query.Type == "Finalizadas")
-                return recolections.Where(x => x.Status == "Finalizada").OrderByDescending(x => x.RealStartDate);
+                return recolections.OrderByDescending(x => x.RealStartDate);
 
-            if (query.Type == "Planificadas")
-                return recolections.Where(x => x.Status == "Planificada").OrderBy(x => x.EstimatedStartDate);
 
-            return recolections.Where(x => x.EstimatedStartDate.Date == DateTime.Now.Date).OrderBy(x => x.EstimatedStartDate);
+            return recolections.OrderBy(x => x.EstimatedStartDate);
         }
     }
 }

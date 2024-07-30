@@ -17,8 +17,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Vehicle)
                 .Include(m => m.Route)
-                .Include(x => x.RecolectionContainers)
-                    .ThenInclude(x => x.Container)
                 .ToListAsync();
 
         public async Task<Recolection> GetByIdWithEntities(int recolectionId)
@@ -52,7 +50,27 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Where(x => x.VehicleId == vehicleId)
                 .ToListAsync();
 
-        public async Task<List<Recolection>> GetByEmployeeIdWithEntities(int employeeId)
+        public async Task<List<Recolection>> GetByEmployeeIdAndTypeWithEntities(int employeeId, string type)
+            => await context.Set<Recolection>()
+                .Include(m => m.Employee)
+                .Include(m => m.VehicleCenter)
+                .Include(m => m.WasteCenter)
+                .Include(m => m.Vehicle)
+                .Include(m => m.Route)
+                .Where(x => x.EmployeeId == employeeId && x.Status == type)
+                .ToListAsync();
+
+        public async Task<List<Recolection>> GetByEmployeeIdAndDateWithEntities(int employeeId)
+            => await context.Set<Recolection>()
+                .Include(m => m.Employee)
+                .Include(m => m.VehicleCenter)
+                .Include(m => m.WasteCenter)
+                .Include(m => m.Vehicle)
+                .Include(m => m.Route)
+                .Where(x => x.EmployeeId == employeeId && x.EstimatedStartDate.Date == DateTime.Now.Date)
+                .ToListAsync();
+
+        public async Task<Recolection?> GetInProgressWithEntities(int employeeId)
             => await context.Set<Recolection>()
                 .Include(m => m.Employee)
                 .Include(m => m.VehicleCenter)
@@ -61,7 +79,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.Route)
                 .Include(m => m.RecolectionContainers)
                     .ThenInclude(m => m.Container)
-                .Where(x => x.EmployeeId == employeeId)
-                .ToListAsync();
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && (x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos"));
     }
 }
