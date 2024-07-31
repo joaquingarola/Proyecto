@@ -37,6 +37,10 @@ body {
     bottom: -300px;
     right: -300px;
   }
+
+  &__add-button {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .loading {
@@ -60,7 +64,7 @@ body {
 }
 
 .data {
-  width: 1250px;
+  width: 70%;
   height: 600px;
   display: flex;
   justify-content: space-between;

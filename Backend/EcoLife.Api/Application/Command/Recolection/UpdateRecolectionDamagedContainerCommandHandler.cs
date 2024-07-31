@@ -20,6 +20,21 @@ namespace EcoLife.Api.Application
         {
             var container = await _uow.ContainerRepository.GetContainerWithRecolectionsAsync(command.ContainerId);
 
+            var removeFromRoute = container.RouteId != null;
+
+            container.Status = "Dañado";
+
+            if (removeFromRoute)
+            {
+                var route = await _uow.RouteRepository.GetByIdAsync(container.RouteId.Value);
+
+                route.Quantity -= 1;
+
+                await _uow.RouteRepository.SaveChangesAsync();
+
+                container.RouteId = null;
+            }
+
             var recolectionIdList = new List<int>();
 
             var recolectionContainers = container.RecolectionContainers

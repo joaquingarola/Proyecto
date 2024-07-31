@@ -33,22 +33,9 @@ namespace EcoLife.Api.Application
 
             _mapper.Map(command, editContainer);
 
-            var removeFromRoute = command.RouteId != null && command.Status == "Dañado";
-
-            if (removeFromRoute)
-            {
-                editContainer.RouteId = null;
-
-                var route = await _uow.RouteRepository.GetByIdAsync(command.RouteId.Value);
-
-                route.Quantity -= 1;
-
-                await _uow.RouteRepository.SaveChangesAsync();
-            }
-
             var result = await _uow.ContainerRepository.Update(editContainer);
 
-            if(removeFromRoute)
+            if(command.Status == "Dañado")
             {
                 await _mediator.Send(new UpdateRecolectionDamagedContainerCommand() { ContainerId = editContainer.Id });
             }

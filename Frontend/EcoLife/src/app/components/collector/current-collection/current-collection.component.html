@@ -43,14 +43,26 @@
         <p class="info-item__label">Tipo:</p>
         <p class="info-item__value">{{ getType() }}</p>
       </div>
+      <div>
+        <button
+          (click)="updateRoute()"
+          mat-raised-button
+          color="primary"
+          class="container__add-button"
+          [class.spinner]="updateContainerLoading"
+          [disabled]="updateContainerLoading || damageContainerLoading">
+          {{ getButtonText() }}
+        </button>
+      </div>
       <button
-        (click)="updateRoute()"
+        *ngIf="nextDestination"	
+        (click)="damagedContainer()"
         mat-raised-button
-        color="primary"
+        color="warn"
         class="container__add-button"
-        [class.spinner]="updateContainerLoading"
-        [disabled]="updateContainerLoading">
-        {{ getButtonText() }}
+        [class.spinner]="damageContainerLoading"
+        [disabled]="updateContainerLoading || damageContainerLoading">
+        Contenedor dañado
       </button>
     </div>
     <div class="data__info" *ngIf="recolectionCompleted">

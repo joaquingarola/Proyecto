@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
-import { RecolectionService, RouteService, StorageService } from '../../../services';
+import { ContainerService, RecolectionService, RouteService, StorageService } from '../../../services';
 import { TypeEnum } from './type.enum';
 
 @Component({
@@ -16,10 +16,11 @@ export class CurrentCollectionComponent {
   wasteCenter: SelectedItem = { type: SelectedItemType.WasteCenter };
   containersRouteCoords: Array<L.LatLngTuple>; 
   containersRoute: RecolectionContainerModel[];
-  nextDestination: ContainerModel;
+  nextDestination: ContainerModel | null;
   finalDestination: WasteCenterModel;
   entityType = TypeEnum.Container;
   updateContainerLoading: boolean = false;
+  damageContainerLoading: boolean = false;
   recolectionCompleted: boolean = false;
   section: SectionRecolection;
   totalTime: string;
@@ -27,7 +28,8 @@ export class CurrentCollectionComponent {
   constructor(
     private storageServie: StorageService,
     private recolectionService: RecolectionService,
-    private routeService: RouteService) { }
+    private routeService: RouteService,
+    private containerService: ContainerService) { }
 
   ngOnInit(): void {
     this.user = this.storageServie.getUser();
@@ -60,6 +62,7 @@ export class CurrentCollectionComponent {
     if(nextContainer) {
       this.nextDestination = nextContainer.container!;
     } else {
+      this.nextDestination = null;
       if(this.recolection.status == 'Iniciada'){
         this.entityType = TypeEnum.WasteCenter;
       } else {
@@ -73,9 +76,9 @@ export class CurrentCollectionComponent {
   updateRoute(): void {
     this.updateContainerLoading = true;
     if(this.entityType == TypeEnum.Container) {
-      this.routeService.UpdateContainerRoute(this.recolection.id!, this.nextDestination.id!)
+      this.routeService.UpdateContainerRoute(this.recolection.id!, this.nextDestination!.id!)
         .subscribe(() => {
-          this.containersRoute.find(x => x.containerId! == this.nextDestination.id!)!.empty = true;
+          this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
           this.manageContainers(this.containersRoute);
         })
         .add(() => this.updateContainerLoading = false);
@@ -145,7 +148,7 @@ export class CurrentCollectionComponent {
 
   getNextDestination(): string {
     if(this.entityType == TypeEnum.Container) {
-      return this.nextDestination.address;
+      return this.nextDestination!.address;
     }
 
     let centerAddress: string = '';
@@ -181,5 +184,15 @@ export class CurrentCollectionComponent {
 
   private padZero(value: number): string {
     return value < 10 ? '0' + value : value.toString();
+  }
+
+  damagedContainer(): void {
+    this.damageContainerLoading = true;
+    this.containerService.damagedContainer(this.nextDestination!.id!)
+        .subscribe(() => {
+          this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
+          this.manageContainers(this.containersRoute);
+        })
+        .add(() => this.damageContainerLoading = false);
   }
 }

@@ -32,4 +32,8 @@ export class ContainerService {
   public updateContainer(container: ContainerModel): Observable<Object> {
     return this.http.put(`${this.API_URL}`, container);
   }
+
+  public damagedContainer(containerId: number): Observable<Object> {
+    return this.http.post(`${this.API_URL}/damaged/${containerId}`, null);
+  }
 }

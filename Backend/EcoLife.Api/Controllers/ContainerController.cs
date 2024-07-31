@@ -39,6 +39,14 @@ namespace EcoLife.Api.Controllers
             return Ok(await _mediator.Send(command));
         }
 
+        [HttpPost("damaged/{containerId}")]
+        async public Task<IActionResult> DamagedContainer([FromRoute, Required] UpdateRecolectionDamagedContainerCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpDelete("{containerId}")]
         async public Task<IActionResult> DeleteContainerByIdAsync([FromRoute, Required] DeleteContainerCommand command)
         {
