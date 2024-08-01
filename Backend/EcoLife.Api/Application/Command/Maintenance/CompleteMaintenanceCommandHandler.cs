@@ -15,9 +15,11 @@ namespace EcoLife.Api.Application
 
         public async Task<int> Handle(CompleteMaintenanceCommand command, CancellationToken cancellationToken)
         {
-            var maintenance = await _uow.MaintenanceRepository.GetByIdAsync(command.MaintenanceId);
+            var maintenance = await _uow.MaintenanceRepository.GetByIdWithVehicleAsync(command.MaintenanceId);
 
             maintenance.EndDate = command.EndDate;
+
+            maintenance.Vehicle!.Status = "Disponible";
 
             var result = await _uow.MaintenanceRepository.Update(maintenance);
 

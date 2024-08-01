@@ -81,6 +81,14 @@ namespace EcoLife.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("cancel/{recolectionId}")]
+        async public Task<IActionResult> CancelRecolection([FromRoute] CancelRecolectionCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpPost("waste-center/{recolectionId}")]
         async public Task<IActionResult> WasteCenterReached([FromRoute] UpdateWasteCenterReachedCommand command)
         {

@@ -50,6 +50,10 @@ export class RecolectionService {
     return this.http.post(`${this.API_URL}/complete/${id}`, null);
   }
 
+  public cancelRecolection(id: number): Observable<Object> {
+    return this.http.post(`${this.API_URL}/cancel/${id}`, null);
+  }
+
   public wasteCenterReached(id: number): Observable<Object> {
     return this.http.post(`${this.API_URL}/waste-center/${id}`, null);
   }

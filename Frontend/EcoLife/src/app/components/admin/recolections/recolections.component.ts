@@ -55,6 +55,15 @@ export class RecolectionsComponent {
     this.recolectionService.getAll()
       .subscribe(
         (response) => {
+          response.sort((a, b) => {
+            if (a.status === 'Vehículo pendiente' && b.status !== 'Vehículo pendiente') {
+              return -1;
+            }
+            if (a.status !== 'Vehículo pendiente' && b.status === 'Vehículo pendiente') {
+              return 1;
+            }
+            return 0;
+          });
           this.recolections = new MatTableDataSource(response);
           this.initialize();
           this.isLoading = false;

@@ -21,7 +21,9 @@ export class CurrentCollectionComponent {
   entityType = TypeEnum.Container;
   updateContainerLoading: boolean = false;
   damageContainerLoading: boolean = false;
+  damageVehicleLoading: boolean = false;
   recolectionCompleted: boolean = false;
+  recolectionCanceled: boolean = false;
   section: SectionRecolection;
   totalTime: string;
 
@@ -189,10 +191,19 @@ export class CurrentCollectionComponent {
   damagedContainer(): void {
     this.damageContainerLoading = true;
     this.containerService.damagedContainer(this.nextDestination!.id!)
-        .subscribe(() => {
-          this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
-          this.manageContainers(this.containersRoute);
-        })
-        .add(() => this.damageContainerLoading = false);
+      .subscribe(() => {
+        this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
+        this.manageContainers(this.containersRoute);
+      })
+      .add(() => this.damageContainerLoading = false);
+  }
+
+  damagedVehicle(): void {
+    this.damageVehicleLoading = true;
+    this.recolectionService.cancelRecolection(this.recolection.id!)
+      .subscribe(() => { 
+        this.recolectionCanceled = true;
+      })
+      .add(() => this.damageVehicleLoading = false);
   }
 }

@@ -27,7 +27,7 @@
         </app-map>
       </div>
     </div>
-    <div class="data__info" *ngIf="!recolectionCompleted">
+    <div class="data__info" *ngIf="!recolectionCompleted && !recolectionCanceled">
       <p class="info-title">
         <b>Detalle de la recolección</b>
       </p>
@@ -50,24 +50,39 @@
           color="primary"
           class="container__add-button"
           [class.spinner]="updateContainerLoading"
-          [disabled]="updateContainerLoading || damageContainerLoading">
+          [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
           {{ getButtonText() }}
         </button>
       </div>
+      <div>
+        <button
+          *ngIf="nextDestination"	
+          (click)="damagedContainer()"
+          mat-raised-button
+          color="warn"
+          class="container__add-button"
+          [class.spinner]="damageContainerLoading"
+          [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
+          Contenedor dañado
+        </button>
+      </div>
       <button
-        *ngIf="nextDestination"	
-        (click)="damagedContainer()"
+        (click)="damagedVehicle()"
         mat-raised-button
         color="warn"
         class="container__add-button"
-        [class.spinner]="damageContainerLoading"
-        [disabled]="updateContainerLoading || damageContainerLoading">
-        Contenedor dañado
+        [class.spinner]="damageVehicleLoading"
+        [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
+        Vehículo dañado
       </button>
     </div>
     <div class="data__info" *ngIf="recolectionCompleted">
       <p> <b>La recolección se ha completado exitosamente.</b></p>
       <p> Tiempo de recolección: {{ totalTime }}</p>
+      <p> Podés ver tus otras asignaciones <a href="./collector">acá.</a></p>
+    </div>
+    <div class="data__info" *ngIf="recolectionCanceled">
+      <p> <b>La recolección ha sido cancelada.</b></p>
       <p> Podés ver tus otras asignaciones <a href="./collector">acá.</a></p>
     </div>
   </div>

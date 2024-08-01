@@ -106,10 +106,18 @@ export class AssignmentListComponent {
       return true;
     }
 
-    if(new Date(recolection.estimatedStartDate!).getDate() <= new Date().getDate()) {
+    if(recolection.status != 'Planificada') {
+      return true;
+    }
+
+    if(this.stripTime(new Date(recolection.estimatedStartDate!)) <= this.stripTime(new Date())) {
       return false;
     }
 
     return true;
+  }
+
+  stripTime(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 }

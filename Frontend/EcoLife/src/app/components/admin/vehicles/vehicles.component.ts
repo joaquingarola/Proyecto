@@ -17,7 +17,7 @@ import { NotifyMaintenanceFormModalComponent } from './notify-maintenance-form-m
 export class VehiclesComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ["patent", "description", "model", "buyDate", "vehicleCenter", "options"];
+  displayedColumns = ["patent", "description", "model", "status", "buyDate", "vehicleCenter", "options"];
   vehicles: MatTableDataSource<VehicleModel> = new MatTableDataSource();
   isLoading: boolean;
   private confirmationData: ConfirmationModalData = {

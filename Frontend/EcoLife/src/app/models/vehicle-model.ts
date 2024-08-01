@@ -6,6 +6,7 @@ export interface VehicleModel {
     description: string,
     model: number,
     buyDate: Date,
+    status: string,
     vehicleCenterId: number,
     vehicleCenter?: VehicleCenterModel
 }

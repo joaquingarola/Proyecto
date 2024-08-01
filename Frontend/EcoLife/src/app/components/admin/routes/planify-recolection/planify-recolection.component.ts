@@ -76,9 +76,13 @@ export class PlanifyRecolectionComponent {
     this.recolectionForm.get('startDate')?.setValue(this.data.recolection?.estimatedStartDate);
     this.recolectionForm.get('wasteCenterId')?.setValue(this.data.recolection?.wasteCenter.id);
     this.recolectionForm.get('vehicleCenterId')?.setValue(this.data.recolection?.vehicleCenter.id);
-    this.recolectionForm.get('vehicleId')?.setValue(this.data.recolection?.vehicle.id);
     this.recolectionForm.get('estimatedStartTime')?.setValue(this.getTime(this.data.recolection?.estimatedStartDate!));
     this.recolectionForm.get('estimatedEndTime')?.setValue(this.getTime(this.data.recolection?.estimatedEndDate!));
+    if(this.data.recolection?.status != 'Vehículo pendiente') {
+      this.recolectionForm.get('vehicle')?.setValue(this.data.recolection?.vehicle.id);
+    } else {
+      this.recolectionForm.get('vehicle')?.setValue('');
+    }
     this.onStartDateChange();
   }
 
@@ -95,7 +99,9 @@ export class PlanifyRecolectionComponent {
       const coords = new L.LatLng(this.data.recolection?.vehicleCenter.latitude, this.data.recolection?.vehicleCenter.longitude);
       this.updateSelectedVehicleCenter(coords);
       this.onVehicleCenterChange();
-      this.selectedVehicle = this.vehicles.find(x => x.id == this.data.recolection?.vehicle.id)?.id!;
+      if(this.data.recolection.status != 'Vehículo pendiente') {
+        this.selectedVehicle = this.vehicles.find(x => x.id == this.data.recolection?.vehicle.id)?.id!;
+      }
     }
   }
 
@@ -139,7 +145,7 @@ export class PlanifyRecolectionComponent {
     this.vehicleService.getAll()
     .subscribe(
       (response) => {
-        this.vehicles = response;
+        this.vehicles = response.filter(x => x.status == 'Disponible');
         this.isLoadingVehicleCenters = false;
         this.getWasteCenters();
       }
@@ -209,7 +215,8 @@ export class PlanifyRecolectionComponent {
     if (this.recolectionForm.valid) {
       this.isLoadingButton = true;
       if(this.data.recolection) {
-        const recolection: RecolectionModel = { id: this.data.recolection.id, ...this.recolectionForm.value, status: this.data.recolection.status };
+        const status = this.data.recolection.status == 'Vehículo pendiente' ? 'Planificada' : this.data.recolection.status;
+        const recolection: RecolectionModel = { id: this.data.recolection.id, ...this.recolectionForm.value, status: status };
         this.recolectionService.update(recolection).subscribe({
           next: (response: RecolectionResponseModel) => {
             if (response.success) {

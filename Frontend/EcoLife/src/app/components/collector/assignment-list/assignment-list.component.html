@@ -37,7 +37,7 @@
 					<th mat-header-cell *matHeaderCellDef> Opciones </th>
 					<td mat-cell *matCellDef="let recolection">
 						<mat-icon *ngIf="recolection.status == 'Iniciada'" (click)="view()" class="icon success-icon">visibility</mat-icon>
-						<mat-icon *ngIf="recolection.status == 'Planificada'" [ngClass]="{'disabled-icon': isInitDisabled(recolection)}" (click)="startRecolection(recolection)" class="icon success-icon">play_arrow</mat-icon>
+						<mat-icon *ngIf="recolection.status != 'Iniciada'" [ngClass]="{'disabled-icon': isInitDisabled(recolection)}" (click)="startRecolection(recolection)" class="icon success-icon">play_arrow</mat-icon>
 					</td>
 			</ng-container>
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

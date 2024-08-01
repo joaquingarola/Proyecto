@@ -14,5 +14,10 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
             => await context.Set<Maintenance>()
                 .Include(m => m.Vehicle)
                 .ToListAsync();
+
+        public async Task<Maintenance> GetByIdWithVehicleAsync(int maintenanceId)
+            => await context.Maintenances
+                .Include(m => m.Vehicle)
+                .FirstAsync(x => x.Id == maintenanceId);
     }
 }
