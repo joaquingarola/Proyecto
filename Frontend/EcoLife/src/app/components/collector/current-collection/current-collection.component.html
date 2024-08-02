@@ -11,7 +11,7 @@
     <img src="assets/no-recolection-found.png" alt="No se encontraron recolecciones">
     <div class="no-data__content">
       <p class="no-data__title">No se encontraron recolecciones</p>
-      <p class="no-data__text">No tienes recolecciones en curso.<br> Puedes iniciar una nueva recolección haciendo click <a href="./collector">aquí</a>.</p>
+      <p class="no-data__text">No tienes recolecciones en curso.<br> Puedes iniciar una nueva recolección haciendo click <a (click)="goGoToday()" class="link">acá</a>.</p>
     </div>
   </div>
   <div class="data" *ngIf="recolection != null">
@@ -79,11 +79,11 @@
     <div class="data__info" *ngIf="recolectionCompleted">
       <p> <b>La recolección se ha completado exitosamente.</b></p>
       <p> Tiempo de recolección: {{ totalTime }}</p>
-      <p> Podés ver tus otras asignaciones <a href="./collector">acá.</a></p>
+      <p> Podés ver tus otras asignaciones <a (click)="goGoToday()" class="link">acá</a></p>
     </div>
     <div class="data__info" *ngIf="recolectionCanceled">
       <p> <b>La recolección ha sido cancelada.</b></p>
-      <p> Podés ver tus otras asignaciones <a href="./collector">acá.</a></p>
+      <p> Podés ver tus otras asignaciones <a (click)="goGoToday()" class="link">acá.</a></p>
     </div>
   </div>
 </ng-template>

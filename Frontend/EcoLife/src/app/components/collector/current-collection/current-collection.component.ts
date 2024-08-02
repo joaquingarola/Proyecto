@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
 import { ContainerService, RecolectionService, RouteService, StorageService } from '../../../services';
 import { TypeEnum } from './type.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-current-collection',
@@ -31,6 +32,7 @@ export class CurrentCollectionComponent {
     private storageServie: StorageService,
     private recolectionService: RecolectionService,
     private routeService: RouteService,
+    private router: Router,
     private containerService: ContainerService) { }
 
   ngOnInit(): void {
@@ -205,5 +207,9 @@ export class CurrentCollectionComponent {
         this.recolectionCanceled = true;
       })
       .add(() => this.damageVehicleLoading = false);
+  }
+
+  goGoToday(): void {
+    this.router.navigate(['/collector']);
   }
 }
