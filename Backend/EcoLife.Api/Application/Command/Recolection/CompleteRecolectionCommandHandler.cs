@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 using MediatR;
 
 namespace EcoLife.Api.Application
@@ -16,7 +17,7 @@ namespace EcoLife.Api.Application
         {
             var recolection = await _uow.RecolectionRepository.GetByIdAsync(command.RecolectionId);
 
-            recolection.Status = "Finalizada";
+            recolection.Status = RecolectionStatus.Finalized;
 
             recolection.RealEndDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time"));
 

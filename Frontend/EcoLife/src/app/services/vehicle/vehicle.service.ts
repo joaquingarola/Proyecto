@@ -17,6 +17,10 @@ export class VehicleService {
     return this.http.get<VehicleModel[]>(`${this.API_URL}`);
   }
 
+  public getAllAvailables(): Observable<VehicleModel[]> {
+    return this.http.get<VehicleModel[]>(`${this.API_URL}/availables`);
+  }
+
   public getById(id: number): Observable<VehicleModel> {
     return this.http.get<VehicleModel>(`${this.API_URL}/${id}`);
   }

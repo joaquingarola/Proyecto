@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 using MediatR;
 
 namespace EcoLife.Api.Application
@@ -16,7 +17,7 @@ namespace EcoLife.Api.Application
         {
             var employeeRecolections = await _uow.RecolectionRepository.GetByEmployeeId(query.EmployeeId);
                 
-            var inProgress = employeeRecolections.FirstOrDefault(x => x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos");
+            var inProgress = employeeRecolections.FirstOrDefault(x => x.Status == RecolectionStatus.Initiated || x.Status == RecolectionStatus.VehicleCenterComeBack);
 
             return inProgress != null;
         }

@@ -4,6 +4,7 @@ using EcoLife.Api.Entities;
 using AutoMapper;
 using MediatR;
 using EcoLife.Api.Services.Interfaces;
+using EcoLife.Api.Data.Constants;
 
 namespace EcoLife.Api.Application
 {
@@ -35,7 +36,7 @@ namespace EcoLife.Api.Application
 
             var result = await _uow.ContainerRepository.Update(editContainer);
 
-            if(command.Status == "Dañado")
+            if(command.Status == ContainerStatus.Damaged)
             {
                 await _mediator.Send(new UpdateRecolectionDamagedContainerCommand() { ContainerId = editContainer.Id });
             }

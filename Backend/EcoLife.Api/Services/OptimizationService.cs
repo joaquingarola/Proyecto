@@ -31,7 +31,7 @@ namespace EcoLife.Api.Services
         {
             var recolection = await _uow.RecolectionRepository.GetByIdWithEntities(recolectionId);
 
-            if (recolection.Status != "Planificada")
+            if (recolection.Status != "Planificada" && recolection.Status != "Vehículo pendiente")
                 return;
 
             var jobs = new List<Job>();

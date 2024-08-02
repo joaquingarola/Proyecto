@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 using MediatR;
 
 namespace EcoLife.Api.Application
@@ -16,13 +17,13 @@ namespace EcoLife.Api.Application
         {
             var recolections = await _uow.RecolectionRepository.GetByVehicleId(command.VehicleId);
 
-            var planifiedRecolections = recolections.Where(x => x.Status == "Planificada");
+            var planifiedRecolections = recolections.Where(x => x.Status == RecolectionStatus.Planified);
 
             if (planifiedRecolections.Any())
             {
                 foreach (var rec in planifiedRecolections)
                 {
-                    rec.Status = "Vehículo pendiente";
+                    rec.Status = RecolectionStatus.PendingVehicle;
                 }
             }
 
@@ -30,7 +31,7 @@ namespace EcoLife.Api.Application
 
             var vehicle = await _uow.VehicleRepository.GetByIdAsync(command.VehicleId);
 
-            vehicle.Status = "Dañado";
+            vehicle.Status = VehicleStatus.Damaged;
 
             await _uow.VehicleRepository.Update(vehicle);
         }

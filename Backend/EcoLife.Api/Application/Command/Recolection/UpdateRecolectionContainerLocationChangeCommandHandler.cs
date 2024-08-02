@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Services.Interfaces;
 
 using MediatR;
@@ -21,7 +22,7 @@ namespace EcoLife.Api.Application
             var container = await _uow.ContainerRepository.GetContainerWithRecolectionsAsync(command.ContainerId);
 
             var recolectionContainers = container.RecolectionContainers
-                .Where(rc => rc.Recolection.Status == "Planificada")
+                .Where(rc => rc.Recolection.Status == RecolectionStatus.Planified || rc.Recolection.Status == RecolectionStatus.PendingVehicle)
                 .ToList();
 
             if (recolectionContainers.Any())

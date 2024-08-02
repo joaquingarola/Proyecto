@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 
 using MediatR;
 
@@ -19,7 +20,7 @@ namespace EcoLife.Api.Application
 
             maintenance.EndDate = command.EndDate;
 
-            maintenance.Vehicle!.Status = "Disponible";
+            maintenance.Vehicle!.Status = VehicleStatus.Available;
 
             var result = await _uow.MaintenanceRepository.Update(maintenance);
 

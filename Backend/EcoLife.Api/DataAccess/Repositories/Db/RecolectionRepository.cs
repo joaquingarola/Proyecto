@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.Repositories.Base;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.Repositories.Base;
 using EcoLife.Api.DataAccess.Repositories.Interfaces;
 using EcoLife.Api.Entities;
 
@@ -50,14 +51,14 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Where(x => x.VehicleId == vehicleId)
                 .ToListAsync();
 
-        public async Task<List<Recolection>> GetByEmployeeIdAndTypeWithEntities(int employeeId, string type)
+        public async Task<List<Recolection>> GetByEmployeeIdAndTypeWithEntities(int employeeId, List<string> types)
             => await context.Set<Recolection>()
                 .Include(m => m.Employee)
                 .Include(m => m.VehicleCenter)
                 .Include(m => m.WasteCenter)
                 .Include(m => m.Vehicle)
                 .Include(m => m.Route)
-                .Where(x => x.EmployeeId == employeeId && x.Status == type)
+                .Where(x => x.EmployeeId == employeeId && types.Contains(x.Status))
                 .ToListAsync();
 
         public async Task<List<Recolection>> GetByEmployeeIdAndDateWithEntities(int employeeId)
@@ -79,6 +80,6 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Include(m => m.Route)
                 .Include(m => m.RecolectionContainers)
                     .ThenInclude(m => m.Container)
-                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && (x.Status == "Iniciada" || x.Status == "Volviendo a centro de vehículos"));
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && (x.Status == RecolectionStatus.Initiated || x.Status == RecolectionStatus.PendingVehicle));
     }
 }

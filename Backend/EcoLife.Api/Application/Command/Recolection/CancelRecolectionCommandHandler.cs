@@ -1,4 +1,5 @@
-﻿using EcoLife.Api.DataAccess.UnitOfWork;
+﻿using EcoLife.Api.Data.Constants;
+using EcoLife.Api.DataAccess.UnitOfWork;
 using MediatR;
 
 namespace EcoLife.Api.Application.Command.Recolection
@@ -18,7 +19,7 @@ namespace EcoLife.Api.Application.Command.Recolection
         {
             var recolection = await _uow.RecolectionRepository.GetByIdAsync(command.RecolectionId);
 
-            recolection.Status = "Cancelada";
+            recolection.Status = RecolectionStatus.Canceled;
 
             recolection.RealEndDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time"));
 
