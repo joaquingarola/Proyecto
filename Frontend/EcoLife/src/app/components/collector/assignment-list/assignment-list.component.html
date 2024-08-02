@@ -6,7 +6,7 @@
 			<mat-label>Filtrar</mat-label>
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por descripción o estado" #input autocomplete="off">
 		</mat-form-field>
-		<table mat-table [dataSource]="recolections" class="mat-elevation-z8 container__data__table" matSort>
+		<table mat-table [dataSource]="recolections" class="mat-elevation-z8 container__data__table" matSort matTableResponsive>
 			<ng-container matColumnDef="description">
 				<th mat-header-cell *matHeaderCellDef mat-sort-header > Descripción </th>
 				<td mat-cell *matCellDef="let recolection"> {{recolection.description}} </td>

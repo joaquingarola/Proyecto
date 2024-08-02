@@ -124,3 +124,5 @@ input::-ms-clear {
   display: flex !important;
   justify-content: center !important; 
 }
+
+@import './app/directives/mat-table-responsive.directive.scss';
