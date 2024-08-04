@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel } from '../../../models';
-import { ContainerService, RecolectionService, RouteService, StorageService } from '../../../services';
+import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel, ConfirmationModalData } from '../../../models';
+import { ContainerService, ModalConfirmationService, RecolectionService, RouteService, StorageService } from '../../../services';
 import { TypeEnum } from './type.enum';
 import { Router } from '@angular/router';
 
@@ -27,13 +27,24 @@ export class CurrentCollectionComponent {
   recolectionCanceled: boolean = false;
   section: SectionRecolection;
   totalTime: string;
+  private containerConfirmationData: ConfirmationModalData = {
+    message: '¿Estás seguro de marcar el contenedor como dañado?',
+    confirmCaption: 'Si',
+    cancelCaption: 'No'
+  };
+  private vehicleConfirmationData: ConfirmationModalData = {
+    message: '¿Estás seguro de marcar el vehículo como dañado?',
+    confirmCaption: 'Si',
+    cancelCaption: 'No'
+  };
 
   constructor(
     private storageServie: StorageService,
     private recolectionService: RecolectionService,
     private routeService: RouteService,
     private router: Router,
-    private containerService: ContainerService) { }
+    private containerService: ContainerService,
+    private modalConfirmationService: ModalConfirmationService) { }
 
   ngOnInit(): void {
     this.user = this.storageServie.getUser();
@@ -190,26 +201,36 @@ export class CurrentCollectionComponent {
     return value < 10 ? '0' + value : value.toString();
   }
 
+  goGoToday(): void {
+    this.router.navigate(['/collector']);
+  }
+
   damagedContainer(): void {
-    this.damageContainerLoading = true;
-    this.containerService.damagedContainer(this.nextDestination!.id!)
-      .subscribe(() => {
-        this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
-        this.manageContainers(this.containersRoute);
-      })
-      .add(() => this.damageContainerLoading = false);
+    this.modalConfirmationService.open(this.containerConfirmationData)
+      .subscribe(response => {
+        if(response){
+          this.damageContainerLoading = true;
+          this.containerService.damagedContainer(this.nextDestination!.id!)
+            .subscribe(() => {
+              this.containersRoute.find(x => x.containerId! == this.nextDestination!.id!)!.empty = true;
+              this.manageContainers(this.containersRoute);
+            })
+            .add(() => this.damageContainerLoading = false);
+        }
+    });
   }
 
   damagedVehicle(): void {
-    this.damageVehicleLoading = true;
-    this.recolectionService.cancelRecolection(this.recolection.id!)
-      .subscribe(() => { 
-        this.recolectionCanceled = true;
-      })
-      .add(() => this.damageVehicleLoading = false);
-  }
-
-  goGoToday(): void {
-    this.router.navigate(['/collector']);
+    this.modalConfirmationService.open(this.vehicleConfirmationData)
+      .subscribe(response => {
+        if(response){
+          this.damageVehicleLoading = true;
+          this.recolectionService.cancelRecolection(this.recolection.id!)
+            .subscribe(() => { 
+              this.recolectionCanceled = true;
+            })
+            .add(() => this.damageVehicleLoading = false);
+        }
+    });
   }
 }
