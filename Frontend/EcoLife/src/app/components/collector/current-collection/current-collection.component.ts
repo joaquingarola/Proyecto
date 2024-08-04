@@ -3,6 +3,8 @@ import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerMo
 import { ContainerService, ModalConfirmationService, RecolectionService, RouteService, StorageService } from '../../../services';
 import { TypeEnum } from './type.enum';
 import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-current-collection',
@@ -44,7 +46,14 @@ export class CurrentCollectionComponent {
     private routeService: RouteService,
     private router: Router,
     private containerService: ContainerService,
-    private modalConfirmationService: ModalConfirmationService) { }
+    private modalConfirmationService: ModalConfirmationService,
+    private matIconRegistry: MatIconRegistry, 
+    private domSanitizer: DomSanitizer) { 
+      /* this.matIconRegistry.addSvgIcon(
+        'trash-container',
+        this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/dumpster.svg')
+      ); */
+    }
 
   ngOnInit(): void {
     this.user = this.storageServie.getUser();

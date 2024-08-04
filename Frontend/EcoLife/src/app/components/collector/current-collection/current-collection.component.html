@@ -43,7 +43,7 @@
         <p class="info-item__label">Tipo:</p>
         <p class="info-item__value">{{ getType() }}</p>
       </div>
-      <div>
+      <div class="data__buttons">
         <button
           (click)="updateRoute()"
           mat-raised-button
@@ -53,8 +53,6 @@
           [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
           {{ getButtonText() }}
         </button>
-      </div>
-      <div>
         <button
           *ngIf="nextDestination"	
           (click)="damagedContainer()"
@@ -63,18 +61,18 @@
           class="container__add-button"
           [class.spinner]="damageContainerLoading"
           [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
-          Contenedor dañado
+          <mat-icon class="icon">delete</mat-icon>
+        </button>
+        <button
+          (click)="damagedVehicle()"
+          mat-raised-button
+          color="warn"
+          class="container__add-button"
+          [class.spinner]="damageVehicleLoading"
+          [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
+          <mat-icon class="icon">local_shipping</mat-icon>
         </button>
       </div>
-      <button
-        (click)="damagedVehicle()"
-        mat-raised-button
-        color="warn"
-        class="container__add-button"
-        [class.spinner]="damageVehicleLoading"
-        [disabled]="updateContainerLoading || damageContainerLoading || damageVehicleLoading">
-        Vehículo dañado
-      </button>
     </div>
     <div class="data__info" *ngIf="recolectionCompleted">
       <p> <b>La recolección se ha completado exitosamente.</b></p>

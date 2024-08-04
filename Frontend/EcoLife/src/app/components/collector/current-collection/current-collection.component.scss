@@ -64,10 +64,11 @@ body {
 }
 
 .data {
-  width: 70%;
+  width: 80%;
   height: 600px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2rem;
 
   &__content {
     width: 900px;
@@ -77,6 +78,11 @@ body {
   &__map {
     width: 100%;
     height: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.5rem;
   }
 }
 
@@ -121,4 +127,19 @@ body {
 
 .link:hover {
   color: darkblue;
+}
+
+.icon {
+  margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .data {
+    width: 90%;
+    flex-direction: column;
+
+    &__map {
+      width: 90vw;
+    }
+  }
 }
