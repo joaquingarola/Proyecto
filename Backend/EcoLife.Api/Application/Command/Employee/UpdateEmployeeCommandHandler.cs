@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+
+using EcoLife.Api.Data.Constants;
 using EcoLife.Api.DataAccess.UnitOfWork;
 using EcoLife.Api.Dtos.Response;
 using EcoLife.Api.Entities;
@@ -55,7 +57,7 @@ namespace EcoLife.Api.Application
             {
                 _mapper.Map(editEmployee, user);
 
-                await _emailSender.SendEmailAsync(user.Username, user.Password);
+                await _emailSender.SendEmailAsync(user.Username, user.Password, EmailType.Create);
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 

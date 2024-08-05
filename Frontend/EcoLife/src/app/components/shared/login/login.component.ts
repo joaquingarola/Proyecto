@@ -63,4 +63,8 @@ export class LoginComponent {
         }).add(() => this.isLoading = false);
     }
   }
+
+  forgotPassword(): void{
+    this.router.navigate(['/new-password'])
+  }
 }

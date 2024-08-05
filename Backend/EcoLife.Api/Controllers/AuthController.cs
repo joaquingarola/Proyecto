@@ -22,5 +22,13 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpPost("reset-password")]
+        async public Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
     }
 }

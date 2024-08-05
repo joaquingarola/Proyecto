@@ -17,7 +17,16 @@
       <div *ngIf="error.length !== 0" class="login-form__error">
         <span>{{error}}</span>
       </div>
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.pristine || loginForm.invalid || isLoading" [class.spinner]="isLoading">Login</button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="loginForm.pristine || loginForm.invalid || isLoading" 
+        [class.spinner]="isLoading"
+        class="login-form__login-button">
+          Iniciar sesión
+      </button>
     </form>
+    <button mat-button (click)="forgotPassword()">Olvidé mi contraseña</button>
   </div>
 </div>

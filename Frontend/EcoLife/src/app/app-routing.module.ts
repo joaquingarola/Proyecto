@@ -16,9 +16,11 @@ import { WasteCentersComponent } from './components/admin/waste-centers/waste-ce
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
 import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
+import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'new-password', component: ResetPasswordComponent},
   {path: 'vehicles', component: VehiclesComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'maintenances', component: MaintenanceComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }}, 
   {path: 'employees', component: EmployeeComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},

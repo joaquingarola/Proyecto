@@ -12,7 +12,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public login(login: LoginModel): Observable<UserResponseModel> {
+  login(login: LoginModel): Observable<UserResponseModel> {
     return this.http.post<UserResponseModel>(`${this.API_URL}/login`, login);
+  }
+
+  resetPassword(email: string): Observable<Object> {
+    return this.http.post(`${this.API_URL}/reset-password`, email);
   }
 }

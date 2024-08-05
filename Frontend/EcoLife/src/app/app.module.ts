@@ -72,6 +72,7 @@ import { FrecuentQuestionsComponent } from './components/homepage/frecuent-quest
 import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
 import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 import { MatTableResponsiveDirective } from './directives/mat-table-responsive.directive';
+import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -118,7 +119,8 @@ registerLocaleData(localeEs, 'es');
     RouteNotValidModalComponent,
     AssignmentListComponent,
     CurrentCollectionComponent,
-    MatTableResponsiveDirective
+    MatTableResponsiveDirective,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
