@@ -64,14 +64,14 @@ body {
 }
 
 .data {
-  width: 80%;
+  width: 85%;
   height: 600px;
   display: flex;
   justify-content: center;
   gap: 2rem;
 
   &__content {
-    width: 900px;
+    width: 70%;
     height: 600px;
   }
 
@@ -83,6 +83,10 @@ body {
   &__buttons {
     display: flex;
     gap: 0.5rem;
+  }
+
+  &__info {
+    width: 30%;
   }
 }
 
@@ -140,6 +144,10 @@ body {
 
     &__map {
       width: 90vw;
+    }
+
+    &__info {
+      width: 100%;
     }
   }
 }

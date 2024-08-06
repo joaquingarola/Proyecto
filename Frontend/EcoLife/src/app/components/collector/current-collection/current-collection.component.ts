@@ -39,6 +39,12 @@ export class CurrentCollectionComponent {
     confirmCaption: 'Si',
     cancelCaption: 'No'
   };
+  private completeRecolectionData: ConfirmationModalData = {
+    message: 'La recolección se completó con éxito!',
+    confirmCaption: 'Aceptar',
+    cancelCaption: '',
+    onlyOneButton: true
+  }
 
   constructor(
     private storageServie: StorageService,
@@ -141,6 +147,8 @@ export class CurrentCollectionComponent {
       .add(() => {
         this.updateContainerLoading = false;
       });
+
+    this.modalConfirmationService.open(this.completeRecolectionData).subscribe();
   }
 
   updateRouteDraw(): void {
