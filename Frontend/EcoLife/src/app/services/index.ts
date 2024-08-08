@@ -14,3 +14,4 @@ export * from './vehicle-center/vehicle-center.service';
 export * from './waste-center/waste-center.service';
 export * from './route/route.service';
 export * from './recolection/recolection.service';
+export * from './damage/damage.service';

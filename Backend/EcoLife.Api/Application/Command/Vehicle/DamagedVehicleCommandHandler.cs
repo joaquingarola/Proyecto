@@ -7,10 +7,12 @@ namespace EcoLife.Api.Application
     public class DamagedVehicleCommandHandler : IRequestHandler<DamagedVehicleCommand>
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMediator _mediator;
 
-        public DamagedVehicleCommandHandler(IUnitOfWork uow)
+        public DamagedVehicleCommandHandler(IUnitOfWork uow, IMediator mediator)
         {
             _uow = uow;
+            _mediator = mediator;
         }
 
         public async Task Handle(DamagedVehicleCommand command, CancellationToken cancellationToken)
@@ -34,6 +36,8 @@ namespace EcoLife.Api.Application
             vehicle.Status = VehicleStatus.Damaged;
 
             await _uow.VehicleRepository.Update(vehicle);
+
+            await _mediator.Send(new CreateDamageCommand() { Type = DamageType.Vehicle }, cancellationToken);
         }
     }
 }

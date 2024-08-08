@@ -17,6 +17,7 @@ import { RecolectionsComponent } from './components/admin/recolections/recolecti
 import { AssignmentListComponent } from './components/collector/assignment-list/assignment-list.component';
 import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
+import { MetricsComponent } from './components/admin/metrics/metrics.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'vehicle-centers', component: VehicleCentersComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'waste-centers', component: WasteCentersComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'recolections', component: RecolectionsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
+  {path: 'metrics', component: MetricsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: '', redirectTo: 'news', pathMatch: 'full'},
   {path: '**', redirectTo: 'news'}
 ];

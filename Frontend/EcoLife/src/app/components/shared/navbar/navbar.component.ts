@@ -22,6 +22,10 @@ export class NavbarComponent {
       routerLink: '/employees'
     },
     {
+      label: 'Métricas',
+      routerLink: '/metrics'
+    },
+    {
       label: 'Vehículos',
       items: [
         {

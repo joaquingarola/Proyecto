@@ -1,16 +1,17 @@
-﻿using System.Reflection.Metadata;
-
-using EcoLife.Api.Dtos;
-
-namespace EcoLife.Api.Entities
+﻿namespace EcoLife.Api.Entities
 {
-    public class DamageDto
+    public class Damage
     {
-        public ContainerDto Container { get; set; }
-        public DateOnly Date {get; set;}
-        public string Description { get; set;}
+        public int Id { get; set; }
+        public DateTime Date {get; set;}
+        public string? Type { get; set;}
 
-        public Blob Image { get; set;}
+        public Damage() { }
 
+        public Damage(string type)
+        {
+            Type = type;
+            Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time"));
+        }
     }
 }

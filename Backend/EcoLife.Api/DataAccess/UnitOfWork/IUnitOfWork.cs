@@ -16,5 +16,6 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IRouteRepository RouteRepository { get; }
         public IRecolectionRepository RecolectionRepository { get; }
         public IRecolectionContainersRepository RecolectionContainersRepository { get; }
+        public IDamageRepository DamageRepository { get; }
     }
 }

@@ -10,11 +10,13 @@ namespace EcoLife.Api.Application
     {
         private readonly IUnitOfWork _uow;
         private readonly IOptimizationService _optimizationService;
+        private readonly IMediator _mediator;
 
-        public UpdateRecolectionDamagedContainerCommandHandler(IUnitOfWork uow, IOptimizationService optimizationService)
+        public UpdateRecolectionDamagedContainerCommandHandler(IUnitOfWork uow, IOptimizationService optimizationService, IMediator mediator)
         {
             _uow = uow;
             _optimizationService = optimizationService;
+            _mediator = mediator;
         }
 
         public async Task Handle(UpdateRecolectionDamagedContainerCommand command, CancellationToken cancellationToken)
@@ -53,6 +55,8 @@ namespace EcoLife.Api.Application
             }
 
             await _uow.ContainerRepository.SaveChangesAsync();
+
+            await _mediator.Send(new CreateDamageCommand() { Type = DamageType.Container }, cancellationToken);
 
             foreach (var recId in recolectionIdList)
             {

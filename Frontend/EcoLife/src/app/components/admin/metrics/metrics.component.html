@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <p class="container__title">Métricas</p>
+  <div class="metrics-damages">
+    <div class="metrics-damages__select">
+      <mat-form-field>
+        <mat-label>Período</mat-label>
+        <mat-select [(value)]="selectedPeriod" (selectionChange)="onPeriodChange($event)">
+          <mat-option *ngFor="let option of periodOptions" [value]="option.value">
+            {{ option.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="metrics-damages__cards">
+      <div *ngIf="damagesLoading" class="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!damagesLoading">
+        <p>Vehículos dañados: {{ stats.vehicleDamagesCount }}</p>
+        <p>Contenedores dañados: {{ stats.containerDamagesCount }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

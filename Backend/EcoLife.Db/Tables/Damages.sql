@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Damages]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
+	[Date] DATETIME NOT NULL,  
+	[Type] NVARCHAR(50) NOT NULL
+)

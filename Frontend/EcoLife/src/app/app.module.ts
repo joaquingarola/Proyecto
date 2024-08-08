@@ -73,6 +73,7 @@ import { AssignmentListComponent } from './components/collector/assignment-list/
 import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 import { MatTableResponsiveDirective } from './directives/mat-table-responsive.directive';
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
+import { MetricsComponent } from './components/admin/metrics/metrics.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -120,7 +121,8 @@ registerLocaleData(localeEs, 'es');
     AssignmentListComponent,
     CurrentCollectionComponent,
     MatTableResponsiveDirective,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    MetricsComponent
   ],
   imports: [
     BrowserModule,
