@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../enviroments/enviroment';
-import { RecolectionModel, RecolectionResponseModel } from '../../models';
+import { RecolectionCurrentStats, RecolectionHistoricStats, RecolectionModel, RecolectionResponseModel } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +60,13 @@ export class RecolectionService {
 
   public validateInProgressRecolection(id: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.API_URL}/validate/${id}`);
+  }
+
+  public getHistoricStats(type: string): Observable<RecolectionHistoricStats> {
+    return this.http.get<RecolectionHistoricStats>(`${this.API_URL}/historic-stats/${type}`);
+  }
+
+  public getCurrentStats(): Observable<RecolectionCurrentStats> {
+    return this.http.get<RecolectionCurrentStats>(`${this.API_URL}/current-stats/`);
   }
 }

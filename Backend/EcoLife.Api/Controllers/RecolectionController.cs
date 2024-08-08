@@ -102,5 +102,17 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(query));
         }
+
+        [HttpGet("current-stats")]
+        async public Task<IActionResult> GetCurrentStats()
+        {
+            return Ok(await _mediator.Send(new GetCurrentStatsQuery()));
+        }
+
+        [HttpGet("historic-stats/{timePeriod}")]
+        async public Task<IActionResult> GetDamagesStats([FromRoute, Required] GetHistoricStatsQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
     }
 }

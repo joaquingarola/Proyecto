@@ -25,4 +25,6 @@ export * from './recolection-container-model';
 export * from './employee-response-model';
 export * from './recolection-response-model';
 export * from './section-recolection-model';
-export * from './stats-response.model';
+export * from './damage-stats-response.model';
+export * from './recolection-current-stats.model';
+export * from './recolection-historic-stats.model';

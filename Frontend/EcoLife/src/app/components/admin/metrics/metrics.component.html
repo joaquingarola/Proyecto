@@ -2,10 +2,11 @@
 <div class="container">
   <p class="container__title">Métricas</p>
   <div class="metrics-damages">
+    <p class="metrics-damages__title">Daños</p>
     <div class="metrics-damages__select">
       <mat-form-field>
         <mat-label>Período</mat-label>
-        <mat-select [(value)]="selectedPeriod" (selectionChange)="onPeriodChange($event)">
+        <mat-select [(value)]="selectedDamagedPeriod" (selectionChange)="onDamagePeriodChange($event)">
           <mat-option *ngFor="let option of periodOptions" [value]="option.value">
             {{ option.viewValue }}
           </mat-option>
@@ -17,8 +18,42 @@
         <mat-spinner></mat-spinner>
       </div>
       <div *ngIf="!damagesLoading">
-        <p>Vehículos dañados: {{ stats.vehicleDamagesCount }}</p>
-        <p>Contenedores dañados: {{ stats.containerDamagesCount }}</p>
+        <p>Vehículos dañados: {{ damageStats.vehicleDamagesCount }}</p>
+        <p>Contenedores dañados: {{ damageStats.containerDamagesCount }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="metrics-recolections">
+    <p class="metrics-recolections__title">Recolecciones</p>
+    <div class="metrics-recolections__types">
+        <div *ngIf="currentRecolectionLoading" class="loading">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="!currentRecolectionLoading">
+          <p>Planificadas: {{ recolectionCurrentStats.planifiedCount }}</p>
+          <p>Vehículo pendiente: {{ recolectionCurrentStats.vehiclePendingCount }}</p>
+          <p>En curso: {{ recolectionCurrentStats.inProgressCount }}</p>
+        </div>
+      <div class="metrics-recolections__historic">
+        <div class="metrics-recolections__select">
+          <mat-form-field>
+            <mat-label>Período</mat-label>
+            <mat-select [(value)]="selectedRecolectionPeriod" (selectionChange)="onRecolectionPeriodChange($event)">
+              <mat-option *ngFor="let option of periodOptions" [value]="option.value">
+                {{ option.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="metrics-recolections__cards">
+          <div *ngIf="historicRecolectionLoading" class="loading">
+            <mat-spinner></mat-spinner>
+          </div>
+          <div *ngIf="!historicRecolectionLoading">
+            <p>Canceladas: {{ recolectionHistoricStats.canceledCount }}</p>
+            <p>Finalizadas: {{ recolectionHistoricStats.finalizedCount }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

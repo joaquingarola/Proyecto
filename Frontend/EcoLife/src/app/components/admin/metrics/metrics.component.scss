@@ -46,6 +46,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 1rem;
+    }
+  }
+
+  &-recolections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    &__types {
+      display: flex;
+      flex-direction: row;
+      gap: 5rem;
+    }
   }
 }
 

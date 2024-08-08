@@ -1,7 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { environment } from '../../enviroments/enviroment';
 import { HttpClient } from '@angular/common/http';
-import { StatsModel } from '../../models';
+import { DamageStatsModel } from '../../models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class DamageService {
 
   constructor(private http: HttpClient) { }
 
-  public getByType(type: string): Observable<StatsModel> {
-    return this.http.get<StatsModel>(`${this.API_URL}/${type}`);
+  public getByType(type: string): Observable<DamageStatsModel> {
+    return this.http.get<DamageStatsModel>(`${this.API_URL}/${type}`);
   }
 }

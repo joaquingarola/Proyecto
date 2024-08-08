@@ -1,4 +1,4 @@
-export interface StatsModel {
+export interface DamageStatsModel {
   containerDamagesCount: number,
   vehicleDamagesCount: number
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DamageService } from '../../../services';
-import { StatsModel } from '../../../models';
+import { DamageService, RecolectionService } from '../../../services';
+import { DamageStatsModel, RecolectionCurrentStats, RecolectionHistoricStats } from '../../../models';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -10,8 +10,13 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class MetricsComponent implements OnInit {
   damagesLoading = false;
-  stats: StatsModel;
-  selectedPeriod: string = 'All';
+  currentRecolectionLoading = false;
+  historicRecolectionLoading = false;
+  damageStats: DamageStatsModel;
+  recolectionHistoricStats: RecolectionHistoricStats;
+  recolectionCurrentStats: RecolectionCurrentStats;
+  selectedDamagedPeriod: string = 'All';
+  selectedRecolectionPeriod: string = 'All';
   periodOptions = [
     { value: 'Weekly', viewValue: 'Semanal' },
     { value: 'Monthly', viewValue: 'Mensual' },
@@ -19,23 +24,50 @@ export class MetricsComponent implements OnInit {
     { value: 'All', viewValue: 'Todo' }
   ];
 
-  constructor(private damageService: DamageService) { }
+  constructor(
+    private damageService: DamageService,
+    private recolectionService: RecolectionService) { }
 
   ngOnInit(): void {
-    this.getPeriodStats();
+    this.getDamagedPeriodStats();
+    this.getRecolectionPeriodStats();
+    this.getCurrentRecolectionStats();
   }
 
-  onPeriodChange(event: MatSelectChange) {
-    this.selectedPeriod = event.value;
-    this.getPeriodStats();
+  onDamagePeriodChange(event: MatSelectChange) {
+    this.selectedDamagedPeriod = event.value;
+    this.getDamagedPeriodStats();
   }
 
-  getPeriodStats(): void {
+  onRecolectionPeriodChange(event: MatSelectChange) {
+    this.selectedRecolectionPeriod = event.value;
+    this.getRecolectionPeriodStats();
+  }
+
+  getDamagedPeriodStats(): void {
     this.damagesLoading = true;
-    this.damageService.getByType(this.selectedPeriod)
-      .subscribe((response: StatsModel) => {
-        this.stats = response;
+    this.damageService.getByType(this.selectedDamagedPeriod)
+      .subscribe((response: DamageStatsModel) => {
+        this.damageStats = response;
         this.damagesLoading = false;
+    });
+  }
+
+  getRecolectionPeriodStats(): void {
+    this.historicRecolectionLoading = true;
+    this.recolectionService.getHistoricStats(this.selectedRecolectionPeriod)
+      .subscribe((response: RecolectionHistoricStats) => {
+        this.recolectionHistoricStats = response;
+        this.historicRecolectionLoading = false;
+    });
+  }
+
+  getCurrentRecolectionStats(): void {
+    this.currentRecolectionLoading = true;
+    this.recolectionService.getCurrentStats()
+      .subscribe((response: RecolectionCurrentStats) => {
+        this.recolectionCurrentStats = response;
+        this.currentRecolectionLoading = false;
     });
   }
 }
