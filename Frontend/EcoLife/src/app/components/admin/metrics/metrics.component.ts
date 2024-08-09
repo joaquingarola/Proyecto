@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DamageService, RecolectionService } from '../../../services';
-import { DamageStatsModel, RecolectionCurrentStats, RecolectionHistoricStats } from '../../../models';
+import { DamageStatsModel, RecolectionCurrentStats, RecolectionHistoricStats, RecolectionTopStats } from '../../../models';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -12,11 +12,17 @@ export class MetricsComponent implements OnInit {
   damagesLoading = false;
   currentRecolectionLoading = false;
   historicRecolectionLoading = false;
+  topRecolectionLoading = false;
   damageStats: DamageStatsModel;
   recolectionHistoricStats: RecolectionHistoricStats;
   recolectionCurrentStats: RecolectionCurrentStats;
+  recolectionTopStats: RecolectionTopStats = {
+    topVehicles: [],
+    topEmployees: []
+  };
   selectedDamagedPeriod: string = 'All';
   selectedRecolectionPeriod: string = 'All';
+  selectedTopPeriod: string = 'All';
   periodOptions = [
     { value: 'Weekly', viewValue: 'Semanal' },
     { value: 'Monthly', viewValue: 'Mensual' },
@@ -32,6 +38,7 @@ export class MetricsComponent implements OnInit {
     this.getDamagedPeriodStats();
     this.getRecolectionPeriodStats();
     this.getCurrentRecolectionStats();
+    this.getTopRecolectionStats();
   }
 
   onDamagePeriodChange(event: MatSelectChange) {
@@ -42,6 +49,11 @@ export class MetricsComponent implements OnInit {
   onRecolectionPeriodChange(event: MatSelectChange) {
     this.selectedRecolectionPeriod = event.value;
     this.getRecolectionPeriodStats();
+  }
+  
+  onTopPeriodChange(event: MatSelectChange) {
+    this.selectedTopPeriod = event.value;
+    this.getTopRecolectionStats();
   }
 
   getDamagedPeriodStats(): void {
@@ -68,6 +80,15 @@ export class MetricsComponent implements OnInit {
       .subscribe((response: RecolectionCurrentStats) => {
         this.recolectionCurrentStats = response;
         this.currentRecolectionLoading = false;
+    });
+  }
+
+  getTopRecolectionStats(): void {
+    this.topRecolectionLoading = true;
+    this.recolectionService.getTopStats(this.selectedTopPeriod)
+      .subscribe((response: RecolectionTopStats) => {
+        this. recolectionTopStats = response;
+        this.topRecolectionLoading = false;
     });
   }
 }

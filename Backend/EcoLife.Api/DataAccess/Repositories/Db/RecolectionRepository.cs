@@ -71,6 +71,13 @@ namespace EcoLife.Api.DataAccess.Repositories.Db
                 .Where(x => x.EmployeeId == employeeId && x.EstimatedStartDate.Date == DateTime.Now.Date)
                 .ToListAsync();
 
+        public async Task<List<Recolection>> GetFinalizedWithVehicleAndEmployee()
+            => await context.Set<Recolection>()
+                .Include(m => m.Employee)
+                .Include(m => m.Vehicle)
+                .Where(x => x.Status == RecolectionStatus.Finalized)
+                .ToListAsync();
+
         public async Task<Recolection?> GetInProgressWithEntities(int employeeId)
             => await context.Set<Recolection>()
                 .Include(m => m.Employee)

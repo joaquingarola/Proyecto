@@ -114,5 +114,11 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(query));
         }
+
+        [HttpGet("top-stats/{timePeriod}")]
+        async public Task<IActionResult> GetTopStats([FromRoute, Required] GetTopStatsQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
     }
 }
