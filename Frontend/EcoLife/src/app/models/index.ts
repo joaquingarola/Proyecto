@@ -29,3 +29,4 @@ export * from './damage-stats-response.model';
 export * from './recolection-current-stats.model';
 export * from './recolection-historic-stats.model';
 export * from './recolection-top-stats.model';
+export * from './prime-select-option.model';

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DamageService, RecolectionService } from '../../../services';
-import { DamageStatsModel, RecolectionCurrentStats, RecolectionHistoricStats, RecolectionTopStats } from '../../../models';
+import { DamageStatsModel, PrimeSelectOptionModel, RecolectionCurrentStats, RecolectionHistoricStats, RecolectionTopStats } from '../../../models';
 import { MatSelectChange } from '@angular/material/select';
+import { DropdownChangeEvent } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-metrics',
@@ -9,6 +10,7 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrl: './metrics.component.scss'
 })
 export class MetricsComponent implements OnInit {
+  defaultOption: string = 'All';
   damagesLoading = false;
   currentRecolectionLoading = false;
   historicRecolectionLoading = false;
@@ -20,14 +22,13 @@ export class MetricsComponent implements OnInit {
     topVehicles: [],
     topEmployees: []
   };
-  selectedDamagedPeriod: string = 'All';
-  selectedRecolectionPeriod: string = 'All';
-  selectedTopPeriod: string = 'All';
-  periodOptions = [
-    { value: 'Weekly', viewValue: 'Semanal' },
-    { value: 'Monthly', viewValue: 'Mensual' },
-    { value: 'Quarterly', viewValue: 'Trimestral' },
-    { value: 'All', viewValue: 'Todo' }
+  selectedDamagedPeriod: PrimeSelectOptionModel | undefined;
+  selectedRecolectionPeriod: PrimeSelectOptionModel | undefined;
+  selectedTopPeriod: PrimeSelectOptionModel | undefined;
+  periodOptions: PrimeSelectOptionModel[] = [
+    { code: 'Weekly', label: 'Semanal' },
+    { code: 'Monthly', label: 'Mensual' },
+    { code: 'Quarterly', label: 'Trimestral' }
   ];
 
   constructor(
@@ -41,24 +42,24 @@ export class MetricsComponent implements OnInit {
     this.getTopRecolectionStats();
   }
 
-  onDamagePeriodChange(event: MatSelectChange) {
+  onDamagePeriodChange(event: DropdownChangeEvent) {
     this.selectedDamagedPeriod = event.value;
     this.getDamagedPeriodStats();
   }
 
-  onRecolectionPeriodChange(event: MatSelectChange) {
+  onRecolectionPeriodChange(event: DropdownChangeEvent) {
     this.selectedRecolectionPeriod = event.value;
     this.getRecolectionPeriodStats();
   }
   
-  onTopPeriodChange(event: MatSelectChange) {
+  onTopPeriodChange(event: DropdownChangeEvent) {
     this.selectedTopPeriod = event.value;
     this.getTopRecolectionStats();
   }
 
   getDamagedPeriodStats(): void {
     this.damagesLoading = true;
-    this.damageService.getByType(this.selectedDamagedPeriod)
+    this.damageService.getByType(this.selectedDamagedPeriod?.code ?? this.defaultOption)
       .subscribe((response: DamageStatsModel) => {
         this.damageStats = response;
         this.damagesLoading = false;
@@ -67,7 +68,7 @@ export class MetricsComponent implements OnInit {
 
   getRecolectionPeriodStats(): void {
     this.historicRecolectionLoading = true;
-    this.recolectionService.getHistoricStats(this.selectedRecolectionPeriod)
+    this.recolectionService.getHistoricStats(this.selectedRecolectionPeriod?.code ?? this.defaultOption)
       .subscribe((response: RecolectionHistoricStats) => {
         this.recolectionHistoricStats = response;
         this.historicRecolectionLoading = false;
@@ -85,7 +86,7 @@ export class MetricsComponent implements OnInit {
 
   getTopRecolectionStats(): void {
     this.topRecolectionLoading = true;
-    this.recolectionService.getTopStats(this.selectedTopPeriod)
+    this.recolectionService.getTopStats(this.selectedTopPeriod?.code ?? this.defaultOption)
       .subscribe((response: RecolectionTopStats) => {
         this. recolectionTopStats = response;
         this.topRecolectionLoading = false;

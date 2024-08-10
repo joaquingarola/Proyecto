@@ -92,6 +92,7 @@ export class NavbarComponent {
   user: EmployeeModel;
   rol: string;
   adminFileUrl: string = 'assets/admin_guide.pdf';
+  recFileUrl: string = 'assets/rec_guide.pdf';
 
   constructor(private storageService: StorageService) { }
 
@@ -108,8 +109,8 @@ export class NavbarComponent {
 
   downloadUserGuide(): void {
     const link = document.createElement('a');
-    link.href = this.adminFileUrl;
-    link.download = 'Manual de usuario (Admin).pdf';
+    link.href = this.rol === 'Administrador' ? this.adminFileUrl : this.recFileUrl;
+    link.download = this.rol === 'Administrador' ? 'Manual de usuario (Admin).pdf' : 'Manual de usuario (Recolector).pdf' ;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

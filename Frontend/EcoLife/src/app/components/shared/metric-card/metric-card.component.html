@@ -1,0 +1,12 @@
+<mat-card class="metric-card">
+  <mat-card-content>
+    <div class="metric-icon" *ngIf="icon">
+      <mat-icon>{{ icon }}</mat-icon>
+    </div>
+    <div class="metric-details">
+      <h2 *ngIf="title" class="metric-title">{{ title }}</h2>
+      <p class="metric-value">{{ value | number }}</p>
+      <p class="metric-description" *ngIf="description">{{ description }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -65,6 +65,7 @@ import { RoutesFormModalComponent } from './components/admin/routes/routes-form-
 import { PlanifyRecolectionComponent } from './components/admin/routes/planify-recolection/planify-recolection.component';
 import { MenubarModule } from 'primeng/menubar';
 import { CarouselModule } from 'primeng/carousel';
+import { DropdownModule } from 'primeng/dropdown';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
@@ -74,6 +75,7 @@ import { CurrentCollectionComponent } from './components/collector/current-colle
 import { MatTableResponsiveDirective } from './directives/mat-table-responsive.directive';
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 import { MetricsComponent } from './components/admin/metrics/metrics.component';
+import { MetricCardComponent } from './components/shared/metric-card/metric-card.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -122,7 +124,8 @@ registerLocaleData(localeEs, 'es');
     CurrentCollectionComponent,
     MatTableResponsiveDirective,
     ResetPasswordComponent,
-    MetricsComponent
+    MetricsComponent,
+    MetricCardComponent
   ],
   imports: [
     BrowserModule,
@@ -152,7 +155,8 @@ registerLocaleData(localeEs, 'es');
     MenubarModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    CarouselModule
+    CarouselModule,
+    DropdownModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
