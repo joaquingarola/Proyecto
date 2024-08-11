@@ -39,8 +39,8 @@ const routes: Routes = [
   {path: 'waste-centers', component: WasteCentersComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'recolections', component: RecolectionsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'metrics', component: MetricsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
-  {path: '', redirectTo: 'news', pathMatch: 'full'},
-  {path: '**', redirectTo: 'news'}
+  {path: '', redirectTo: 'homepage', pathMatch: 'full'},
+  {path: '**', redirectTo: 'homepage'}
 ];
 
 @NgModule({

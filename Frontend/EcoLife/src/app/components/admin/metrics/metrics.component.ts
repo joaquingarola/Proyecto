@@ -10,6 +10,7 @@ import { DropdownChangeEvent } from 'primeng/dropdown';
   styleUrl: './metrics.component.scss'
 })
 export class MetricsComponent implements OnInit {
+  actualDate = new Date();
   defaultOption: string = 'All';
   damagesLoading = false;
   currentRecolectionLoading = false;

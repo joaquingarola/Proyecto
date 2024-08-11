@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  scrollToComponent(componentId: string, duration: number = 5000): void {
+
+  constructor(private router: Router) { }
+
+  scrollToComponent(componentId: string): void {
     const element = document.getElementById(componentId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

@@ -46,15 +46,26 @@
       }
     }
   
-    &__social-networks {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-  
-      &__icon {
-        width: 40px;
-      }
+  &__social-networks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    &__icon {
+      width: 40px;
     }
   }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__button {
+    height: 40px;
+    background-color: rgb(187, 195, 222) !important;
+  }
+}
 
