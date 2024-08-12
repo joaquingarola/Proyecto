@@ -31,6 +31,8 @@ export class MetricsComponent implements OnInit {
     { code: 'Monthly', label: 'Mensual' },
     { code: 'Quarterly', label: 'Trimestral' }
   ];
+  data: any;
+  options: any;
 
   constructor(
     private damageService: DamageService,
@@ -72,6 +74,7 @@ export class MetricsComponent implements OnInit {
     this.recolectionService.getHistoricStats(this.selectedRecolectionPeriod?.code ?? this.defaultOption)
       .subscribe((response: RecolectionHistoricStats) => {
         this.recolectionHistoricStats = response;
+        this.initHistoricRecolectionCharts();
         this.historicRecolectionLoading = false;
     });
   }
@@ -89,8 +92,76 @@ export class MetricsComponent implements OnInit {
     this.topRecolectionLoading = true;
     this.recolectionService.getTopStats(this.selectedTopPeriod?.code ?? this.defaultOption)
       .subscribe((response: RecolectionTopStats) => {
-        this. recolectionTopStats = response;
+        this.recolectionTopStats = response;
         this.topRecolectionLoading = false;
     });
   }
+
+  getFinalizedCount(): number {
+    return this.recolectionHistoricStats.finalized.counts.reduce((a, b) => a + b, 0);
+  }
+
+  getCanceledCount(): number {
+    return this.recolectionHistoricStats.canceled.counts.reduce((a, b) => a + b, 0);
+  }
+
+  initHistoricRecolectionCharts(): void {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.data = {
+      labels: this.recolectionHistoricStats.labels,
+      datasets: [
+        {
+          label: this.recolectionHistoricStats.finalized.labelType,
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          data: this.recolectionHistoricStats.finalized.counts
+        },
+        {
+          label: this.recolectionHistoricStats.canceled.labelType,
+          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+          borderColor: documentStyle.getPropertyValue('--pink-500'),
+          data: this.recolectionHistoricStats.canceled.counts
+        }
+      ]
+    };
+
+    this.options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          labels: {
+              color: textColor
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+            font: {
+                weight: 500
+            }
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
+  } 
 }

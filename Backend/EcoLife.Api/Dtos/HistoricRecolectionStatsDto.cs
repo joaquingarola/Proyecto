@@ -2,7 +2,8 @@
 {
     public class HistoricRecolectionStatsDto
     {
-        public int FinalizedCount { get; set; }
-        public int CanceledCount { get; set; }
+        public List<string> Labels { get; set; }
+        public ChartDataDto Finalized { get; set; }
+        public ChartDataDto Canceled { get; set; }
     }
 }

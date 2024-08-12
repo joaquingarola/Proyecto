@@ -66,6 +66,7 @@ import { PlanifyRecolectionComponent } from './components/admin/routes/planify-r
 import { MenubarModule } from 'primeng/menubar';
 import { CarouselModule } from 'primeng/carousel';
 import { DropdownModule } from 'primeng/dropdown';
+import { ChartModule } from 'primeng/chart';
 import { RecolectionsComponent } from './components/admin/recolections/recolections.component';
 import { ViewRecolectionComponent } from './components/admin/recolections/view-recolection/view-recolection.component';
 import { RouteNotValidModalComponent } from './components/admin/routes/route-not-valid-modal/route-not-valid-modal.component';
@@ -156,7 +157,8 @@ registerLocaleData(localeEs, 'es');
     MatMenuModule,
     MatProgressSpinnerModule,
     CarouselModule,
-    DropdownModule
+    DropdownModule,
+    ChartModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginator }, httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]

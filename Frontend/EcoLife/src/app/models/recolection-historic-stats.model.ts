@@ -1,4 +1,7 @@
+import { ChartDataModel } from "./chart-data.model";
+
 export interface RecolectionHistoricStats {
-  finalizedCount: number,
-  canceledCount: number
+  labels: string[],
+  finalized: ChartDataModel,
+  canceled: ChartDataModel
 }

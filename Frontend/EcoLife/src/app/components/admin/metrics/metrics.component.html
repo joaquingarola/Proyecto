@@ -22,12 +22,17 @@
         [showClear]="true"
         placeholder="Seleccione período" />
     </div>
-    <div class="metrics-recolections__cards">
+    <div class="metrics-recolections__info">
       <div *ngIf="historicRecolectionLoading" class="loading">
         <mat-spinner></mat-spinner>
       </div>
-      <metric-card [value]="recolectionHistoricStats.finalizedCount" title="Finalizadas" *ngIf="!historicRecolectionLoading"></metric-card>
-      <metric-card [value]="recolectionHistoricStats.canceledCount" title="Canceladas" *ngIf="!historicRecolectionLoading"></metric-card>
+      <div class="metrics-recolections__cards">
+        <metric-card [value]="getFinalizedCount()" title="Finalizadas" *ngIf="!historicRecolectionLoading"></metric-card>
+        <metric-card [value]="getCanceledCount()" title="Canceladas" *ngIf="!historicRecolectionLoading"></metric-card>
+      </div>
+      <div class="metrics-recolections__charts" *ngIf="!historicRecolectionLoading">
+        <p-chart type="bar" [data]="data" [options]="options" class="chart" />
+      </div>
     </div>
   </div>
   <div class="metrics-damages">
