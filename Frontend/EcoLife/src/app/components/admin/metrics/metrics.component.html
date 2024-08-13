@@ -31,7 +31,8 @@
         <metric-card [value]="getCanceledCount()" title="Canceladas" *ngIf="!historicRecolectionLoading"></metric-card>
       </div>
       <div class="metrics-recolections__charts" *ngIf="!historicRecolectionLoading">
-        <p-chart type="bar" [data]="data" [options]="options" class="chart" />
+        <p-chart type="bar" [data]="recolectionBarData" [options]="recolectionBarOptions" class="chart" />
+        <p-chart type="pie" [data]="recolectionPieData" [options]="recolectionPieOptions" [plugins]="plugins" height="375" class="chart" />
       </div>
     </div>
   </div>

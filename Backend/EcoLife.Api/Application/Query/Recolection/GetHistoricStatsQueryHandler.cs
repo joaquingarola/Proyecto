@@ -59,7 +59,7 @@ namespace EcoLife.Api.Application
                     {
                         var date = DateTime.Now.AddDays(-i).Date;
                         var count = recolections.Count(r => r.Status == status && r.RealEndDate!.Value.Date == date);
-                        labels.Add(date.ToString("dd/MM/yyyy"));
+                        labels.Add(date.ToString("d MMM"));
                         counts.Add(count);
                     }
                     break;
@@ -70,7 +70,7 @@ namespace EcoLife.Api.Application
                     var startDateRange = DateTime.Now.AddDays(-i * 5).Date;
                     var endDateRange = startDateRange.AddDays(4).Date;
                     var count = recolections.Count(r => r.Status == status && r.RealEndDate!.Value.Date >= startDateRange && r.RealEndDate!.Value.Date <= endDateRange);
-                    labels.Add($"{startDateRange:dd/MM} - {endDateRange:dd/MM}");
+                    labels.Add($"{startDateRange:d MMM} - {endDateRange:d MMM}");
                     counts.Add(count);
                 }
                 break;
@@ -81,7 +81,7 @@ namespace EcoLife.Api.Application
                     var startDateRange = DateTime.Now.AddDays(-i * 15).Date;
                     var endDateRange = startDateRange.AddDays(14).Date;
                     var count = recolections.Count(r => r.Status == status && r.RealEndDate!.Value.Date >= startDateRange && r.RealEndDate!.Value.Date <= endDateRange);
-                    labels.Add($"{startDateRange:dd/MM} - {endDateRange:dd/MM}");
+                    labels.Add($"{startDateRange:d MMM} - {endDateRange:d MMM}");
                     counts.Add(count);
                 }
                 break;

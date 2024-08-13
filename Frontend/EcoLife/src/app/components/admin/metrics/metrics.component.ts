@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DamageService, RecolectionService } from '../../../services';
 import { DamageStatsModel, PrimeSelectOptionModel, RecolectionCurrentStats, RecolectionHistoricStats, RecolectionTopStats } from '../../../models';
-import { MatSelectChange } from '@angular/material/select';
 import { DropdownChangeEvent } from 'primeng/dropdown';
+import pluginDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-metrics',
@@ -27,12 +27,15 @@ export class MetricsComponent implements OnInit {
   selectedRecolectionPeriod: PrimeSelectOptionModel | undefined;
   selectedTopPeriod: PrimeSelectOptionModel | undefined;
   periodOptions: PrimeSelectOptionModel[] = [
-    { code: 'Weekly', label: 'Semanal' },
-    { code: 'Monthly', label: 'Mensual' },
-    { code: 'Quarterly', label: 'Trimestral' }
+    { code: 'Weekly', label: 'Últimos 7 días' },
+    { code: 'Monthly', label: 'Últimos 30 días' },
+    { code: 'Quarterly', label: 'Últimos 90 días' }
   ];
-  data: any;
-  options: any;
+  recolectionBarData: any;
+  recolectionBarOptions: any;
+  recolectionPieData: any;
+  recolectionPieOptions: any;
+  plugins: any;
 
   constructor(
     private damageService: DamageService,
@@ -111,7 +114,7 @@ export class MetricsComponent implements OnInit {
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-    this.data = {
+    this.recolectionBarData = {
       labels: this.recolectionHistoricStats.labels,
       datasets: [
         {
@@ -129,7 +132,7 @@ export class MetricsComponent implements OnInit {
       ]
     };
 
-    this.options = {
+    this.recolectionBarOptions = {
       maintainAspectRatio: false,
       aspectRatio: 0.8,
       plugins: {
@@ -154,7 +157,10 @@ export class MetricsComponent implements OnInit {
         },
         y: {
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            callback: function(value: number) {
+              return Number.isInteger(value) ? value : null;
+            }
           },
           grid: {
             color: surfaceBorder,
@@ -163,5 +169,62 @@ export class MetricsComponent implements OnInit {
         }
       }
     };
+
+    this.getPieConfig();
   } 
+
+  getPieConfig(): void {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+
+    this.recolectionPieData = {
+      labels: [this.recolectionHistoricStats.canceled.labelType, this.recolectionHistoricStats.finalized.labelType],
+      datasets: [
+        {
+          data: [this.getCanceledCount(), this.getFinalizedCount()],
+          backgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')]
+        }
+      ]
+    };
+
+    this.recolectionPieOptions = {
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor,
+          }
+        },
+        datalabels: {
+          formatter: (value: number, ctx: any) => {
+            const total = ctx.chart.data.datasets[0].data.reduce((sum: number, data: number) => sum + data, 0);
+            const percentage = (value * 100 / total).toFixed(2) + '%';
+            return percentage;
+          },
+          color: '#fff', 
+          font: {
+            weight: 'bold',
+            size: 14
+          }
+        },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: function(tooltipItem: any) {
+              const dataset = tooltipItem.dataset;
+              const total = dataset.data.reduce((sum: number, value: number) => sum + value, 0);
+              const currentValue = dataset.data[tooltipItem.dataIndex];
+              const percentage = ((currentValue / total) * 100).toFixed(2);
+    
+              return `${percentage}%`;
+            }
+          }
+        }
+      }
+    };
+
+    this.plugins = [pluginDataLabels];
+  }
 }
