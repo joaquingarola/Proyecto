@@ -3,6 +3,9 @@ import { DamageService, RecolectionService } from '../../../services';
 import { DamageStatsModel, PrimeSelectOptionModel, RecolectionCurrentStats, RecolectionHistoricStats, RecolectionTopStats } from '../../../models';
 import { DropdownChangeEvent } from 'primeng/dropdown';
 import pluginDataLabels from 'chartjs-plugin-datalabels';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-metrics',
@@ -32,10 +35,13 @@ export class MetricsComponent implements OnInit {
     { code: 'Quarterly', label: 'Últimos 90 días' }
   ];
   recolectionBarData: any;
-  recolectionBarOptions: any;
+  damageBarData: any;
   recolectionPieData: any;
-  recolectionPieOptions: any;
+  damagePieData: any;
+  barOptions: any;
+  pieOptions: any;
   plugins: any;
+  isDownloading: boolean = false;
 
   constructor(
     private damageService: DamageService,
@@ -46,6 +52,8 @@ export class MetricsComponent implements OnInit {
     this.getRecolectionPeriodStats();
     this.getCurrentRecolectionStats();
     this.getTopRecolectionStats();
+    this.initBarOptions();
+    this.initPieOptions();
   }
 
   onDamagePeriodChange(event: DropdownChangeEvent) {
@@ -68,6 +76,8 @@ export class MetricsComponent implements OnInit {
     this.damageService.getByType(this.selectedDamagedPeriod?.code ?? this.defaultOption)
       .subscribe((response: DamageStatsModel) => {
         this.damageStats = response;
+        this.initBarChartData(response.labels, response.vehicle.labelType, response.container.labelType, response.vehicle.counts, response.container.counts, 'damage');
+        this.initPieChartData(response.vehicle.labelType, response.container.labelType, this.getVehicleDamagesCount(), this.getContainerDamagesCount(), 'damage');
         this.damagesLoading = false;
     });
   }
@@ -77,7 +87,8 @@ export class MetricsComponent implements OnInit {
     this.recolectionService.getHistoricStats(this.selectedRecolectionPeriod?.code ?? this.defaultOption)
       .subscribe((response: RecolectionHistoricStats) => {
         this.recolectionHistoricStats = response;
-        this.initHistoricRecolectionCharts();
+        this.initBarChartData(response.labels, response.finalized.labelType, response.canceled.labelType, response.finalized.counts, response.canceled.counts, 'recolection');
+        this.initPieChartData(response.finalized.labelType, response.canceled.labelType, this.getFinalizedCount(), this.getCanceledCount(), 'recolection');
         this.historicRecolectionLoading = false;
     });
   }
@@ -108,31 +119,45 @@ export class MetricsComponent implements OnInit {
     return this.recolectionHistoricStats.canceled.counts.reduce((a, b) => a + b, 0);
   }
 
-  initHistoricRecolectionCharts(): void {
+  getVehicleDamagesCount(): number {
+    return this.damageStats.vehicle.counts.reduce((a, b) => a + b, 0);
+  }
+
+  getContainerDamagesCount(): number {
+    return this.damageStats.container.counts.reduce((a, b) => a + b, 0);
+  }
+
+  initBarChartData(labels: string[], firstLabelType: string, secondLabelType: string, firstCounts: number[], secondCounts: number[], type: 'recolection' | 'damage'): void {
+    const documentStyle = getComputedStyle(document.documentElement);
+
+    const barData = {
+      labels: labels,
+      datasets: [
+        {
+          label: firstLabelType,
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          data: firstCounts
+        },
+        {
+          label: secondLabelType,
+          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+          borderColor: documentStyle.getPropertyValue('--pink-500'),
+          data: secondCounts
+        }
+      ]
+    };
+
+    this[`${type}BarData`] = barData;
+  } 
+
+  initBarOptions(): void {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-    this.recolectionBarData = {
-      labels: this.recolectionHistoricStats.labels,
-      datasets: [
-        {
-          label: this.recolectionHistoricStats.finalized.labelType,
-          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          data: this.recolectionHistoricStats.finalized.counts
-        },
-        {
-          label: this.recolectionHistoricStats.canceled.labelType,
-          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          data: this.recolectionHistoricStats.canceled.counts
-        }
-      ]
-    };
-
-    this.recolectionBarOptions = {
+    this.barOptions = {
       maintainAspectRatio: false,
       aspectRatio: 0.8,
       plugins: {
@@ -169,26 +194,30 @@ export class MetricsComponent implements OnInit {
         }
       }
     };
+  };
 
-    this.getPieConfig();
-  } 
-
-  getPieConfig(): void {
+  initPieChartData(firstLabelType: string, secondLabelType: string, firstCount: number, secondCount: number, type: 'recolection' | 'damage'): void {
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
 
-    this.recolectionPieData = {
-      labels: [this.recolectionHistoricStats.canceled.labelType, this.recolectionHistoricStats.finalized.labelType],
+    const pieData = {
+      labels: [firstLabelType, secondLabelType],
       datasets: [
         {
-          data: [this.getCanceledCount(), this.getFinalizedCount()],
+          data: [firstCount, secondCount],
           backgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')],
           hoverBackgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')]
         }
       ]
     };
 
-    this.recolectionPieOptions = {
+    this[`${type}PieData`] = pieData;
+  }
+
+  initPieOptions(): void {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+
+    this.pieOptions = {
       maintainAspectRatio: true,
       plugins: {
         legend: {
@@ -226,5 +255,57 @@ export class MetricsComponent implements OnInit {
     };
 
     this.plugins = [pluginDataLabels];
+  }
+
+  downloadPDF(): void {
+    const element = document.getElementById('container');
+
+    if (element) {
+      this.isDownloading = true;
+
+      this.captureElementAsCanvas(element)
+        .subscribe(canvas => {
+          const imgWidth = 210;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
+
+          const x = 0;
+          const y = 0;
+
+          pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+
+          const today = new Date();
+          const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
+          const title = `Metricas_${formattedDate}`;
+
+          pdf.save(`${title}.pdf`);
+        }
+      ).add(() => this.isDownloading = false);
+    }
+  }
+
+  captureElementAsCanvas(element: HTMLElement): Observable<HTMLCanvasElement> {
+    return new Observable<HTMLCanvasElement>(observer => {
+      html2canvas(element, {
+        scale: 1,
+        onclone: (clonedDoc) => {
+          const downloadButton = clonedDoc.getElementById('downloadButton');
+          if (downloadButton) {
+            downloadButton.style.visibility = 'hidden';
+          }
+        },
+      }).then(canvas => {
+        observer.next(canvas);
+        observer.complete();
+      }).catch(error => { 
+        observer.error(error)
+      });
+    });
   }
 }

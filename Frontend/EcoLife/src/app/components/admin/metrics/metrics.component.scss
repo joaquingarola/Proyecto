@@ -33,7 +33,20 @@
     right: -300px;
   }
 
+  &__header {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__download {
+    width: 25%;
+    display: flex;
+    justify-content: end;
+    padding-right: 2rem;
+  }
+
   &__title {
+    width: 50%;
     font-size: 24px;
     font-weight: 700;
     text-align: center;

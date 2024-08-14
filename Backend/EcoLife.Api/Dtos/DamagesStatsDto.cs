@@ -2,7 +2,8 @@
 {
     public class DamagesStatsDto
     {
-        public int ContainerDamagesCount { get; set; }
-        public int VehicleDamagesCount { get; set; }
+        public List<string> Labels { get; set; }
+        public ChartDataDto Container { get; set; }
+        public ChartDataDto Vehicle { get; set; }
     }
 }

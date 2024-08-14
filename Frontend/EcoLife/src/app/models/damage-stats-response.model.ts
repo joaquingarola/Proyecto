@@ -1,4 +1,7 @@
+import { ChartDataModel } from "./chart-data.model";
+
 export interface DamageStatsModel {
-  containerDamagesCount: number,
-  vehicleDamagesCount: number
+  labels: string[],
+  vehicle: ChartDataModel,
+  container: ChartDataModel
 }
