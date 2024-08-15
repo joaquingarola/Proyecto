@@ -48,5 +48,12 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [AllowAnonymous]
+        [HttpPost("citizen-comment")]
+        async public Task<IActionResult> PostCitizenCommentAsync([FromBody] CreateCitizenCommentCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

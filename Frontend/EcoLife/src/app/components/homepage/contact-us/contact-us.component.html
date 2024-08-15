@@ -17,45 +17,38 @@
     </div>
     <div class="container__body__contact"> 
       <h4 class="container__body__contact__subtitle">¡Completá el formulario para ponernos en contacto!</h4>
-      <form [formGroup]="contactForm" class="container__body__contact__form">
+      <form [formGroup]="contactForm" class="container__body__contact__form" (ngSubmit)="onFormSubmit()">
         <div mat-dialog-content class="container__body__contact__form__content">
           <div class="row">
             <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
               <mat-label>Nombre y Apellido</mat-label>
-              <input matInput type="text" placeholder="Juan Perez" formControlName="name"  autocomplete="off">
+              <input matInput type="text" placeholder="Juan Perez" formControlName="name"  autocomplete="off" maxlength="50">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
               <mat-label>Email</mat-label>
-              <input matInput type="email" placeholder="juan@gmail.com" formControlName="email" autocomplete="off">
+              <input matInput type="email" placeholder="juan@gmail.com" formControlName="email" autocomplete="off" maxlength="50">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
               <mat-label>Ciudad</mat-label>
-              <input matInput type="text" placeholder="Rosario" formControlName="city" autocomplete="off">
+              <input matInput type="text" placeholder="Rosario" formControlName="city" autocomplete="off" maxlength="50">
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline" class="container__body__contact__form__content__element">
-              <mat-label>Zona</mat-label>
-              <input matInput type="text" placeholder="Centro" formControlName="zone" autocomplete="off">
+              <mat-label>Dirección</mat-label>
+              <input matInput type="text" placeholder="San Lorenzo 111" formControlName="address" autocomplete="off" maxlength="50">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field class="container__body__contact__form__content__element">
               <mat-label>Deje su comentario</mat-label>
-                <textarea matInput  formControlName="description" autocomplete="off"></textarea>
+                <textarea matInput  formControlName="comment" autocomplete="off" maxlength="250"></textarea>
             </mat-form-field>
           </div>     
-          <!-- <div class="row" class="container__body__contact__form__content__element">
-            <div (click)="fileInput.click()" class="actions">
-              <mat-icon class="icon">upload_file</mat-icon>
-              <p>Adjuntar archivos</p>
-              <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
-            </div>
-          </div> -->
           <div mat-dialog-actions>
             <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.pristine || contactForm.invalid">Enviar</button>
           </div>

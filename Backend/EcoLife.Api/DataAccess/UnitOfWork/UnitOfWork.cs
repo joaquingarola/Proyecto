@@ -18,6 +18,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
         public IRecolectionRepository RecolectionRepository { get; private set; }
         public IRecolectionContainersRepository RecolectionContainersRepository { get; private set; }
         public IDamageRepository DamageRepository { get; private set; }
+        public ICitizenCommentRepository CitizenCommentRepository { get; private set; }
 
         public UnitOfWork(EcoLifeContext context)
         {
@@ -34,6 +35,7 @@ namespace EcoLife.Api.DataAccess.UnitOfWork
             RecolectionRepository = new RecolectionRepository(context);
             RecolectionContainersRepository = new RecolectionContainersRepository(context);
             DamageRepository = new DamageRepository(context);
+            CitizenCommentRepository = new CitizienCommentRepository(context);
         }
     }
 }

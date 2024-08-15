@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NewModel } from '../../models';
+import { CitizenCommentModel, NewModel } from '../../models';
 import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
@@ -28,5 +28,9 @@ export class NewsService {
 
   public updateNew(id: number, news: NewModel, date: Date): Observable<Object> {
     return this.http.put(`${this.API_URL}`, { id: id, ...news, date: date });
+  }
+
+  public addCitizenComment(comment: CitizenCommentModel): Observable<Object> {
+    return this.http.post(`${this.API_URL}/citizen-comment`, comment);
   }
 }

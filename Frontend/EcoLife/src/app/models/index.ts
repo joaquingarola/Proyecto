@@ -31,3 +31,4 @@ export * from './recolection-historic-stats.model';
 export * from './recolection-top-stats.model';
 export * from './prime-select-option.model';
 export * from './chart-data.model';
+export * from './citizen-comment.model';

@@ -21,5 +21,6 @@ namespace EcoLife.Api.DataAccess
         public virtual DbSet<RouteEntity> Routes { get; set; }
         public virtual DbSet<RecolectionContainers> RecolectionContainers { get; set; }
         public virtual DbSet<Damage> Damages { get; set; }
+        public virtual DbSet<CitizenComment> CitizenComments { get; set; }
     }
 }
