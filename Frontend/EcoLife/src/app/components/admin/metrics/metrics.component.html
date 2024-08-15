@@ -27,15 +27,15 @@
         [showClear]="true"
         placeholder="Seleccione período" />
     </div>
-    <div class="metrics-recolections__info">
+    <div class="metrics-recolections__info" [ngClass]="{'min-height': getCanceledCount() > 0 || getFinalizedCount() > 0}">
       <div *ngIf="historicRecolectionLoading" class="loading">
         <mat-spinner></mat-spinner>
       </div>
-      <div class="metrics-recolections__cards">
-        <metric-card [value]="getFinalizedCount()" title="Finalizadas" *ngIf="!historicRecolectionLoading"></metric-card>
-        <metric-card [value]="getCanceledCount()" title="Canceladas" *ngIf="!historicRecolectionLoading"></metric-card>
+      <div class="metrics-recolections__cards" *ngIf="!historicRecolectionLoading">
+        <metric-card [value]="getFinalizedCount()" title="Finalizadas"></metric-card>
+        <metric-card [value]="getCanceledCount()" title="Canceladas"></metric-card>
       </div>
-      <div class="metrics-recolections__charts" *ngIf="!historicRecolectionLoading">
+      <div class="metrics-recolections__charts" *ngIf="!historicRecolectionLoading  && (getCanceledCount() > 0 || getFinalizedCount() > 0)">
         <p-chart type="bar" [data]="recolectionBarData" [options]="barOptions" class="chart" />
         <p-chart type="pie" [data]="recolectionPieData" [options]="pieOptions" [plugins]="plugins" height="375" class="chart" />
       </div>
@@ -52,15 +52,15 @@
         [showClear]="true"
         placeholder="Seleccione período" />
     </div>
-    <div class="metrics-damages__info">
+    <div class="metrics-damages__info" [ngClass]="{'min-height': getContainerDamagesCount() > 0 || getVehicleDamagesCount() > 0}">
       <div *ngIf="damagesLoading" class="loading">
         <mat-spinner></mat-spinner>
       </div>
-      <div class="metrics-damages__cards">
-        <metric-card [value]="getVehicleDamagesCount()" title="Vehículos" *ngIf="!damagesLoading"></metric-card>
-        <metric-card [value]="getContainerDamagesCount()" title="Contenedores" *ngIf="!damagesLoading"></metric-card>
+      <div class="metrics-damages__cards"  *ngIf="!damagesLoading">
+        <metric-card [value]="getVehicleDamagesCount()" title="Vehículos"></metric-card>
+        <metric-card [value]="getContainerDamagesCount()" title="Contenedores"></metric-card>
       </div>
-      <div class="metrics-damages__charts" *ngIf="!damagesLoading">
+      <div class="metrics-damages__charts" *ngIf="!damagesLoading && (getContainerDamagesCount() > 0 || getVehicleDamagesCount() > 0)">
         <p-chart type="bar" [data]="damageBarData" [options]="barOptions" class="chart" />
         <p-chart type="pie" [data]="damagePieData" [options]="pieOptions" [plugins]="plugins" height="375" class="chart" />
       </div>
@@ -93,6 +93,12 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="['name', 'quantity']"></tr>
           <tr mat-row *matRowDef="let row; columns: ['name', 'quantity'];"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell table__no-results" colspan="8">
+              <img src="assets/no_results.png" alt="Logo">
+              <p>No se encontraron resultados</p>
+            </td>
+          </tr>
         </table>
       </div>
       <div class="table" *ngIf="!topRecolectionLoading">
@@ -107,6 +113,12 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="['description', 'quantity']"></tr>
           <tr mat-row *matRowDef="let row; columns: ['description', 'quantity'];"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell table__no-results" colspan="8">
+              <img src="assets/no_results.png" alt="Logo">
+              <p>No se encontraron resultados</p>
+            </td>
+          </tr>
         </table>
       </div>
     </div>

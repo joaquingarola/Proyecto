@@ -112,19 +112,19 @@ export class MetricsComponent implements OnInit {
   }
 
   getFinalizedCount(): number {
-    return this.recolectionHistoricStats.finalized.counts.reduce((a, b) => a + b, 0);
+    return this.recolectionHistoricStats?.finalized.counts.reduce((a, b) => a + b, 0);
   }
 
   getCanceledCount(): number {
-    return this.recolectionHistoricStats.canceled.counts.reduce((a, b) => a + b, 0);
+    return this.recolectionHistoricStats?.canceled.counts.reduce((a, b) => a + b, 0);
   }
 
   getVehicleDamagesCount(): number {
-    return this.damageStats.vehicle.counts.reduce((a, b) => a + b, 0);
+    return this.damageStats?.vehicle.counts.reduce((a, b) => a + b, 0);
   }
 
   getContainerDamagesCount(): number {
-    return this.damageStats.container.counts.reduce((a, b) => a + b, 0);
+    return this.damageStats?.container.counts.reduce((a, b) => a + b, 0);
   }
 
   initBarChartData(labels: string[], firstLabelType: string, secondLabelType: string, firstCounts: number[], secondCounts: number[], type: 'recolection' | 'damage'): void {
@@ -265,8 +265,9 @@ export class MetricsComponent implements OnInit {
 
       this.captureElementAsCanvas(element)
         .subscribe(canvas => {
-          const imgWidth = 210;
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          let imgWidth = 210;
+          const pageHeight = 297;
+          let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
           const imgData = canvas.toDataURL('image/png');
           const pdf = new jsPDF({
@@ -275,8 +276,17 @@ export class MetricsComponent implements OnInit {
             format: 'a4'
           });
 
-          const x = 0;
-          const y = 0;
+          let x = 0;
+          let y = 0;
+
+          if (imgHeight > pageHeight) {
+            const scale = pageHeight / imgHeight;
+            imgWidth *= scale;
+            imgHeight = pageHeight;
+          }
+
+          x = (210 - imgWidth) / 2;
+          y = (297 - imgHeight) / 2;
 
           pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
 
