@@ -33,4 +33,12 @@ export class NewsService {
   public addCitizenComment(comment: CitizenCommentModel): Observable<Object> {
     return this.http.post(`${this.API_URL}/citizen-comment`, comment);
   }
+
+  public getAllComments(): Observable<CitizenCommentModel[]> {
+    return this.http.get<CitizenCommentModel[]>(`${this.API_URL}/citizen-comment`);
+  }
+
+  public deleteComment(id: number): Observable<Object> {
+    return this.http.delete(`${this.API_URL}/citizen-comment/${id}`);
+  }
 }

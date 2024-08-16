@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { NewModel } from '../../../models';
+import { ItemListModel } from '../../../models';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-items-list',
@@ -7,14 +8,14 @@ import { NewModel } from '../../../models';
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnChanges {
-  @Input() items: NewModel[];
+  @Input() items: ItemListModel[];
   @Input() maxItems = 3;
   @Input() showActions = false;
-  @Output() editItem = new EventEmitter<NewModel>();
+  @Output() editItem = new EventEmitter<number>();
   @Output() deleteItem = new EventEmitter<number>();
 
-  public visibleItems: NewModel[];
-  public currentFirstItem = 0;
+  visibleItems: ItemListModel[];
+  currentFirstItem = 0;
 
   ngOnInit(): void {
     this.SetVisibleItems();

@@ -18,6 +18,7 @@ import { AssignmentListComponent } from './components/collector/assignment-list/
 import { CurrentCollectionComponent } from './components/collector/current-collection/current-collection.component';
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 import { MetricsComponent } from './components/admin/metrics/metrics.component';
+import { CitizenCommentsComponent } from './components/admin/citizen-comments/citizen-comments.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'reports', component: ReportsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'homepage', component: HomepageComponent},
   {path: 'news', component: NewsPanelComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
+  {path: 'comments', component: CitizenCommentsComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'containers', component: ContainerComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'routes', component: RoutesComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},
   {path: 'vehicle-centers', component: VehicleCentersComponent, canActivate: [authGuard], data: { roles: ['Administrador'] }},

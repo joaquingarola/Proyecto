@@ -1,0 +1,6 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <p class="container__title">Reclamos ciudadanos</p>
+  <app-items-list [items]="itemList" [showActions]="true" (deleteItem)="deleteComment($event)"></app-items-list>
+</div>
+<app-footer></app-footer>

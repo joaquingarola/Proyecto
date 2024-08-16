@@ -32,3 +32,4 @@ export * from './recolection-top-stats.model';
 export * from './prime-select-option.model';
 export * from './chart-data.model';
 export * from './citizen-comment.model';
+export * from './item-list.model';	

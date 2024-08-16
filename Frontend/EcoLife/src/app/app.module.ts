@@ -77,6 +77,7 @@ import { MatTableResponsiveDirective } from './directives/mat-table-responsive.d
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 import { MetricsComponent } from './components/admin/metrics/metrics.component';
 import { MetricCardComponent } from './components/shared/metric-card/metric-card.component';
+import { CitizenCommentsComponent } from './components/admin/citizen-comments/citizen-comments.component';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -126,7 +127,8 @@ registerLocaleData(localeEs, 'es');
     MatTableResponsiveDirective,
     ResetPasswordComponent,
     MetricsComponent,
-    MetricCardComponent
+    MetricCardComponent,
+    CitizenCommentsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalConfirmationService, NewsService, SnackbarNotificationService } from '../../../services';
-import { ConfirmationModalData, NewModel, SnackbarType } from '../../../models';
+import { ConfirmationModalData, ItemListModel, NewModel, SnackbarType } from '../../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsFormComponent } from './news-form/news-form.component';
 
@@ -10,7 +10,8 @@ import { NewsFormComponent } from './news-form/news-form.component';
   styleUrls: ['./news-panel.component.scss']
 })
 export class NewsPanelComponent implements OnInit {
-  public newsList: NewModel[];
+  itemList: ItemListModel[];
+  newList: NewModel[];
 
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta noticia?',
@@ -33,7 +34,8 @@ export class NewsPanelComponent implements OnInit {
     this.newsService.getAll()
     .subscribe(
       (response) => {
-        this.newsList = response;
+        this.newList = response;
+        this.itemList = response.map(x => { return {id: x.id, title: x.title, date: x.date, description: x.description} });
       });
   }
 
@@ -55,7 +57,8 @@ export class NewsPanelComponent implements OnInit {
     });
   }
 
-  public editNew(data: NewModel): void {
+  public editNew(id: number): void {
+    const data = this.newList.find(x => x.id == id);
     const dialogRef = this.dialog.open(NewsFormComponent, { data });
 
     dialogRef.afterClosed()

@@ -55,5 +55,19 @@ namespace EcoLife.Api.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpGet("citizen-comment")]
+        async public Task<IActionResult> GetAllCitizenCommentAsync()
+        {
+            return Ok(await _mediator.Send(new GetAllCommentsQuery()));
+        }
+
+        [HttpDelete("citizen-comment/{commentId}")]
+        async public Task<IActionResult> DeleteCommentByIdAsync([FromRoute, Required] DeleteCitizenCommentCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
     }
 }

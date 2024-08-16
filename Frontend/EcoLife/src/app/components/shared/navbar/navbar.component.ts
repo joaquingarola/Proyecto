@@ -15,7 +15,16 @@ export class NavbarComponent {
   itemsAdmin: MenuItem[] = [
     {
       label: 'Novedades',
-      routerLink: '/news'
+      items: [
+        {
+          label: 'Reclamos ciudadanos',
+          routerLink: '/comments'
+        },
+        {
+          label: 'Noticias',
+          routerLink: '/news'
+        }
+      ]
     },
     {
       label: 'Empleados',
