@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel, ConfirmationModalData } from '../../../models';
-import { ContainerService, ModalConfirmationService, RecolectionService, RouteService, StorageService } from '../../../services';
+import { ContainerModel, EmployeeModel, RecolectionModel, RecolectionContainerModel, SectionRecolection, SelectedItem, SelectedItemType, WasteCenterModel, ConfirmationModalData, SnackbarType } from '../../../models';
+import { ContainerService, LocationService, ModalConfirmationService, RecolectionService, RouteService, SnackbarNotificationService, StorageService } from '../../../services';
 import { TypeEnum } from './type.enum';
 import { Router } from '@angular/router';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { interval, startWith, Subject, switchMap, takeUntil } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-current-collection',
   templateUrl: './current-collection.component.html',
@@ -45,25 +46,43 @@ export class CurrentCollectionComponent {
     cancelCaption: '',
     onlyOneButton: true
   }
+  private errorSubject = new Subject<void>();
+  userLocation: L.LatLngTuple; 
 
   constructor(
     private storageServie: StorageService,
     private recolectionService: RecolectionService,
+    private snackbarNotificationService: SnackbarNotificationService,
     private routeService: RouteService,
     private router: Router,
     private containerService: ContainerService,
     private modalConfirmationService: ModalConfirmationService,
-    private matIconRegistry: MatIconRegistry, 
-    private domSanitizer: DomSanitizer) { 
-      /* this.matIconRegistry.addSvgIcon(
-        'trash-container',
-        this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/dumpster.svg')
-      ); */
+    private locationService: LocationService) { 
     }
 
   ngOnInit(): void {
     this.user = this.storageServie.getUser();
     this.getInProgressRecolection();
+    this.getLocation();
+  }
+
+  getLocation(): void {
+    interval(7000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.locationService.getCurrentLocation()),
+        takeUntil(this.errorSubject),
+        untilDestroyed(this)
+      )
+      .subscribe({
+        next: (position) => {
+          this.userLocation = [position.coords.latitude, position.coords.longitude];
+        },
+        error: () => {
+          this.errorSubject.next();
+          this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar recuperar la ubicación.', type: SnackbarType.Error });
+        }
+      });
   }
 
   getInProgressRecolection(): void {

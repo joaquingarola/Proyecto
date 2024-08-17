@@ -52,10 +52,10 @@ export class CitizenCommentsComponent {
             .subscribe({
               next: () => {
                 this.listComments();
-                this.snackbarNotificationService.open({ text: 'Novedad eliminada con éxito.', type: SnackbarType.Success });
+                this.snackbarNotificationService.open({ text: 'Reclamo eliminado con éxito.', type: SnackbarType.Success });
               },
               error: () => {
-                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar la novedad.', type: SnackbarType.Error });
+                this.snackbarNotificationService.open({ text: 'Ocurrió un error al intentar eliminar el reclamo.', type: SnackbarType.Error });
               }
             })
         }

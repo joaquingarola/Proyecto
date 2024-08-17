@@ -25,6 +25,7 @@ export class MapComponent implements OnChanges {
   @Input() disabledClick: boolean = false;
   @Input() createRoute: boolean = false;
   @Input() sections: SectionRecolection;
+  @Input() userLocation: L.LatLngTuple | null;
   @Output() coords = new EventEmitter<NominatimPlaceModel | null>();
   @Output() selectedCoords = new EventEmitter<L.LatLng>();
   @Output() selectedWasteCenterUpdate = new EventEmitter<L.LatLng | null>();
@@ -32,6 +33,7 @@ export class MapComponent implements OnChanges {
 
   private controlDraw: L.Routing.Control[] = [];
   private markers: L.Marker[] = [];
+  private userLocationMarker: L.Marker;
   private actualWasteCenter : L.Marker;
   private actualVehicleCenter : L.Marker;
   private defaultCoords: L.LatLngTuple = [-32.949007, -60.642593];
@@ -68,6 +70,11 @@ export class MapComponent implements OnChanges {
     iconSize: [32, 32],
     iconAnchor: [16, 16]
   });
+  public userIcon = L.icon({
+    iconUrl: '../../../../assets/collector_icon.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
+  });
 
   public icons: { [key in SelectedItemType]: L.Icon } = {
     [SelectedItemType.Container]: this.containerIcon,
@@ -98,10 +105,18 @@ export class MapComponent implements OnChanges {
     if(changes?.['sections']?.currentValue && this.map != undefined) {
       this.manageSections();
     }
+
+    if(changes?.['userLocation']?.currentValue) {
+      this.updateUserLocation(changes?.['userLocation']?.currentValue)
+    }
   }
 
   ngAfterViewInit(): void {
     this.map = L.map('map').setView(this.getViewCoords(), 16);
+
+    if(this.userLocation) {
+      this.updateUserLocation(this.userLocation);
+    }
 
     const searchControl = GeoSearchControl({
       provider: new OpenStreetMapProvider({
@@ -209,7 +224,7 @@ export class MapComponent implements OnChanges {
   
         this.updateCoords(e.latlng, false);
       }
-    });
+    });    
   }
 
   private loadVehicleCenters(): void {
@@ -243,6 +258,17 @@ export class MapComponent implements OnChanges {
     let newMarker = this.markers.find(m => m.getLatLng().lat == newCoords[0] && m.getLatLng().lng == newCoords[1]);
     newMarker?.setIcon(this.vehicleCenterIcon);
     this.actualVehicleCenter = new L.Marker(newCoords);
+  }
+
+  private updateUserLocation(newCoords: L.LatLngTuple): void {
+    if(this.userLocationMarker) { 
+      this.map.removeLayer(this.userLocationMarker);
+    }
+
+    if(this.map) {
+      this.userLocationMarker = new L.Marker(newCoords, { icon: this.userIcon });
+      this.userLocationMarker.addTo(this.map);
+    }
   }
 
   private loadWasteCenters(): void {

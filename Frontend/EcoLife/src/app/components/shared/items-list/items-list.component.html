@@ -10,7 +10,7 @@
             {{ item.title }}
           </div>
           <div class="container__items__element__header__actions" *ngIf="showActions">
-            <mat-icon (click)="editItem.emit(item.id!)" class="icon">edit</mat-icon>
+            <mat-icon (click)="editItem.emit(item.id!)" class="icon" *ngIf="!item.subtitle">edit</mat-icon>
             <mat-icon (click)="deleteItem.emit(item.id!)" class="icon" color="warn">delete</mat-icon>
           </div>
         </div>

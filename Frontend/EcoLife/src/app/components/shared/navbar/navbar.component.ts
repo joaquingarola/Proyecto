@@ -17,12 +17,12 @@ export class NavbarComponent {
       label: 'Novedades',
       items: [
         {
-          label: 'Reclamos ciudadanos',
-          routerLink: '/comments'
-        },
-        {
           label: 'Noticias',
           routerLink: '/news'
+        },
+        {
+          label: 'Reclamos ciudadanos',
+          routerLink: '/comments'
         }
       ]
     },
