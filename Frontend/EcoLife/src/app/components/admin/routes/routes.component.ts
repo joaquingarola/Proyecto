@@ -27,7 +27,7 @@ export class RoutesComponent {
   public selectedContainers: Array<L.LatLng> = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ["periodicity", "description", "quantity", "options"];
+  public displayedColumns = [/* "periodicity", */ "description", "quantity", "options"];
   public routes: MatTableDataSource<RouteModel>
   private confirmationData: ConfirmationModalData = {
     message: 'Estás seguro de eliminar esta ruta?',

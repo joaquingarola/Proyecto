@@ -8,10 +8,10 @@
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar descripción o periodicidad" #input autocomplete="off">
 		</mat-form-field>
 		<table mat-table [dataSource]="routes" class="mat-elevation-z8 container__data__table" matSort>
-			<ng-container matColumnDef="periodicity">
+<!-- 			<ng-container matColumnDef="periodicity">
 				<th mat-header-cell *matHeaderCellDef mat-sort-header > Periodicidad </th>
 				<td mat-cell *matCellDef="let route"> {{route.periodicity}} </td>
-			</ng-container>
+			</ng-container> -->
 			<ng-container matColumnDef="description">
 				<th mat-header-cell *matHeaderCellDef mat-sort-header > Descripción </th>
 				<td mat-cell *matCellDef="let route"> {{route.description}} </td>

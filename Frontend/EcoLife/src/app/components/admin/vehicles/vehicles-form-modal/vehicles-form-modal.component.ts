@@ -25,7 +25,7 @@ export class VehiclesFormModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: VehicleModel
   ) {
     this.vehicleForm = this.fb.group({
-      patent: ['', [Validators.required]],
+      patent: ['', [Validators.required, Validators.pattern('(^[A-Z]{2}\\d{3}[A-Z]{2}$)|(^[A-Z]{3}\\d{3}$)')]],
       description: ['', [Validators.required]],
       model: ['', [Validators.required]],
       buyDate: ['', [Validators.required]],
@@ -51,8 +51,9 @@ export class VehiclesFormModalComponent {
   onFormSubmit(): void {
     if (this.vehicleForm.valid) {
       if (this.data) {
+        const vehicle = this.vehicleForm.value;
         this.vehicleService
-          .updateVehicle(this.data.id!, this.vehicleForm.value)
+          .updateVehicle(this.data.id!, { ...vehicle, status: this.data.status })
           .subscribe({
             next: () => this._dialogRef.close(true),
             error: () => {

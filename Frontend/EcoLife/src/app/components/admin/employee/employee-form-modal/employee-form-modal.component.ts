@@ -29,7 +29,7 @@ export class EmployeeFormModalComponent implements OnInit {
   ngOnInit(): void {
     this.getRoles();
     this.employeeForm = this.fb.group({
-      dni: ['', [Validators.required]],
+      dni: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],

@@ -7,7 +7,7 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Dni</mat-label>
-          <input matInput type="text" placeholder="36755966" formControlName="dni" autocomplete="off" maxlength="8"> 
+          <input matInput type="number" placeholder="36755966" formControlName="dni" autocomplete="off" [min]="100000" [max]="9999999" [appMaxLength]="8"> 
         </mat-form-field>
       </div>
       <div class="row">

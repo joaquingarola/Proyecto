@@ -39,7 +39,7 @@ export class RoutesFormModalComponent {
       description: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       wasteType: ['', [Validators.required]],
-      periodicity: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+      periodicity: [0, [Validators.required, Validators.pattern("^[0-9]*$")]]
     });
 
     this.routeForm.controls['wasteType'].setValue(ContainerType[0]);

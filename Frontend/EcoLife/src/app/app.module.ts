@@ -78,6 +78,7 @@ import { ResetPasswordComponent } from './components/shared/reset-password/reset
 import { MetricsComponent } from './components/admin/metrics/metrics.component';
 import { MetricCardComponent } from './components/shared/metric-card/metric-card.component';
 import { CitizenCommentsComponent } from './components/admin/citizen-comments/citizen-comments.component';
+import { MaxLengthDirective } from './directives';
 
 // Configura la aplicación para usar español
 registerLocaleData(localeEs, 'es');
@@ -128,7 +129,8 @@ registerLocaleData(localeEs, 'es');
     ResetPasswordComponent,
     MetricsComponent,
     MetricCardComponent,
-    CitizenCommentsComponent
+    CitizenCommentsComponent,
+    MaxLengthDirective
   ],
   imports: [
     BrowserModule,
