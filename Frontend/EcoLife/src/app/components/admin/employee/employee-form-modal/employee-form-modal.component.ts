@@ -54,9 +54,12 @@ export class EmployeeFormModalComponent implements OnInit {
   onFormSubmit(): void {
     if (this.employeeForm.valid) {
       this.isLoading = true;
+      const phoneNumber: string = this.employeeForm.get('phoneNumber')!.value.toString();
+      const dni: string = this.employeeForm.get('dni')!.value.toString();
+      const employee: EmployeeModel = { ...this.employeeForm.value, phoneNumber: phoneNumber, dni: dni };
       if (this.data) {
         this.employeeService
-          .updateEmployee(this.data.id!, this.employeeForm.value)
+          .updateEmployee(this.data.id!, employee)
           .subscribe({
             next: (response: EmployeeResponseModel) => {
               if (response.success) {
@@ -70,7 +73,7 @@ export class EmployeeFormModalComponent implements OnInit {
             },
           }).add(() => this.isLoading = false);
       } else {
-        this.employeeService.add(this.employeeForm.value).subscribe({
+        this.employeeService.add(employee).subscribe({
           next: (response: EmployeeResponseModel) => {
             if (response.success) {
               this._dialogRef.close(true);
