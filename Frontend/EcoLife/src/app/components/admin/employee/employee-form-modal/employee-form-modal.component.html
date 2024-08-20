@@ -6,17 +6,9 @@
     <div mat-dialog-content class="modal-form__content">
       <div class="row">
         <mat-form-field appearance="outline">
-          <mat-label>Dni</mat-label>
-          <input matInput type="number" placeholder="36755966" formControlName="dni" autocomplete="off" [min]="1000000" [appMaxLength]="8"> 
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input matInput type="text" placeholder="Juan" formControlName="name" autocomplete="off" maxlength="50">
         </mat-form-field>
-      </div>
-      <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Apellido</mat-label>
           <input matInput type="text" placeholder="Perez" formControlName="surname" autocomplete="off" maxlength="50">
@@ -24,14 +16,12 @@
       </div>
       <div class="row">
         <mat-form-field appearance="outline">
+          <mat-label>Dni</mat-label>
+          <input matInput type="number" placeholder="36755966" formControlName="dni" autocomplete="off" [min]="1000000" [appMaxLength]="8"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput type="email" placeholder="juan@hotmail.com" formControlName="email" autocomplete="off" maxlength="70">
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <mat-form-field appearance="outline">
-          <mat-label>Teléfono</mat-label>
-          <input matInput type="number" placeholder="3416545161" formControlName="phoneNumber" autocomplete="off" [appMaxLength]="10">
         </mat-form-field>
       </div>
       <div class="row">
@@ -42,6 +32,10 @@
           <mat-datepicker-toggle matIconSuffix [for]="birthpicker"></mat-datepicker-toggle>
           <mat-datepicker #birthpicker></mat-datepicker>
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput type="number" placeholder="3416545161" formControlName="phoneNumber" autocomplete="off" [appMaxLength]="10">
+        </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field appearance="outline">
@@ -51,8 +45,6 @@
           <mat-datepicker-toggle matIconSuffix [for]="admissionpicker"></mat-datepicker-toggle>
           <mat-datepicker #admissionpicker></mat-datepicker>
         </mat-form-field>
-      </div>
-      <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Rol</mat-label>
           <mat-select formControlName="roleId" [(value)]="selectedRole">

@@ -9,8 +9,6 @@
           <mat-label>Patente</mat-label>
           <input matInput type="text" placeholder="AA150BB" formControlName="patent" maxlength="7" autocomplete="off">
         </mat-form-field>
-      </div>
-      <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Descripción</mat-label>
           <input matInput type="text" placeholder="Renault clio" formControlName="description" autocomplete="off">
@@ -21,8 +19,6 @@
           <mat-label>Modelo</mat-label>
           <input matInput type="number" placeholder="2016, 2022" formControlName="model" min="1950" max="2024" autocomplete="off" [appMaxLength]="4">
         </mat-form-field>
-      </div>
-      <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Fecha de compra</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="buyDate" [max]="actualDate">
@@ -31,7 +27,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row unique-element">
         <mat-form-field appearance="outline">
           <mat-label>Centro de Vehículo</mat-label>
           <mat-select formControlName="vehicleCenterId" [(value)]="selectedVehicleCenter">

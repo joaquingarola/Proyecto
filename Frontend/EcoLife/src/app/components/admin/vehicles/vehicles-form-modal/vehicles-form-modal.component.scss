@@ -1,5 +1,6 @@
 .modal-form{
-  width: 400px;
+  width: 750px;
+  padding: 1rem;
 
   &__title {
       text-align: center;
@@ -10,10 +11,12 @@
   }
 
   &__action {
-      padding: 0px 25px 20px;
-          button {
-              flex: 1;
-          }
+    justify-content: center;
+    gap: 2rem;
+    padding: 0px 25px 20px;
+    button {
+      width: 200px;
+    }
   }
 
   &__error{
@@ -25,9 +28,13 @@
 
 .row {
   display: flex;
-  gap: 10px;
+  gap: 16px;
 
   mat-form-field {
       width: 100%;
   }
+}
+
+.unique-element {
+  max-width: 328px;
 }
