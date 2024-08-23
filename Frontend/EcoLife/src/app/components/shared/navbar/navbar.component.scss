@@ -1,3 +1,5 @@
+@import 'src/app/styles/variables';
+
 .logo {
     width: 80px;
 }
@@ -16,7 +18,45 @@
         justify-content: center;
     }
 
+    &__user-button {
+        color: white;
+    }
+
+    &__user-button:hover {
+        background-color: $footer-hover;
+    }
+
     &__buttons {
         width: 100%;
     }
 }
+
+::ng-deep .p-menubar {
+    background-color: $footer-color !important;
+    border: 0;
+    border-radius: 0;
+}
+
+::ng-deep .p-submenu-list {
+    background-color: $footer-color !important;
+}
+  
+::ng-deep .p-menubar .p-menuitem-link {
+    background-color: $footer-color !important;
+    color: $footer-color !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::ng-deep .p-menuitem-text {
+    color: white;
+}
+
+::ng-deep .p-submenu-icon {
+    color: white;
+}
+  
+::ng-deep .p-menubar .p-menuitem-link:hover {
+    background-color: $footer-hover !important;
+    color: #ffffff !important;
+}
+
