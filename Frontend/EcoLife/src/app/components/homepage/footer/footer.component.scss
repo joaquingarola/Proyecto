@@ -1,29 +1,45 @@
 @import 'src/app/styles/variables';
 
-.container{
-    padding: 10px 0;
-    background-color: $footer-color;
+.container {
+    background-color: $footer-color; /* Fondo negro para toda la sección */
+    padding: 0;
     height: $footer-height + 3px;
-    
-    &__info{
-        display: flex;
-        justify-content: center;
-        gap: 50px;
-    }
-
-    &__separator{
-        margin: 5px 0;
-        padding: 1px 0;
-        background-color: black;
-    }
-
-    &__rights {
-        text-align: center;
-    }
 }
 
-.mat-icon{
+.container__info {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    background-color: rgb(56, 159, 128); /* Parte superior verde */
+    padding: 10px 0;
+    margin: 0; /* Elimina cualquier margen superior o inferior */
+}
+
+.container__separator {
+    padding: 0;
+    margin: 0;
+    height: 2px;
+    background-color: #736060; /* Divisor */
+}
+
+.container__rights {
+    text-align: center;
+    background-color: rgb(22, 26, 22); /* Parte inferior negra */
+    padding: 10px 0;
+    margin: 0; /* Elimina cualquier margen superior o inferior */
+}
+
+.mat-icon {
     position: relative;
     top: 7px;
-    color: rgb(0, 0, 0);
+    color: rgb(22, 26, 22);
+}
+
+.container__rights p {
+    color: rgb(56, 159, 128);
+}
+
+.container__info__phone .material-symbols-outlined,
+.container__info__mail .material-symbols-outlined {
+    color: rgb(22, 26, 22);
 }
