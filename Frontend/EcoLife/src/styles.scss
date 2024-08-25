@@ -153,3 +153,7 @@ input[type=number] {
 .mat-mdc-row:nth-of-type(even) {
   background-color: rgb(238, 238, 238);
 }
+
+.mat-mdc-paginator {
+  background-color: transparent !important;
+}

@@ -1,8 +1,11 @@
+@import 'src/app/styles/variables';
+
+
 .container {
     display: flex;
     justify-content: space-around;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
-    background-color:#3a3030;
+    background-color: $footer-color;
     margin-bottom: 1px;
   
     &__logo {
@@ -19,7 +22,7 @@
       
       &__option{
         font-weight: 520;
-        color: rgb(187, 195, 222);
+        color: $navbar-text-color;
         font-size: 20px;
         position: relative;
 
@@ -28,7 +31,7 @@
           content: "";
           width: 0;
           height: 2px;
-          background-color: rgb(222, 189, 187);
+          background-color: $navbar-text-color;
           left: 50%;
           bottom: -10px;
           transition: all 0.3s ease-in-out;
@@ -65,7 +68,7 @@
 
   &__button {
     height: 40px;
-    background-color: rgb(187, 195, 222) !important;
+    background-color: $navbar-text-color !important;
   }
 }
 
