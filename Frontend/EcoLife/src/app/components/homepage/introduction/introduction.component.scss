@@ -61,7 +61,6 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-
   
   &::before,
   &::after {
@@ -95,15 +94,14 @@
 }
 
 .recycling-carousel {
-  padding: 0 160px;
-
+  width: 1185px;
+  margin: auto;
   &__title {
     position: relative;
     font-weight: 400;
     font-size: 30px;
     color: #3a3030;
     padding: 1rem 0;
-    margin: 0 4rem;
 
     &::before,
     &::after {
