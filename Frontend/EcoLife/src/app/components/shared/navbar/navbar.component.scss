@@ -19,7 +19,7 @@
     }
 
     &__user-button {
-        color: white;
+        color: $navbar-text-color;
     }
 
     &__user-button:hover {
@@ -48,15 +48,15 @@
 }
 
 ::ng-deep .p-menuitem-text {
-    color: white;
+    color: $navbar-text-color;
 }
 
 ::ng-deep .p-submenu-icon {
-    color: white;
+    color: $navbar-text-color;
 }
   
 ::ng-deep .p-menubar .p-menuitem-link:hover {
     background-color: $footer-hover !important;
-    color: #ffffff !important;
+    color: $navbar-text-color !important;
 }
 

@@ -1,37 +1,43 @@
 @import 'src/app/styles/variables';
 
 .container {
-    background-color: $footer-color; /* Fondo negro para toda la sección */
     padding: 0;
-    height: $footer-height + 3px;
+    height: $footer-height + 4px;
+    background-color: rgb(22, 26, 22);
 }
 
 .container__info {
     display: flex;
     justify-content: center;
+    height: 50px;
     gap: 50px;
-    background-color: rgb(56, 159, 128); /* Parte superior verde */
+    background-color: rgb(56, 159, 128);
     padding: 10px 0;
-    margin: 0; /* Elimina cualquier margen superior o inferior */
-}
-
-.container__separator {
-    padding: 0;
     margin: 0;
-    height: 2px;
-    background-color: #736060; /* Divisor */
+
+    &__mail, &__phone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .container__rights {
-    text-align: center;
-    background-color: rgb(22, 26, 22); /* Parte inferior negra */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: rgb(22, 26, 22);
     padding: 10px 0;
-    margin: 0; /* Elimina cualquier margen superior o inferior */
+    margin: 0;
+
+    p {
+        margin: 0;
+    }
 }
 
 .mat-icon {
     position: relative;
-    top: 7px;
     color: rgb(22, 26, 22);
 }
 

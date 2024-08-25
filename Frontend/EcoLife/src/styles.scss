@@ -140,3 +140,16 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.mat-mdc-header-cell {
+  background-color: rgb(56, 159, 128) !important;
+  font-weight: 700 !important;
+}
+
+.mat-mdc-row:nth-of-type(odd) {
+  background-color: white;
+}
+
+.mat-mdc-row:nth-of-type(even) {
+  background-color: rgb(238, 238, 238);
+}

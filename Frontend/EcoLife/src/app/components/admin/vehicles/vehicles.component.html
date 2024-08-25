@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="container__data">
 		<p class="table-title">Lista de vehículos</p>
-		<button mat-raised-button color="primary" (click)="addVehicle()" class="container__data__add-button">Agregar nuevo vehículo</button>
+		<button mat-raised-button color="primary" (click)="addVehicle()" class="container__data__add-button">Agregar vehículo</button>
 		<mat-form-field class="container__data__filter">
 			<mat-label>Filtrar</mat-label>
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por patente, descripción o modelo" #input autocomplete="off">
