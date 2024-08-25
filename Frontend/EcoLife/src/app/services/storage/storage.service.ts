@@ -40,6 +40,6 @@ export class StorageService {
 
   public logOut(): void {
     window.sessionStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/homepage']);
   }
 }
