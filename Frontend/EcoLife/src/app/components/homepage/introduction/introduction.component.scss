@@ -1,0 +1,86 @@
+.recycling-management {
+  display: flex;
+  justify-content: center;
+  gap: 85px;
+  align-items: flex-start;
+  padding: 20px;
+
+  &__content {
+    max-width: 550px;
+  }
+
+  &__title {
+    position: relative;
+    font-weight: 400;
+    font-size: 34px;
+    color: #3a3030;
+    padding: 2rem 0;
+    margin: 0;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 50%;
+      left: 0;
+    }
+
+    &::before {
+      height: 3px;
+      background-color: black;
+      transform: translateY(-25%);
+    }
+
+    &::after {
+      height: 1px;
+      background-color: black;
+      left: 50%;
+    }
+  }
+
+  &__description {
+    margin-top: 1rem;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  &__image-container {
+    max-width: 550px;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+  }
+}
+
+.container {
+  background: linear-gradient(215deg, #ffffff, #e0f7fa );
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(81, 196, 144, 0.2);
+    z-index: -1;
+  }
+
+  &::before {
+    bottom: -300px;
+    left: -300px;
+  }
+
+  &::after {
+    top: -300px;
+    right: -300px;
+  }
+}
