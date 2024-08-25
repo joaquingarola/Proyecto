@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" id="services">
+  <h2 class="container__title">Servicios</h2>
   <div class="recycling-management">
     <div class="recycling-management__image-container">
       <img src="../../../../assets/hp_image_1.PNG" alt="Contenedores verdes y naranjas" class="recycling-management__image">
@@ -20,5 +21,21 @@
     <div class="recycling-management__image-container">
       <img src="../../../../assets/hp_image_2.PNG" alt="Contenedores verdes y naranjas" class="recycling-management__image">
     </div>
+  </div>
+  <div class="recycling-carousel">
+    <h2 class="recycling-carousel__title">En la ciudad</h2>
+    <p-carousel 
+      [value]="photos" 
+      [numVisible]="3" 
+      [numScroll]="1" 
+      [circular]="true" 
+      [autoplayInterval]="7500" 
+      [styleClass]="'custom-carousel'">
+      <ng-template pTemplate="item" let-photo>
+        <div class="photo-item">
+          <img [src]="photo.imageSrc" alt="{{ photo.altText }}" />
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
 </div>
