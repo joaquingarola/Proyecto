@@ -280,8 +280,6 @@ export class PlanifyRecolectionComponent {
 
   private minTimeValidator(): ValidatorFn {
     let actualDate = new Date();
-    const minToAdd = 60 - actualDate.getMinutes();
-    actualDate = new Date(actualDate.getTime() + (minToAdd*60*1000));
     const minTime = `${this.padZero(actualDate.getHours())}:${this.padZero(actualDate.getMinutes())}:00`;
 
     return (control: AbstractControl): ValidationErrors | null => {
