@@ -41,7 +41,7 @@ export class CurrentCollectionComponent {
     cancelCaption: 'No'
   };
   private completeRecolectionData: ConfirmationModalData = {
-    message: 'La recolección se completó con éxito!',
+    message: '¡La recolección se completó con éxito!',
     confirmCaption: 'Aceptar',
     cancelCaption: '',
     onlyOneButton: true
