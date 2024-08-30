@@ -16,7 +16,7 @@ import { ContainerFormModalComponent } from './container-form-modal/container-fo
 export class ContainerComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ["capacity", "wasteType", "status", "zone", "lastEmptying", "address", "options"];
+  displayedColumns = ["id","capacity", "wasteType", "status", "zone", "lastEmptying", "address", "options"];
   containers: MatTableDataSource<ContainerModel> = new MatTableDataSource();
   isLoading: boolean;
 

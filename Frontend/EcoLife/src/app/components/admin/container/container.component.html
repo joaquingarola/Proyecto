@@ -8,6 +8,10 @@
 			<input matInput (keyup)="applyFilter($event)" placeholder="Podés filtrar por residuo, estado o zona" #input autocomplete="off">
 		</mat-form-field>
 		<table mat-table [dataSource]="containers" class="mat-elevation-z8 container__data__table" matSort>
+			<ng-container matColumnDef="id">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Código </th>
+				<td mat-cell *matCellDef="let container" class="centered-cell"> {{container.id}} </td>
+		</ng-container>
 			<ng-container matColumnDef="capacity">
 					<th mat-header-cell *matHeaderCellDef mat-sort-header class="centered-header" > Capacidad </th>
 					<td mat-cell *matCellDef="let container" class="centered-cell"> {{container.capacity}} </td>
