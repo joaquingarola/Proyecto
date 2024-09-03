@@ -58,3 +58,10 @@
 .container__info__mail .material-symbols-outlined {
     color: rgb(22, 26, 22);
 }
+
+@media (max-width: 768px) {
+    .container__info {
+        gap: 20px;
+    }
+}
+  

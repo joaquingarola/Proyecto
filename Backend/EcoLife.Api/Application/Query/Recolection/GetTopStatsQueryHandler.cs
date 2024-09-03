@@ -37,7 +37,7 @@ namespace EcoLife.Api.Application
                 .GroupBy(r => r.Employee)
                 .Select(g => new TopEmployeeDto
                 {
-                    Name = g.Key.Name,
+                    Name = $"{g.Key.Surname}, {g.Key.Name}",
                     Quantity = g.Count()
                 })
                 .OrderByDescending(e => e.Quantity)

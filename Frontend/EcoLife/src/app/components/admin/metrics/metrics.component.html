@@ -84,8 +84,8 @@
       <div class="table" *ngIf="!topRecolectionLoading">
         <table mat-table [dataSource]="recolectionTopStats.topEmployees">
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let employee"> {{employee.name}} </td>
+            <th mat-header-cell *matHeaderCellDef> Empleado </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.name}} {{employee.surname}} </td>
           </ng-container>
           <ng-container matColumnDef="quantity">
             <th mat-header-cell *matHeaderCellDef> Cantidad </th>
@@ -104,7 +104,7 @@
       <div class="table" *ngIf="!topRecolectionLoading">
         <table mat-table [dataSource]="recolectionTopStats.topVehicles">
           <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <th mat-header-cell *matHeaderCellDef> Vehículo	 </th>
             <td mat-cell *matCellDef="let vehicle"> {{vehicle.patent}} - {{vehicle.description}} </td>
           </ng-container>
           <ng-container matColumnDef="quantity">

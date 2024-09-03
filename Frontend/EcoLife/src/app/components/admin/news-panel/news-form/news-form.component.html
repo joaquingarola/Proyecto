@@ -7,13 +7,13 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Titulo</mat-label>
-          <input matInput type="text" placeholder="Titulo de la noticia" formControlName="title" autocomplete="off" maxlength="50"> 
+          <input matInput type="text" placeholder="Titulo de la noticia" formControlName="title" autocomplete="off" maxlength="100"> 
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Descripcion</mat-label>
-          <textarea matInput placeholder="Breve descripción de la noticia" formControlName="description" autocomplete="off" maxlength="300"></textarea>
+          <textarea matInput placeholder="Breve descripción de la noticia" formControlName="description" autocomplete="off" maxlength="400"></textarea>
         </mat-form-field>
       </div>
       <div *ngIf="error.length !==0" class="modal-form__error">
