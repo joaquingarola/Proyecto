@@ -204,8 +204,8 @@ export class MetricsComponent implements OnInit {
       datasets: [
         {
           data: [firstCount, secondCount],
-          backgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')],
-          hoverBackgroundColor: [documentStyle.getPropertyValue('--pink-500'), documentStyle.getPropertyValue('--blue-500')]
+          backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--pink-500')],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--pink-500')]
         }
       ]
     };
